@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Anas Pizza Original">
+  <defs>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E9242F"/>
+      <stop offset="1" stop-color="#B5121C"/>
+    </linearGradient>
+    <linearGradient id="crust" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD37A"/>
+      <stop offset="1" stop-color="#E8A02F"/>
+    </linearGradient>
+    <linearGradient id="cheese" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#FFE7A8"/>
+      <stop offset="1" stop-color="#FFC02E"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="64" cy="64" r="62" fill="url(#ring)"/>
+  <circle cx="64" cy="64" r="55.5" fill="none" stroke="#FFF6EA" stroke-width="2.5" opacity=".85"/>
+
+  <!-- pizza slice -->
+  <g transform="translate(64 68) rotate(-8)">
+    <path d="M0-36 33 26a5 5 0 0 1-4.4 7.4H-28.6A5 5 0 0 1-33 26Z" fill="url(#crust)"/>
+    <path d="M0-27.5 26.8 22.6a2.6 2.6 0 0 1-2.3 3.8h-49a2.6 2.6 0 0 1-2.3-3.8Z" fill="url(#cheese)"/>
+    <circle cx="0" cy="-6" r="5.4" fill="#D3221C"/>
+    <circle cx="-11.5" cy="10" r="4.6" fill="#D3221C"/>
+    <circle cx="12" cy="11" r="4.6" fill="#D3221C"/>
+    <circle cx="0" cy="19.5" r="3.6" fill="#D3221C"/>
+    <path d="M6-19c3.2-.6 5.6 1.4 5.2 4.2-2.9 1-5.6-.9-5.2-4.2Z" fill="#3E8E4A"/>
+    <path d="M-9 2.5c3-1.5 5.9-.1 6.2 2.7-2.5 1.7-5.7.7-6.2-2.7Z" fill="#3E8E4A"/>
+  </g>
+</svg>

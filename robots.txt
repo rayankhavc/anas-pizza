@@ -1,0 +1,7 @@
+# Anas Pizza Original — Nantes
+# ⚠️ Remplacer le domaine ci-dessous par le domaine définitif.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.anaspizza-nantes.fr/sitemap.xml
