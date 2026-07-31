@@ -1,337 +1,908 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="theme-color" content="#0B0A09" />
-<title>Anas Pizza Original — Pizzeria à emporter &amp; livraison, Nantes centre</title>
-<meta name="description" content="Anas Pizza Original, pizzeria à emporter et en livraison au 10 Allée Duguay Trouin, 44000 Nantes. Ouvert tous les jours 10h-00h, vendredi et samedi jusqu'à 02h. Pizzas de 1 à 10 €." />
-<link rel="preconnect" href="https://images.unsplash.com" crossorigin="" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
-<style>
-  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-  body { margin: 0; background: #0B0A09; color: #F7F0E4; font-family: Barlow, system-ui, sans-serif; text-wrap: pretty; }
-  * { box-sizing: border-box; }
-  a { color: #E7B24A; text-decoration: none; }
-  a:hover { color: #F7F0E4; }
-  h1, h2, h3 { margin: 0; }
-  p { margin: 0; }
-  img { display: block; }
-  @keyframes anasTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  @keyframes anasBlink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A101E">
+<meta name="color-scheme" content="dark">
 
-  a { transition: filter .15s ease, background-color .15s ease; }
-  a:hover { filter: brightness(1.12); }
-</style>
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ⚙️  À PERSONNALISER AVANT LA MISE EN LIGNE
+     1. Remplacer https://www.anaspizza-nantes.fr par le vrai nom de domaine
+        (canonical, og:url, JSON-LD, sitemap.xml, robots.txt).
+     2. Remplacer les liens Uber Eats / Deliveroo (chercher « data-order »)
+        par les URL exactes des fiches restaurant.
+     3. Déposer les photos dans assets/img/ : devanture.jpg · salle.jpg ·
+        pizza.jpg (voir assets/img/README.md).
+     4. Activer les réseaux sociaux : bloc « .socials » dans le pied de page.
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<title>Anas Pizza Original — Pizzeria à Nantes centre | À emporter &amp; livraison</title>
+<meta name="description" content="Pizzeria Anas Pizza Original, 10 allée Duguay Trouin à Nantes centre. Plus de 40 pizzas cuites à la commande : sur place, à emporter ou en livraison. Ouvert 7j/7 dès 11h30. Tél. 02 59 10 01 98.">
+<link rel="canonical" href="https://www.anaspizza-nantes.fr/">
+
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="author" content="Anas Pizza Original">
+<meta name="geo.region" content="FR-44">
+<meta name="geo.placename" content="Nantes">
+
+<meta property="og:type" content="restaurant">
+<meta property="og:site_name" content="Anas Pizza Original">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Anas Pizza Original — Pizzeria à Nantes centre">
+<meta property="og:description" content="Plus de 40 pizzas cuites à la commande : sur place, à emporter ou en livraison. 10 allée Duguay Trouin, 44000 Nantes. Ouvert 7j/7 dès 11h30.">
+<meta property="og:url" content="https://www.anaspizza-nantes.fr/">
+<meta property="og:image" content="https://www.anaspizza-nantes.fr/assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Anas Pizza Original, pizzeria à Nantes centre">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anas Pizza Original — Pizzeria à Nantes centre">
+<meta name="twitter:description" content="Plus de 40 pizzas cuites à la commande. Sur place, à emporter ou en livraison, 7j/7 dès 11h30.">
+<meta name="twitter:image" content="https://www.anaspizza-nantes.fr/assets/img/og-image.jpg">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/emblem.svg">
+<link rel="manifest" href="site.webmanifest">
+
+<link rel="preload" href="assets/fonts/anton-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/barlow-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/barlow-condensed-700-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/styles.css">
+<script src="assets/js/main.js" defer></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Restaurant",
-  "name": "Anas Pizza Original",
-  "image": "https://example.com/anas-pizza-original-hero.jpg",
-  "servesCuisine": "Pizza",
-  "priceRange": "1-10 €",
-  "acceptsReservations": false,
-  "menu": "https://example.com/#carte",
-  "telephone": "+33259100198",
-  "url": "https://example.com/",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "10 Allée Duguay Trouin",
-    "postalCode": "44000",
-    "addressLocality": "Nantes",
-    "addressCountry": "FR"
-  },
-  "geo": { "@type": "GeoCoordinates", "latitude": 47.2126, "longitude": -1.5568 },
-  "openingHoursSpecification": [
-    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "10:00", "closes": "00:00" },
-    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "10:00", "closes": "02:00" }
-  ],
-  "hasDeliveryMethod": ["http://purl.org/goodrelations/v1#DeliveryModePickUp","http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"]
+  "@graph": [
+    {
+      "@type": ["Restaurant", "LocalBusiness"],
+      "@id": "https://www.anaspizza-nantes.fr/#restaurant",
+      "name": "Anas Pizza Original",
+      "description": "Pizzeria à Nantes centre : plus de 40 pizzas cuites à la commande, sur place, à emporter ou en livraison.",
+      "url": "https://www.anaspizza-nantes.fr/",
+      "image": "https://www.anaspizza-nantes.fr/assets/img/og-image.jpg",
+      "logo": "https://www.anaspizza-nantes.fr/assets/img/emblem.svg",
+      "telephone": "+33259100198",
+      "email": "anas.pizza.original@gmail.com",
+      "servesCuisine": ["Pizza", "Italienne", "Restauration rapide"],
+      "priceRange": "€",
+      "currenciesAccepted": "EUR",
+      "acceptsReservations": "False",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "10 allée Duguay Trouin",
+        "addressLocality": "Nantes",
+        "postalCode": "44000",
+        "addressRegion": "Pays de la Loire",
+        "addressCountry": "FR"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 47.2136, "longitude": -1.5573 },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=Anas+Pizza+Original+10+all%C3%A9e+Duguay+Trouin+44000+Nantes",
+      "areaServed": { "@type": "City", "name": "Nantes" },
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "11:30", "closes": "00:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "11:30", "closes": "02:00" }
+      ],
+      "hasMenu": { "@id": "https://www.anaspizza-nantes.fr/#menu" }
+    },
+    {
+      "@type": "Menu",
+      "@id": "https://www.anaspizza-nantes.fr/#menu",
+      "name": "La carte Anas Pizza Original",
+      "url": "https://www.anaspizza-nantes.fr/#carte",
+      "inLanguage": "fr-FR",
+      "hasMenuSection": [
+        { "@type": "MenuSection", "name": "Base sauce tomate", "description": "Pizzas sur base sauce tomate. Medium 7,90 € · Large 10,90 €" },
+        { "@type": "MenuSection", "name": "Base crème fraîche", "description": "Pizzas sur base crème fraîche. Medium 7,90 € · Large 10,90 €" },
+        { "@type": "MenuSection", "name": "Pizzas sauce originale", "description": "Sauces curry, barbecue, algérienne, chili thaï. Medium 7,99 € · Large 11,90 €" },
+        { "@type": "MenuSection", "name": "Pizzas signature", "description": "Les créations de la maison. Medium 9,90 € · Large 12,90 €" },
+        { "@type": "MenuSection", "name": "Pizzas traditionnelles", "description": "Les classiques. Medium 6,90 € · Large 9,90 €" },
+        { "@type": "MenuSection", "name": "Les végétariennes", "description": "Medium 6,90 € · Large 9,90 €" },
+        { "@type": "MenuSection", "name": "Finger food", "description": "Mozzarella sticks, wings, nuggets, maxi tenders. De 4,90 € à 5,90 €" },
+        { "@type": "MenuSection", "name": "Desserts", "description": "Gâteau amandes et Daim, tiramisu, brownie. 3,50 €" }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.anaspizza-nantes.fr/#website",
+      "url": "https://www.anaspizza-nantes.fr/",
+      "name": "Anas Pizza Original",
+      "inLanguage": "fr-FR",
+      "publisher": { "@id": "https://www.anaspizza-nantes.fr/#restaurant" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.anaspizza-nantes.fr/#faq",
+      "mainEntity": [
+        { "@type": "Question", "name": "Quels sont les horaires d’Anas Pizza Original à Nantes ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Nous sommes ouverts 7 jours sur 7 à partir de 11h30. Du dimanche au jeudi jusqu’à minuit, le vendredi et le samedi jusqu’à 2h du matin." } },
+        { "@type": "Question", "name": "Où se trouve Anas Pizza Original ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Au 10 allée Duguay Trouin, 44000 Nantes, en plein centre-ville, à quelques minutes à pied du Cours des 50 Otages et du quartier Bouffay." } },
+        { "@type": "Question", "name": "Peut-on se faire livrer une pizza Anas Pizza Original ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui. La livraison est assurée sur Nantes via Uber Eats et Deliveroo. Vous pouvez aussi appeler le 02 59 10 01 98 pour commander à emporter." } },
+        { "@type": "Question", "name": "Peut-on manger sur place ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui, la salle vous accueille pour manger sur place, et vous pouvez également commander à emporter." } },
+        { "@type": "Question", "name": "Combien coûte une pizza chez Anas Pizza Original ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Les pizzas traditionnelles et végétariennes démarrent à 6,90 € en medium et 9,90 € en large. Les pizzas base tomate et crème fraîche sont à 7,90 € (medium) et 10,90 € (large). Les pizzas signature sont à 9,90 € et 12,90 €." } },
+        { "@type": "Question", "name": "Y a-t-il une offre spéciale dans la semaine ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui : tous les mardis, toutes nos pizzas sont à 5,90 €." } }
+      ]
+    }
+  ]
 }
 </script>
 </head>
-<body>
-<main style="max-width: 100%; overflow-x: hidden; padding-bottom: 88px;">
 
-  <div aria-hidden="true" style="background: #C31419; color: #FFF0DC; overflow: hidden; white-space: nowrap; border-bottom: 2px solid #0B0A09;">
-    <div style="display: inline-flex; gap: 0; animation: anasTicker 26s linear infinite; will-change: transform;">
-      <span style="display: inline-flex; align-items: center; gap: 18px; padding: 7px 18px 7px 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .16em; font-size: 13px; text-transform: uppercase;">Ouvert jusqu'à 2h ven. &amp; sam. <span style="opacity: .5;">✦</span> À emporter en 12 min <span style="opacity: .5;">✦</span> Livraison Uber Eats &amp; Deliveroo <span style="opacity: .5;">✦</span> 10 allée Duguay Trouin, Nantes <span style="opacity: .5;">✦</span> Pizzas de 1 à 10 € <span style="opacity: .5;">✦</span></span>
-      <span style="display: inline-flex; align-items: center; gap: 18px; padding: 7px 18px 7px 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .16em; font-size: 13px; text-transform: uppercase;">Ouvert jusqu'à 2h ven. &amp; sam. <span style="opacity: .5;">✦</span> À emporter en 12 min <span style="opacity: .5;">✦</span> Livraison Uber Eats &amp; Deliveroo <span style="opacity: .5;">✦</span> 10 allée Duguay Trouin, Nantes <span style="opacity: .5;">✦</span> Pizzas de 1 à 10 € <span style="opacity: .5;">✦</span></span>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<!-- ══ Bandeau promo défilant ═══════════════════════════════════════════ -->
+<div class="ticker">
+  <div class="ticker__track">
+    <div class="ticker__group">
+      <span class="ticker__item">🔥 Tous les mardis : toutes nos pizzas à 5,90 €</span>
+      <span class="ticker__item">Ouvert 7j/7 dès 11h30</span>
+      <span class="ticker__item">Sur place · À emporter · Livraison</span>
+      <span class="ticker__item">☎ 02 59 10 01 98</span>
+      <span class="ticker__item">Nantes centre — 10 allée Duguay Trouin</span>
+    </div>
+    <div class="ticker__group" aria-hidden="true">
+      <span class="ticker__item">🔥 Tous les mardis : toutes nos pizzas à 5,90 €</span>
+      <span class="ticker__item">Ouvert 7j/7 dès 11h30</span>
+      <span class="ticker__item">Sur place · À emporter · Livraison</span>
+      <span class="ticker__item">☎ 02 59 10 01 98</span>
+      <span class="ticker__item">Nantes centre — 10 allée Duguay Trouin</span>
     </div>
   </div>
+</div>
 
-  <section style="position: relative; min-height: 92svh; display: flex; flex-direction: column; background: #0B0A09;">
-    <img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Pizza tomate mozzarella basilic découpée en parts sur une planche" fetchpriority="high" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%;" />
-    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,9,.72) 0%, rgba(11,10,9,.3) 30%, rgba(11,10,9,.85) 66%, #0B0A09 100%);"></div>
-
-    <div style="position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px clamp(18px, 5vw, 44px); margin-bottom: auto;">
-      <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .2em; font-size: 12px; color: rgba(247,240,228,.7); text-transform: uppercase; padding-top: 8px;">Nantes · centre</span>
-      <span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .12em; font-size: 12px; color: #0B0A09; text-transform: uppercase; background: #E7B24A; padding: 8px 13px; border-radius: 2px;">
-        <span style="width: 7px; height: 7px; border-radius: 50%; background: #B4261A; animation: anasBlink 1.8s ease-in-out infinite;"></span>
-        Ouvert maintenant
+<!-- ══ En-tête ══════════════════════════════════════════════════════════ -->
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="#top" aria-label="Anas Pizza Original — accueil">
+      <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="38" height="38">
+      <span class="brand__txt">
+        <span class="brand__a">Anas <i>Pizza</i></span>
+        <span class="brand__b">Original</span>
       </span>
+    </a>
+
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#carte">La carte</a>
+      <a href="#mardi">Offre du mardi</a>
+      <a href="#maison">La maison</a>
+      <a href="#infos">Infos &amp; horaires</a>
+      <a href="#commander">Commander</a>
+    </nav>
+
+    <span class="header__spacer"></span>
+
+    <a class="header__tel" href="tel:+33259100198">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+      <span>02 59 10 01 98</span>
+    </a>
+
+    <a class="btn btn--sm header__cta" href="#commander">Commander</a>
+
+    <button class="burger" type="button" data-drawer-open aria-expanded="false" aria-controls="drawer" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ══ Tiroir mobile ════════════════════════════════════════════════════ -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+    <div class="drawer__top">
+      <span class="brand">
+        <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="34" height="34">
+        <span class="brand__txt"><span class="brand__a">Anas <i>Pizza</i></span></span>
+      </span>
+      <button class="drawer__close" type="button" data-drawer-close aria-label="Fermer le menu">✕</button>
     </div>
 
-    <div style="position: relative; padding: 0 clamp(18px, 5vw, 44px) calc(96px + env(safe-area-inset-bottom)); max-width: 1240px; width: 100%; margin: 0 auto;">
-      <p style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .26em; font-size: clamp(11px, 3vw, 13px); color: #E7B24A; margin-bottom: 10px;">Pizzeria · à emporter &amp; livraison</p>
-      <h1 style="font-family: Anton, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: -.015em; line-height: .84; font-size: clamp(52px, min(17vw, 19svh), 132px); color: #F7F0E4; margin-bottom: 16px;">
-        Anas<br /><span style="display: inline-block; margin-left: .06em;">Pizza</span><br /><span style="color: #C31419; text-shadow: 0 0 0 #000, 2px 2px 0 rgba(247,240,228,.18);">Original</span>
-      </h1>
-      <p style="font-size: clamp(17px, 4.4vw, 22px); line-height: 1.35; font-weight: 500; color: rgba(247,240,228,.92); max-width: 32ch; margin-bottom: 22px; border-left: 3px solid #C31419; padding-left: 14px;">
-        Pâte pétrie le matin, four à 400°, <strong style="color: #E7B24A; font-weight: 700;">12 minutes</strong> et c'est dans vos mains. Jusqu'à 2h du matin le week-end.
-      </p>
+    <a class="drawer__link" style="--i:0" href="#carte">La carte <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" style="--i:1" href="#mardi">Offre du mardi <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" style="--i:2" href="#maison">La maison <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" style="--i:3" href="#infos">Infos &amp; horaires <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" style="--i:4" href="#faq">Questions fréquentes <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" style="--i:5" href="#commander">Commander <span aria-hidden="true">→</span></a>
 
-      <div style="display: flex; flex-direction: column; gap: 9px; max-width: 520px;">
-        <a href="tel:+33259100198" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #C31419; color: #FFF7EC; border-radius: 3px; padding: 19px 22px; font-family: Anton, sans-serif; font-size: clamp(22px, 5.6vw, 30px); text-transform: uppercase; letter-spacing: .01em; box-shadow: 0 16px 40px rgba(0,0,0,.5); border-bottom: 4px solid #7E0D10;">
-          <span>✆ Appeler</span><span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: .62em; letter-spacing: .06em; opacity: .9;">02 59 10 01 98</span>
-        </a>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 9px;">
-          
-            <a href="https://www.ubereats.com/" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(247,240,228,.1); backdrop-filter: blur(6px); border: 1px solid rgba(247,240,228,.28); color: #F7F0E4; border-radius: 3px; padding: 15px 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 16px;">Uber Eats</a>
-          
-          
-            <a href="https://deliveroo.fr/" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(247,240,228,.1); backdrop-filter: blur(6px); border: 1px solid rgba(247,240,228,.28); color: #F7F0E4; border-radius: 3px; padding: 15px 14px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 16px;">Deliveroo</a>
-          
-        </div>
-      </div>
+    <div class="drawer__foot">
+      <a class="btn btn--block" href="tel:+33259100198">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+        Appeler le restaurant
+      </a>
+      <a class="btn btn--ghost btn--block" href="https://www.google.com/maps/dir/?api=1&amp;destination=10+all%C3%A9e+Duguay+Trouin+44000+Nantes" target="_blank" rel="noopener">Itinéraire</a>
     </div>
-  </section>
+  </div>
+</div>
 
-  <section aria-label="Nos engagements" style="background: #0B0A09; border-top: 1px solid rgba(247,240,228,.12); border-bottom: 1px solid rgba(247,240,228,.12);">
-    <ul style="list-style: none; margin: 0 auto; padding: 0; max-width: 1240px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
-      <li style="padding: clamp(16px, 4vw, 26px) 14px; text-align: center; border-right: 1px solid rgba(247,240,228,.12);">
-        <span style="display: block; font-family: Anton, sans-serif; font-size: clamp(17px, 4.2vw, 22px); text-transform: uppercase; color: #F7F0E4;">À emporter</span>
-        <span style="display: block; margin-top: 3px; font-size: 13px; color: rgba(247,240,228,.5); font-weight: 500;">Prête en 12 min</span>
-      </li>
-      <li style="padding: clamp(16px, 4vw, 26px) 14px; text-align: center; border-right: 1px solid rgba(247,240,228,.12);">
-        <span style="display: block; font-family: Anton, sans-serif; font-size: clamp(17px, 4.2vw, 22px); text-transform: uppercase; color: #F7F0E4;">Livraison</span>
-        <span style="display: block; margin-top: 3px; font-size: 13px; color: rgba(247,240,228,.5); font-weight: 500;">Uber Eats · Deliveroo</span>
-      </li>
-      <li style="padding: clamp(16px, 4vw, 26px) 14px; text-align: center; border-right: 1px solid rgba(247,240,228,.12);">
-        <span style="display: block; font-family: Anton, sans-serif; font-size: clamp(17px, 4.2vw, 22px); text-transform: uppercase; color: #E7B24A;">Ouvert tard</span>
-        <span style="display: block; margin-top: 3px; font-size: 13px; color: rgba(247,240,228,.5); font-weight: 500;">2h du matin ven. &amp; sam.</span>
-      </li>
-      <li style="padding: clamp(16px, 4vw, 26px) 14px; text-align: center;">
-        <span style="display: block; font-family: Anton, sans-serif; font-size: clamp(17px, 4.2vw, 22px); text-transform: uppercase; color: #F7F0E4;">1 à 10 €</span>
-        <span style="display: block; margin-top: 3px; font-size: 13px; color: rgba(247,240,228,.5); font-weight: 500;">Tout le monde y arrive</span>
-      </li>
-    </ul>
-  </section>
+<main id="contenu">
+  <span id="top"></span>
 
-  <section id="carte" style="background: #F4EADA; color: #241C17; padding: clamp(38px, 8vw, 86px) clamp(16px, 5vw, 44px);">
-    <div style="max-width: 1240px; margin: 0 auto;">
-      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; margin-bottom: clamp(20px, 4vw, 34px);">
-        <div>
-          <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .24em; font-size: 12px; color: #C31419; text-transform: uppercase;">La carte</span>
-          <h2 style="font-family: Anton, sans-serif; font-size: clamp(38px, 10vw, 78px); text-transform: uppercase; line-height: .86; color: #17110D; margin-top: 8px;">Les pizzas<br />de la maison</h2>
-        </div>
-        <p style="font-size: 15px; font-weight: 500; color: #6E5C4E; max-width: 32ch;">Préparées à la commande, base tomate ou crème. Suppléments 1 € · Pâte fine ou moelleuse.</p>
-      </div>
+  <!-- ══ Hero ═══════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__grid-lines" aria-hidden="true"></div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(12px, 2.4vw, 20px); margin-bottom: clamp(14px, 3vw, 24px);">
-        <article style="position: relative; border-radius: 4px; overflow: hidden; background: #17110D; min-height: 340px; display: flex; flex-direction: column; justify-content: flex-end;">
-          <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Pizza margherita au basilic frais sur plan de travail en marbre" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
-          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,17,13,.05) 30%, rgba(23,17,13,.9) 100%);"></div>
-          <span style="position: absolute; top: 14px; left: 14px; background: #C31419; color: #FFF0DC; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: 11px; padding: 6px 10px; border-radius: 2px;">La plus commandée</span>
-          <div style="position: relative; padding: 18px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;">
-            <div>
-              <h3 style="font-family: Anton, sans-serif; font-size: clamp(26px, 6vw, 34px); text-transform: uppercase; color: #F7F0E4; line-height: 1;">Margherita</h3>
-              <p style="margin-top: 5px; font-size: 14.5px; font-weight: 500; color: rgba(247,240,228,.75); max-width: 30ch;">Tomate, mozzarella fior di latte, basilic frais</p>
-            </div>
-            
-              <span style="flex: none; font-family: Anton, sans-serif; font-size: clamp(28px, 7vw, 40px); color: #E7B24A; line-height: 1;">6 €</span>
-            
-          </div>
-        </article>
-        <article style="position: relative; border-radius: 4px; overflow: hidden; background: #17110D; min-height: 340px; display: flex; flex-direction: column; justify-content: flex-end;">
-          <img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="Pizza aux fromages fondants, fil de mozzarella étiré" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
-          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,17,13,.05) 30%, rgba(23,17,13,.9) 100%);"></div>
-          <span style="position: absolute; top: 14px; left: 14px; background: #C31419; color: #FFF0DC; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; font-size: 11px; padding: 6px 10px; border-radius: 2px;">Fondante</span>
-          <div style="position: relative; padding: 18px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;">
-            <div>
-              <h3 style="font-family: Anton, sans-serif; font-size: clamp(26px, 6vw, 34px); text-transform: uppercase; color: #F7F0E4; line-height: 1;">4 Fromages</h3>
-              <p style="margin-top: 5px; font-size: 14.5px; font-weight: 500; color: rgba(247,240,228,.75); max-width: 30ch;">Crème, mozzarella, chèvre, bleu, emmental</p>
-            </div>
-            
-              <span style="flex: none; font-family: Anton, sans-serif; font-size: clamp(28px, 7vw, 40px); color: #E7B24A; line-height: 1;">9 €</span>
-            
-          </div>
-        </article>
-      </div>
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <p class="status" data-status>
+          <span class="status__dot" aria-hidden="true"></span>
+          <span data-status-label>Ouvert 7j/7</span>
+          <span class="status__sub" data-status-sub>· dès 11h30</span>
+        </p>
 
-      <ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 0 clamp(20px, 4vw, 44px);">
-        <li style="display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgba(36,28,23,.14);">
-          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Pizza reine jambon et champignons sur planche en bois" loading="lazy" decoding="async" width="72" height="72" style="flex: none; width: 72px; height: 72px; object-fit: cover; border-radius: 3px;" />
-          <div style="flex: 1; min-width: 0;">
-            <h3 style="font-family: Anton, sans-serif; font-size: clamp(19px, 4.6vw, 22px); text-transform: uppercase; color: #17110D; line-height: 1.05;">Reine</h3>
-            <p style="margin-top: 3px; font-size: 14px; line-height: 1.35; color: #6E5C4E; font-weight: 500;">Tomate, mozzarella, jambon, champignons frais</p>
-          </div>
-          
-            <span style="flex: none; font-family: Anton, sans-serif; font-size: clamp(20px, 5vw, 24px); color: #C31419;">8 €</span>
-          
-        </li>
-        <li style="display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgba(36,28,23,.14);">
-          <img src="https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Part de pizza aux merguez et poivrons" loading="lazy" decoding="async" width="72" height="72" style="flex: none; width: 72px; height: 72px; object-fit: cover; border-radius: 3px;" />
-          <div style="flex: 1; min-width: 0;">
-            <h3 style="font-family: Anton, sans-serif; font-size: clamp(19px, 4.6vw, 22px); text-transform: uppercase; color: #17110D; line-height: 1.05;">Merguez</h3>
-            <p style="margin-top: 3px; font-size: 14px; line-height: 1.35; color: #6E5C4E; font-weight: 500;">Tomate, mozzarella, merguez, poivrons, oignons</p>
-          </div>
-          
-            <span style="flex: none; font-family: Anton, sans-serif; font-size: clamp(20px, 5vw, 24px); color: #C31419;">9 €</span>
-          
-        </li>
-        <li style="display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgba(36,28,23,.14);">
-          <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Pizza végétarienne aux légumes et ricotta" loading="lazy" decoding="async" width="72" height="72" style="flex: none; width: 72px; height: 72px; object-fit: cover; border-radius: 3px;" />
-          <div style="flex: 1; min-width: 0;">
-            <h3 style="font-family: Anton, sans-serif; font-size: clamp(19px, 4.6vw, 22px); text-transform: uppercase; color: #17110D; line-height: 1.05;">Végétarienne</h3>
-            <p style="margin-top: 3px; font-size: 14px; line-height: 1.35; color: #6E5C4E; font-weight: 500;">Tomate, mozzarella, poivrons, oignons, olives, champignons</p>
-          </div>
-          
-            <span style="flex: none; font-family: Anton, sans-serif; font-size: clamp(20px, 5vw, 24px); color: #C31419;">8,50 €</span>
-          
-        </li>
-        <li style="display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgba(36,28,23,.14);">
-          <img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Calzone doré sorti du four" loading="lazy" decoding="async" width="72" height="72" style="flex: none; width: 72px; height: 72px; object-fit: cover; border-radius: 3px;" />
-          <div style="flex: 1; min-width: 0;">
-            <h3 style="font-family: Anton, sans-serif; font-size: clamp(19px, 4.6vw, 22px); text-transform: uppercase; color: #17110D; line-height: 1.05;">Calzone</h3>
-            <p style="margin-top: 3px; font-size: 14px; line-height: 1.35; color: #6E5C4E; font-weight: 500;">Chausson garni : tomate, mozzarella, jambon, œuf</p>
-          </div>
-          
-            <span style="flex: none; font-family: Anton, sans-serif; font-size: clamp(20px, 5vw, 24px); color: #C31419;">9,50 €</span>
-          
-        </li>
-        <li style="display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgba(36,28,23,.14);">
-          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Pizza garnie de viande découpée en parts" loading="lazy" decoding="async" width="72" height="72" style="flex: none; width: 72px; height: 72px; object-fit: cover; border-radius: 3px;" />
-          <div style="flex: 1; min-width: 0;">
-            <h3 style="font-family: Anton, sans-serif; font-size: clamp(19px, 4.6vw, 22px); text-transform: uppercase; color: #17110D; line-height: 1.05;">Orientale</h3>
-            <p style="margin-top: 3px; font-size: 14px; line-height: 1.35; color: #6E5C4E; font-weight: 500;">Tomate, mozzarella, viande hachée, oignons, œuf</p>
-          </div>
-          
-            <span style="flex: none; font-family: Anton, sans-serif; font-size: clamp(20px, 5vw, 24px); color: #C31419;">9,50 €</span>
-          
-        </li>
-        <li style="display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgba(36,28,23,.14);">
-          <img src="https://images.unsplash.com/photo-1528137871618-79d2761e3fd5?auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="Pizza garnie de roquette fraîche" loading="lazy" decoding="async" width="72" height="72" style="flex: none; width: 72px; height: 72px; object-fit: cover; border-radius: 3px;" />
-          <div style="flex: 1; min-width: 0;">
-            <h3 style="font-family: Anton, sans-serif; font-size: clamp(19px, 4.6vw, 22px); text-transform: uppercase; color: #17110D; line-height: 1.05;">Roquette</h3>
-            <p style="margin-top: 3px; font-size: 14px; line-height: 1.35; color: #6E5C4E; font-weight: 500;">Tomate, mozzarella, jambon cru, roquette, parmesan</p>
-          </div>
-          
-            <span style="flex: none; font-family: Anton, sans-serif; font-size: clamp(20px, 5vw, 24px); color: #C31419;">10 €</span>
-          
-        </li>
-      </ul>
+        <h1 class="h-xl">
+          <span class="line" style="--i:0"><span>Le goût</span></span>
+          <span class="line" style="--i:1"><span>authentique</span></span>
+          <span class="line" style="--i:2"><span class="word-stroke">de la pizza</span></span>
+        </h1>
 
-      <div style="margin-top: clamp(22px, 5vw, 38px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; background: #17110D; color: #F7F0E4; border-radius: 4px; padding: clamp(18px, 4vw, 28px);">
-        <p style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: clamp(19px, 4.8vw, 26px); max-width: 24ch; line-height: 1.1;">Vous hésitez ?<br /><span style="color: #E7B24A;">Appelez, on vous conseille en 30 secondes.</span></p>
-        <a href="tel:+33259100198" style="display: inline-flex; align-items: center; gap: 10px; background: #E7B24A; color: #17110D; border-radius: 3px; padding: 16px 24px; font-family: Anton, sans-serif; font-size: 20px; text-transform: uppercase;">✆ 02 59 10 01 98</a>
-      </div>
-    </div>
-  </section>
+        <p class="lead">
+          Pâte préparée chaque jour, cuisson à la commande, plus de 40 recettes.
+          <strong>Anas Pizza Original</strong> vous accueille en plein cœur de Nantes,
+          au 10 allée Duguay Trouin — sur place, à emporter ou en livraison.
+        </p>
 
-  <section aria-label="Le four" style="position: relative; min-height: clamp(340px, 58svh, 520px); display: flex; align-items: flex-end; background: #0B0A09;">
-    <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Pizza en cuisson dans un four à bois" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
-    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,10,9,.6) 0%, rgba(11,10,9,.25) 40%, rgba(11,10,9,.94) 100%);"></div>
-    <div style="position: relative; max-width: 1240px; width: 100%; margin: 0 auto; padding: clamp(24px, 5vw, 52px) clamp(18px, 5vw, 44px);">
-      <p style="font-family: Anton, sans-serif; font-size: clamp(28px, 7.5vw, 58px); text-transform: uppercase; line-height: .92; color: #F7F0E4; max-width: 18ch;">Une pizza sort<br />du four toutes les<br /><span style="color: #E7B24A;">4 minutes</span></p>
-      <p style="margin-top: 12px; font-size: clamp(15px, 4vw, 18px); font-weight: 500; color: rgba(247,240,228,.7); max-width: 42ch;">Midi, soir, et bien après. Le vendredi et le samedi, la dernière fournée part à 2h.</p>
-    </div>
-  </section>
-
-  <section id="infos" style="background: #0B0A09; padding: clamp(38px, 8vw, 86px) clamp(16px, 5vw, 44px);">
-    <div style="max-width: 1240px; margin: 0 auto;">
-      <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .24em; font-size: 12px; color: #E7B24A; text-transform: uppercase;">Infos pratiques</span>
-      <h2 style="font-family: Anton, sans-serif; font-size: clamp(36px, 9.5vw, 68px); text-transform: uppercase; line-height: .88; margin-top: 8px; margin-bottom: clamp(20px, 4vw, 36px);">On vous attend au<br />10 Duguay Trouin</h2>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(12px, 2.4vw, 20px); align-items: start;">
-
-        <div style="background: #16130F; border: 1px solid rgba(247,240,228,.1); border-radius: 4px; padding: clamp(20px, 4vw, 28px);">
-          <h3 style="font-family: Anton, sans-serif; font-size: 22px; text-transform: uppercase; color: #E7B24A; margin-bottom: 16px;">Horaires</h3>
-          <dl style="margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 12px 16px; font-size: clamp(16px, 4vw, 18px); align-items: baseline;">
-            <dt style="font-weight: 600; color: rgba(247,240,228,.7);">Dimanche → jeudi</dt>
-            <dd style="margin: 0; font-family: Anton, sans-serif; font-size: 1.2em; text-align: right; letter-spacing: .01em;">10h — 00h</dd>
-            <dt style="font-weight: 700; color: #F7F0E4;">Vendredi &amp; samedi</dt>
-            <dd style="margin: 0; font-family: Anton, sans-serif; font-size: 1.2em; text-align: right; color: #E7B24A; letter-spacing: .01em;">10h — 02h</dd>
-          </dl>
-          <p style="margin-top: 18px; font-size: 14px; font-weight: 600; color: #8FD79A; border-left: 2px solid #8FD79A; padding-left: 11px;">Ouvert 7j/7, jours fériés compris. Dernière commande 20 min avant fermeture.</p>
-        </div>
-
-        <div style="background: #16130F; border: 1px solid rgba(247,240,228,.1); border-radius: 4px; padding: clamp(20px, 4vw, 28px); display: flex; flex-direction: column;">
-          <h3 style="font-family: Anton, sans-serif; font-size: 22px; text-transform: uppercase; color: #E7B24A; margin-bottom: 16px;">Adresse</h3>
-          <address style="font-style: normal; font-size: clamp(17px, 4.2vw, 19px); font-weight: 600; line-height: 1.45; color: #F7F0E4;">10 Allée Duguay Trouin<br />44000 Nantes</address>
-          <p style="margin-top: 8px; font-size: 14px; color: rgba(247,240,228,.5); font-weight: 500;">Nantes centre, à deux pas des quais</p>
-          <div role="img" aria-label="Plan du quartier : 10 Allée Duguay Trouin, 44000 Nantes" style="position: relative; margin-top: 14px; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border: 1px solid rgba(247,240,228,.14); border-radius: 3px; background: #1F1B16;">
-            <div style="position: absolute; top: -12.5%; left: 0; width: 100%; display: grid; grid-template-columns: 1fr 1fr; filter: grayscale(.45) contrast(1.08) brightness(.94);">
-              <img src="https://tile.openstreetmap.org/16/32484/22994.png" alt="" loading="lazy" decoding="async" width="256" height="256" style="width: 100%; height: auto;" />
-              <img src="https://tile.openstreetmap.org/16/32485/22994.png" alt="" loading="lazy" decoding="async" width="256" height="256" style="width: 100%; height: auto;" />
-              <img src="https://tile.openstreetmap.org/16/32484/22995.png" alt="" loading="lazy" decoding="async" width="256" height="256" style="width: 100%; height: auto;" />
-              <img src="https://tile.openstreetmap.org/16/32485/22995.png" alt="" loading="lazy" decoding="async" width="256" height="256" style="width: 100%; height: auto;" />
-            </div>
-            <span aria-hidden="true" style="position: absolute; left: 70%; top: 50%; transform: translate(-50%, -100%); display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50% 50% 50% 0; background: #C31419; border: 2px solid #FFF0DC; rotate: -45deg; box-shadow: 0 6px 14px rgba(0,0,0,.5);"></span>
-            <span style="position: absolute; right: 4px; bottom: 3px; font-size: 9px; color: rgba(255,255,255,.85); background: rgba(11,10,9,.55); padding: 1px 5px; border-radius: 2px;">© OpenStreetMap</span>
-          </div>
-          <a href="https://maps.google.com/?q=10+All%C3%A9e+Duguay+Trouin+44000+Nantes" style="margin-top: auto; padding-top: 14px; display: flex;">
-            <span style="display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px; border: 1px solid rgba(231,178,74,.5); color: #E7B24A; border-radius: 3px; padding: 15px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 16px;">Itinéraire →</span>
+        <div class="btn-row">
+          <a class="btn" href="tel:+33259100198">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+            02 59 10 01 98
           </a>
+          <a class="btn btn--ghost" href="#carte">Voir la carte</a>
         </div>
 
-        <div style="background: #16130F; border: 1px solid rgba(247,240,228,.1); border-radius: 4px; padding: clamp(20px, 4vw, 28px); display: flex; flex-direction: column;">
-          <h3 style="font-family: Anton, sans-serif; font-size: 22px; text-transform: uppercase; color: #E7B24A; margin-bottom: 16px;">Commander</h3>
-          <div style="display: flex; flex-direction: column; gap: 9px;">
-            <a href="tel:+33259100198" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #C31419; color: #FFF7EC; border-radius: 3px; padding: 16px 18px; font-family: Anton, sans-serif; font-size: 19px; text-transform: uppercase; border-bottom: 3px solid #7E0D10;"><span>✆ Appeler</span><span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; opacity: .9;">02 59 10 01 98</span></a>
-            
-              <a href="https://www.ubereats.com/" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(247,240,228,.07); border: 1px solid rgba(247,240,228,.18); color: #F7F0E4; border-radius: 3px; padding: 16px 18px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 17px;"><span>Uber Eats</span><span style="opacity: .5;">→</span></a>
-            
-            
-              <a href="https://deliveroo.fr/" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(247,240,228,.07); border: 1px solid rgba(247,240,228,.18); color: #F7F0E4; border-radius: 3px; padding: 16px 18px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 17px;"><span>Deliveroo</span><span style="opacity: .5;">→</span></a>
-            
-          </div>
-          <p style="margin-top: 16px; font-size: 14px; font-weight: 500; color: rgba(247,240,228,.5);">CB et espèces sur place. Aux heures de pointe (19h — 21h), le téléphone reste le plus rapide.</p>
+        <ul class="hero__meta">
+          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Cuisson à la commande</li>
+          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Uber Eats &amp; Deliveroo</li>
+          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Salle &amp; à emporter</li>
+        </ul>
+      </div>
+
+      <div class="hero__art">
+        <svg class="pizza" viewBox="0 0 500 500" role="img" aria-label="Illustration d’une pizza dont une part se soulève">
+          <defs>
+            <radialGradient id="pz-crust" cx="38%" cy="30%">
+              <stop offset="0" stop-color="#F6C86B"/>
+              <stop offset="70%" stop-color="#E09B36"/>
+              <stop offset="100%" stop-color="#B96C1C"/>
+            </radialGradient>
+            <radialGradient id="pz-cheese" cx="40%" cy="32%">
+              <stop offset="0" stop-color="#FFE9A9"/>
+              <stop offset="65%" stop-color="#FFCB59"/>
+              <stop offset="100%" stop-color="#F0A32E"/>
+            </radialGradient>
+            <radialGradient id="pz-pep" cx="35%" cy="30%">
+              <stop offset="0" stop-color="#E8483A"/>
+              <stop offset="100%" stop-color="#B01F1B"/>
+            </radialGradient>
+          </defs>
+
+          <g class="pizza__disc">
+            <path d="M250 250 L326.5 65.2 A200 200 0 1 1 173.5 65.2 Z" fill="url(#pz-crust)"/>
+            <path d="M250 250 L317.4 87.4 A176 176 0 1 1 182.6 87.4 Z" fill="url(#pz-cheese)"/>
+
+            <g stroke="rgba(170,100,26,.32)" stroke-width="3" stroke-linecap="round">
+              <path d="M250 250 96 250"/><path d="M250 250 404 250"/>
+              <path d="M250 250 141 359"/><path d="M250 250 359 359"/>
+              <path d="M250 250 250 424"/>
+            </g>
+
+            <g fill="rgba(255,246,208,.5)">
+              <ellipse cx="196" cy="196" rx="26" ry="17" transform="rotate(-18 196 196)"/>
+              <ellipse cx="318" cy="216" rx="22" ry="14" transform="rotate(24 318 216)"/>
+              <ellipse cx="230" cy="330" rx="27" ry="16" transform="rotate(-8 230 330)"/>
+              <ellipse cx="330" cy="330" rx="19" ry="13" transform="rotate(32 330 330)"/>
+              <ellipse cx="160" cy="278" rx="18" ry="12" transform="rotate(12 160 278)"/>
+            </g>
+
+            <g fill="url(#pz-pep)">
+              <circle cx="168" cy="214" r="23"/>
+              <circle cx="286" cy="176" r="19"/>
+              <circle cx="336" cy="262" r="21"/>
+              <circle cx="200" cy="306" r="20"/>
+              <circle cx="292" cy="342" r="22"/>
+              <circle cx="248" cy="392" r="16"/>
+              <circle cx="150" cy="322" r="15"/>
+              <circle cx="236" cy="240" r="18"/>
+            </g>
+
+            <g>
+              <circle cx="218" cy="176" r="9" fill="#2E2A33"/><circle cx="218" cy="176" r="3.4" fill="#8C7A5A"/>
+              <circle cx="352" cy="206" r="8" fill="#2E2A33"/><circle cx="352" cy="206" r="3" fill="#8C7A5A"/>
+              <circle cx="182" cy="368" r="8" fill="#2E2A33"/><circle cx="182" cy="368" r="3" fill="#8C7A5A"/>
+              <circle cx="330" cy="392" r="7.5" fill="#2E2A33"/><circle cx="330" cy="392" r="2.8" fill="#8C7A5A"/>
+              <path d="M272 274c16-9 32-2 34 14-15 9-33 3-34-14Z" fill="#3E8E4A"/>
+              <path d="M138 250c15-10 31-4 34 12-14 10-32 5-34-12Z" fill="#468F4E"/>
+              <path d="M258 322c14-8 28-2 30 12-13 8-29 3-30-12Z" fill="#3E8E4A"/>
+            </g>
+          </g>
+
+          <g class="pizza__slice">
+            <path d="M250 250 L173.5 65.2 A200 200 0 0 1 326.5 65.2 Z" fill="url(#pz-crust)"/>
+            <path d="M250 250 L182.6 87.4 A176 176 0 0 1 317.4 87.4 Z" fill="url(#pz-cheese)"/>
+            <ellipse cx="250" cy="152" rx="30" ry="18" fill="rgba(255,246,208,.5)"/>
+            <circle cx="228" cy="126" r="17" fill="url(#pz-pep)"/>
+            <circle cx="276" cy="164" r="15" fill="url(#pz-pep)"/>
+            <circle cx="250" cy="208" r="12" fill="url(#pz-pep)"/>
+            <circle cx="286" cy="112" r="7" fill="#2E2A33"/>
+            <path d="M212 178c13-8 27-2 29 11-13 8-27 3-29-11Z" fill="#3E8E4A"/>
+          </g>
+        </svg>
+
+        <span class="floaty floaty--1 chip"><span class="chip__ico" aria-hidden="true">€</span> Dès <b>6,90 €</b></span>
+        <span class="floaty floaty--2 chip"><span class="chip__ico" aria-hidden="true">★</span> <b>42</b> recettes</span>
+        <span class="floaty floaty--3 chip"><span class="chip__ico" aria-hidden="true">⏱</span> Cuite <b>minute</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Bandeau chiffres ═══════════════════════════════════════════════ -->
+  <section class="band" aria-label="Anas Pizza Original en chiffres">
+    <div class="container">
+      <div class="band__grid">
+        <div class="band__cell" data-reveal>
+          <p class="band__n"><span data-count="42" data-suffix="">42</span></p>
+          <p class="band__l">Recettes de pizza</p>
+        </div>
+        <div class="band__cell" data-reveal>
+          <p class="band__n"><span data-count="7">7</span>j/7</p>
+          <p class="band__l">Ouvert toute la semaine</p>
+        </div>
+        <div class="band__cell" data-reveal>
+          <p class="band__n">11h30</p>
+          <p class="band__l">Service en continu</p>
+        </div>
+        <div class="band__cell" data-reveal>
+          <p class="band__n">2 <span style="font-size:.58em">tailles</span></p>
+          <p class="band__l">Medium ou large</p>
         </div>
       </div>
     </div>
   </section>
 
-  <footer style="background: #060505; padding: clamp(30px, 6vw, 58px) clamp(18px, 5vw, 44px) clamp(26px, 5vw, 44px); border-top: 1px solid rgba(247,240,228,.08);">
-    <div style="max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: clamp(20px, 4vw, 40px);">
-      <div>
-        <p style="font-family: Anton, sans-serif; font-size: 26px; text-transform: uppercase; line-height: .92; color: #F7F0E4;">Anas Pizza<br /><span style="color: #C31419;">Original</span></p>
-        <p style="margin-top: 10px; font-size: 14px; color: rgba(247,240,228,.45); font-weight: 500;">Pizzeria à emporter &amp; livraison<br />Nantes centre</p>
+  <!-- ══ Nos engagements ════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="t-engagements">
+    <div class="container">
+      <div class="sec-head center" data-reveal>
+        <p class="eyebrow eyebrow--center">Pizzeria à Nantes centre</p>
+        <h2 class="h-l" id="t-engagements">Une pizza <span class="tint">faite pour vous</span></h2>
+        <p class="lead">Pas de pizza qui attend sous la lampe : chaque commande part au four au moment
+          où vous la passez. Trois minutes de plus, beaucoup de goût en plus.</p>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; color: rgba(247,240,228,.7); font-weight: 500;">
-        <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .16em; font-size: 12px; color: #E7B24A; text-transform: uppercase; margin-bottom: 4px;">Contact</span>
-        <a href="tel:+33259100198">02 59 10 01 98</a>
-        <span>10 Allée Duguay Trouin</span>
-        <span>44000 Nantes</span>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; color: rgba(247,240,228,.7); font-weight: 500;">
-        <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .16em; font-size: 12px; color: #E7B24A; text-transform: uppercase; margin-bottom: 4px;">Horaires</span>
-        <span>Dim. → jeu. · 10h — 00h</span>
-        <span>Ven. &amp; sam. · 10h — 02h</span>
-        <span>Ouvert 7j/7</span>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500;">
-        <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: .16em; font-size: 12px; color: #E7B24A; text-transform: uppercase; margin-bottom: 4px;">Commander</span>
-        <a href="https://www.ubereats.com/">Uber Eats</a>
-        <a href="https://deliveroo.fr/">Deliveroo</a>
-        <a href="https://maps.google.com/?q=10+All%C3%A9e+Duguay+Trouin+44000+Nantes">Voir sur la carte</a>
+
+      <div class="specials">
+        <article class="special" data-reveal>
+          <div class="special__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.2-.7-4.3 1-6-.2 3 1 4.5 2.5 6 1.4 1.3 2.5 3 2.5 5a5 5 0 0 1-10 0c0-.5.1-1 .2-1.4"/></svg></div>
+          <h3 class="h-m">Cuite à la commande</h3>
+          <p>Four brûlant, pâte du jour, garniture posée devant vous. La pizza sort quand elle est prête, pas avant.</p>
+        </article>
+
+        <article class="special" data-reveal>
+          <div class="special__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
+          <h3 class="h-m">42 recettes au choix</h3>
+          <p>Sauce tomate, crème fraîche, curry, barbecue, algérienne, chili thaï… et nos signatures maison.</p>
+          <span class="special__tag">La carte</span>
+        </article>
+
+        <article class="special" data-reveal>
+          <div class="special__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M14 9h4l4 4v4a1 1 0 0 1-1 1h-1"/><circle cx="7.5" cy="18" r="2.5"/><circle cx="17.5" cy="18" r="2.5"/></svg></div>
+          <h3 class="h-m">Livrée chez vous</h3>
+          <p>Uber Eats et Deliveroo livrent Anas Pizza Original partout dans Nantes, le midi comme le soir.</p>
+        </article>
+
+        <article class="special" data-reveal>
+          <div class="special__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg></div>
+          <h3 class="h-m">Ouvert tard</h3>
+          <p>Jusqu’à minuit en semaine, jusqu’à 2h du matin le vendredi et le samedi. La faim n’a pas d’horaire.</p>
+        </article>
       </div>
     </div>
-    <p style="max-width: 1240px; margin: clamp(22px, 5vw, 38px) auto 0; padding-top: 16px; border-top: 1px solid rgba(247,240,228,.08); font-size: 12.5px; color: rgba(247,240,228,.3);">© 2026 Anas Pizza Original — Maquette de démonstration · Photos d'illustration à remplacer</p>
-  </footer>
+  </section>
 
-  
-    <div style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px clamp(12px, 4vw, 20px) calc(10px + env(safe-area-inset-bottom)); background: linear-gradient(180deg, rgba(11,10,9,0) 0%, rgba(11,10,9,.96) 45%);">
-      <div style="max-width: 620px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 8px;">
-        <a href="tel:+33259100198" style="display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 58px; background: #C31419; color: #FFF7EC; border-radius: 3px; font-family: Anton, sans-serif; font-size: clamp(18px, 4.8vw, 22px); text-transform: uppercase; box-shadow: 0 10px 26px rgba(0,0,0,.55); border-bottom: 3px solid #7E0D10;">✆ Appeler</a>
-        <a href="#infos" style="display: flex; align-items: center; justify-content: center; min-height: 58px; background: #E7B24A; color: #17110D; border-radius: 3px; font-family: Anton, sans-serif; font-size: clamp(15px, 4vw, 18px); text-transform: uppercase; box-shadow: 0 10px 26px rgba(0,0,0,.55); text-align: center; padding: 0 8px;">Livraison</a>
+  <!-- ══ La carte ═══════════════════════════════════════════════════════ -->
+  <section class="section" id="carte" aria-labelledby="t-carte">
+    <div class="container">
+      <div class="sec-head sec-head--split" data-reveal>
+        <div>
+          <p class="eyebrow">Nos créations</p>
+          <h2 class="h-l" id="t-carte">La carte</h2>
+          <p class="lead">Toutes nos pizzas existent en <strong>medium</strong> et en <strong>large</strong>.
+            Cherchez un ingrédient ou filtrez par base : la carte s’adapte.</p>
+        </div>
+        <a class="btn btn--ghost btn--sm" href="#commander">Commander</a>
+      </div>
+
+      <div class="menu-tools">
+        <div class="menu-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <label class="sr-only" for="q">Rechercher une pizza ou un ingrédient</label>
+          <input id="q" type="search" placeholder="Chèvre, kebab, merguez…" autocomplete="off">
+          <button class="menu-search__clear" type="button" aria-label="Effacer la recherche">✕</button>
+        </div>
+
+        <div class="filters" role="group" aria-label="Filtrer la carte">
+          <button class="filter" type="button" data-filter="all" aria-pressed="true">Tout</button>
+          <button class="filter" type="button" data-filter="tomate" aria-pressed="false">Sauce tomate</button>
+          <button class="filter" type="button" data-filter="creme" aria-pressed="false">Crème fraîche</button>
+          <button class="filter" type="button" data-filter="originale" aria-pressed="false">Sauce originale</button>
+          <button class="filter" type="button" data-filter="signature" aria-pressed="false">Signature</button>
+          <button class="filter" type="button" data-filter="tradition" aria-pressed="false">Traditionnelles</button>
+          <button class="filter" type="button" data-filter="veggie" aria-pressed="false">Végétariennes</button>
+          <button class="filter" type="button" data-filter="snacks" aria-pressed="false">Finger food</button>
+          <button class="filter" type="button" data-filter="desserts" aria-pressed="false">Desserts</button>
+        </div>
+      </div>
+
+      <!-- ─ Base sauce tomate ─ -->
+      <div class="menu-cat" data-cat="tomate">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Base <em>sauce tomate</em></h3>
+          <div class="prices">
+            <span class="price-tag"><span>Medium</span><b>7,90 €</b></span>
+            <span class="price-tag"><span>Large</span><b>10,90 €</b></span>
+          </div>
+        </div>
+        <div class="items">
+          <article class="item"><p class="item__top"><span class="item__name">4 Fromages</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, chèvre, parmesan.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Sicilienne</span></p><p class="item__desc">Base tomate, mozzarella, câpres, anchois, olives.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Cannibale</span></p><p class="item__desc">Sauce tomate, mozzarella, poulet mariné, viande hachée.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Tikka</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Sauce tomate, mozzarella, poulet mariné, pommes de terre, poivrons.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Mexicaine</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Base tomate, mozzarella, merguez, pepperoni, poivrons, olives.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Campione</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, champignons, œuf.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Regina</span></p><p class="item__desc">Base tomate, mozzarella, chorizo, champignons, olives.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Hamburger</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, oignons, cornichon, cheddar.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Brésilienne</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Oriental</span></p><p class="item__desc">Base tomate, mozzarella, merguez, champignons, œuf.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Salmon Pizza</span></p><p class="item__desc">Sauce tomate, mozzarella, saumon.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Hot Pepper</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, poulet mariné, jalapeños.</p></article>
+        </div>
+      </div>
+
+      <!-- ─ Base crème fraîche ─ -->
+      <div class="menu-cat" data-cat="creme">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Base <em>crème fraîche</em></h3>
+          <div class="prices">
+            <span class="price-tag"><span>Medium</span><b>7,90 €</b></span>
+            <span class="price-tag"><span>Large</span><b>10,90 €</b></span>
+          </div>
+        </div>
+        <div class="items">
+          <article class="item"><p class="item__top"><span class="item__name">Chèvre Miel</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Crème fraîche, mozzarella, fromage de chèvre, jambon, miel.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Campagnarde</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, pomme de terre, champignons, boursin.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">La Farmer</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, tenders, boursin, pommes de terre, oignons rouges.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Chicken</span></p><p class="item__desc">Crème fraîche, mozzarella, pomme de terre, poulet fumé.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Kebab</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Crème fraîche, mozzarella, oignons rouges, tomates cerise, kebab, cheddar.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Tartiflette</span></p><p class="item__desc">Crème fraîche, mozzarella, lardons de veau, reblochon, pomme de terre, oignons.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Burger</span></p><p class="item__desc">Crème fraîche, mozzarella, viande hachée, oignons rouges, pickles, cheddar, ketchup.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Western</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Crème fraîche, mozzarella, poulet épicé, poivrons, champignons.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Paysanne</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, oignons rouges, pomme de terre.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Chicago</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, viande hachée, cheddar, œuf.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Française</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon de dinde, lardons de volaille, champignons, olives.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Norvégienne</span></p><p class="item__desc">Crème fraîche, mozzarella, saumon.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Tasty Kabab</span></p><p class="item__desc">Crème fraîche, mozzarella, viande kebab, oignons, poivrons.</p></article>
+        </div>
+      </div>
+
+      <!-- ─ Sauce originale ─ -->
+      <div class="menu-cat" data-cat="originale">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Pizzas <em>sauce originale</em></h3>
+          <div class="prices">
+            <span class="price-tag"><span>Medium</span><b>7,99 €</b></span>
+            <span class="price-tag"><span>Large</span><b>11,90 €</b></span>
+          </div>
+        </div>
+        <div class="items">
+          <article class="item"><p class="item__top"><span class="item__name">Bollywood</span></p><p class="item__desc">Sauce curry, crème fraîche, mozzarella, poulet mariné, oignons, poivrons.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Buffalo BBQ</span></p><p class="item__desc">Sauce barbecue, sauce tomate, mozzarella, viande hachée, poivrons, oignons.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Algérienne</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Sauce algérienne, sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">La Boursin</span></p><p class="item__desc">Boursin, crème fraîche, mozzarella, poulet mariné, champignons.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Pimento</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Sauce chili thaï, mozzarella, poulet mariné, chorizo, jalapeños, olives.</p></article>
+        </div>
+      </div>
+
+      <!-- ─ Signature ─ -->
+      <div class="menu-cat" data-cat="signature">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Pizzas <em>signature</em></h3>
+          <div class="prices">
+            <span class="price-tag"><span>Medium</span><b>9,90 €</b></span>
+            <span class="price-tag"><span>Large</span><b>12,90 €</b></span>
+          </div>
+          <p class="menu-cat__note">Les créations de la maison — celles qu’on ne trouve nulle part ailleurs.</p>
+        </div>
+        <div class="items">
+          <article class="item"><p class="item__top"><span class="item__name">L’Originale</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Crème fraîche, mozzarella, cordon bleu, tenders, boursin, poivrons.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Carnivore</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Sauce tomate, cordon bleu, tenders, bacon de bœuf, viande hachée, cheddar.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">La Burrata</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Sauce tomate, mozzarella, tomates cerises, roquette, basilic, boule de burrata (100 g), crème de vinaigre balsamique.</p></article>
+        </div>
+      </div>
+
+      <!-- ─ Traditionnelles ─ -->
+      <div class="menu-cat" data-cat="tradition">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Pizzas <em>traditionnelles</em></h3>
+          <div class="prices">
+            <span class="price-tag"><span>Medium</span><b>6,90 €</b></span>
+            <span class="price-tag"><span>Large</span><b>9,90 €</b></span>
+          </div>
+        </div>
+        <div class="items">
+          <article class="item"><p class="item__top"><span class="item__name">Pêcheur</span></p><p class="item__desc">Sauce tomate, mozzarella, thon, œuf, olives.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Calzone</span></p><p class="item__desc">Sauce tomate, mozzarella, thon ou viande hachée ou jambon.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">L’Original Pepperoni</span></p><p class="item__desc">Sauce tomate, mozzarella, pepperoni.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Hawaïenne</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, ananas.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">4 Saisons</span></p><p class="item__desc">Base tomate, jambon, champignons, artichauts, olives.</p></article>
+        </div>
+      </div>
+
+      <!-- ─ Végétariennes ─ -->
+      <div class="menu-cat" data-cat="veggie">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Les <em>végétariennes</em></h3>
+          <div class="prices">
+            <span class="price-tag"><span>Medium</span><b>6,90 €</b></span>
+            <span class="price-tag"><span>Large</span><b>9,90 €</b></span>
+          </div>
+        </div>
+        <div class="items">
+          <article class="item"><p class="item__top"><span class="item__name">Margherita</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, origan.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Végétarienne</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, poivrons, tomates fraîches, origan, olives.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Veggie Spicy</span><span class="badge badge--veg">Végé</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Base tomate, mozzarella, poivrons, pomme de terre, maïs, jalapeños.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Reine</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, champignons.</p></article>
+        </div>
+      </div>
+
+      <!-- ─ Finger food ─ -->
+      <div class="menu-cat" data-cat="snacks">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Finger <em>food</em></h3>
+          <p class="menu-cat__note">Parfait à partager. Ou pas.</p>
+        </div>
+        <div class="items">
+          <article class="item"><p class="item__top"><span class="item__name">Mozzarella Sticks</span><span class="item__price">4,90 €</span></p><p class="item__desc">6 pièces, servies avec sauce.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Wings</span><span class="item__price">5,90 €</span></p><p class="item__desc">6 ailes de poulet croustillantes.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Nuggets</span><span class="item__price">4,90 €</span></p><p class="item__desc">6 pièces, servies avec sauce.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Maxi Tenders</span><span class="item__price">5,90 €</span></p><p class="item__desc">6 tenders de poulet panés.</p></article>
+        </div>
+      </div>
+
+      <!-- ─ Desserts ─ -->
+      <div class="menu-cat" data-cat="desserts">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Les <em>desserts</em></h3>
+          <div class="prices"><span class="price-tag"><span>À l’unité</span><b>3,50 €</b></span></div>
+        </div>
+        <div class="items">
+          <article class="item"><p class="item__top"><span class="item__name">Gâteau amandes &amp; Daim</span><span class="item__price">3,50 €</span></p><p class="item__desc">Le petit gâteau qui fait basculer la fin de repas.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Tiramisu</span><span class="item__price">3,50 €</span></p><p class="item__desc">Mascarpone, café, cacao.</p></article>
+          <article class="item"><p class="item__top"><span class="item__name">Brownie</span><span class="item__price">3,50 €</span></p><p class="item__desc">Chocolat fondant, cœur moelleux.</p></article>
+        </div>
+      </div>
+
+      <p class="menu-empty">Aucun plat ne correspond à cette recherche. Essayez « kebab », « chèvre » ou « merguez ».</p>
+
+      <p class="menu-foot">
+        Prix TTC en euros. La carte et les tarifs affichés ici sont donnés à titre indicatif et peuvent évoluer :
+        les prix en vigueur sont ceux affichés en boutique. Une question sur un allergène ou une composition ?
+        Appelez-nous au <a href="tel:+33259100198">02 59 10 01 98</a>, on vous répond.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ Offre du mardi ═════════════════════════════════════════════════ -->
+  <section class="section" id="mardi" aria-labelledby="t-mardi" style="padding-top:0">
+    <div class="container">
+      <div class="promo" data-reveal="zoom">
+        <div class="promo__grid">
+          <div class="promo__price" aria-hidden="true">
+            <b>5,90 €</b>
+            <span>La pizza</span>
+          </div>
+          <div>
+            <p class="eyebrow">L’offre de la semaine</p>
+            <h2 class="h-l" id="t-mardi">Tous les mardis, la pizza à 5,90 €</h2>
+            <p>Toutes nos pizzas à 5,90 € le mardi, toute la journée, de 11h30 à minuit.
+              Prévenez les collègues.</p>
+            <div class="btn-row" style="margin-top:1.4rem">
+              <a class="btn btn--gold" href="tel:+33259100198">Réserver ma pizza du mardi</a>
+              <a class="btn btn--ghost" href="#carte">Choisir sur la carte</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  
+  </section>
 
+  <!-- ══ La maison ══════════════════════════════════════════════════════ -->
+  <section class="section" id="maison" aria-labelledby="t-maison">
+    <div class="container about__grid">
+      <div class="about__copy" data-reveal="left">
+        <p class="eyebrow">La maison</p>
+        <h2 class="h-l" id="t-maison">Une vraie pizzeria de quartier, <span class="tint">au centre de Nantes</span></h2>
+        <p class="lead">Au 10 allée Duguay Trouin, entre le Cours des 50 Otages et le quartier Bouffay,
+          Anas Pizza Original, c’est une salle chaleureuse, un comptoir et un four qui tourne du déjeuner
+          jusque tard dans la nuit. On vient y chercher sa pizza, on s’y installe, ou on se la fait livrer.
+          Dans tous les cas, elle est cuite pour vous.</p>
+
+        <div class="values">
+          <div class="value">
+            <span class="value__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-9.2-8.6A5.4 5.4 0 0 1 12 6.2a5.4 5.4 0 0 1 9.2 6.2C19 16.6 12 21 12 21Z"/></svg></span>
+            <div><h3>Des produits qu’on assume</h3><p>Mozzarella, chèvre, reblochon, burrata, saumon, merguez : la garniture, c’est là qu’on met le budget.</p></div>
+          </div>
+          <div class="value">
+            <span class="value__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg></span>
+            <div><h3>Salle &amp; comptoir</h3><p>Des tables pour manger sur place, et un comptoir pour récupérer sa commande sans attendre.</p></div>
+          </div>
+          <div class="value">
+            <span class="value__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg></span>
+            <div><h3>Ouvert quand vous avez faim</h3><p>Service en continu dès 11h30, jusqu’à 2h du matin les vendredis et samedis.</p></div>
+          </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:1.8rem">
+          <a class="btn" href="#commander">Commander maintenant</a>
+          <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=10+all%C3%A9e+Duguay+Trouin+44000+Nantes" target="_blank" rel="noopener">Venir nous voir</a>
+        </div>
+      </div>
+
+      <div class="about__media" data-reveal="right">
+        <!-- Déposez vos photos dans assets/img/ (voir assets/img/README.md).
+             Tant qu'un fichier est absent, un emplacement stylé s'affiche à la place. -->
+        <div class="gallery">
+          <figure class="shot shot--wide">
+            <img src="assets/img/devanture.jpg" alt="Devanture d’Anas Pizza Original, 10 allée Duguay Trouin à Nantes" loading="lazy" decoding="async" width="800" height="500">
+            <div class="shot__ph" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
+              <span>Photo — devanture</span>
+            </div>
+            <figcaption>Notre devanture, allée Duguay Trouin</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <img src="assets/img/salle.jpg" alt="La salle d’Anas Pizza Original à Nantes" loading="lazy" decoding="async" width="400" height="500">
+            <div class="shot__ph" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
+              <span>Photo — la salle</span>
+            </div>
+            <figcaption>La salle</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <img src="assets/img/pizza.jpg" alt="Une pizza sortie du four chez Anas Pizza Original" loading="lazy" decoding="async" width="400" height="500">
+            <div class="shot__ph" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
+              <span>Photo — nos pizzas</span>
+            </div>
+            <figcaption>Sortie du four</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Infos pratiques ════════════════════════════════════════════════ -->
+  <section class="section" id="infos" aria-labelledby="t-infos">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <p class="eyebrow">Infos pratiques</p>
+        <h2 class="h-l" id="t-infos">Nous trouver &amp; nous joindre</h2>
+      </div>
+
+      <div class="infos__grid">
+        <div class="panel" data-reveal>
+          <h3 class="h-m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9"/></svg> Horaires d’ouverture</h3>
+          <dl class="hours">
+            <div class="hours__row" data-day="lundi"><dt>Lundi</dt><dd>11h30 – 00h00</dd></div>
+            <div class="hours__row" data-day="mardi"><dt>Mardi</dt><dd>11h30 – 00h00</dd></div>
+            <div class="hours__row" data-day="mercredi"><dt>Mercredi</dt><dd>11h30 – 00h00</dd></div>
+            <div class="hours__row" data-day="jeudi"><dt>Jeudi</dt><dd>11h30 – 00h00</dd></div>
+            <div class="hours__row" data-day="vendredi"><dt>Vendredi</dt><dd>11h30 – 02h00</dd></div>
+            <div class="hours__row" data-day="samedi"><dt>Samedi</dt><dd>11h30 – 02h00</dd></div>
+            <div class="hours__row" data-day="dimanche"><dt>Dimanche</dt><dd>11h30 – 00h00</dd></div>
+          </dl>
+          <p style="margin-top:1rem;font-size:.9rem;color:var(--muted)">Service en continu, midi et soir. Un doute un jour férié ? Un coup de fil suffit.</p>
+        </div>
+
+        <div class="panel" data-reveal>
+          <h3 class="h-m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Coordonnées</h3>
+          <dl class="contact-list">
+            <div class="contact-row">
+              <span class="contact-row__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <div><dt>Adresse</dt><dd>10 allée Duguay Trouin<br>44000 Nantes</dd></div>
+            </div>
+            <div class="contact-row">
+              <span class="contact-row__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span>
+              <div><dt>Téléphone</dt><dd><a href="tel:+33259100198">02 59 10 01 98</a></dd></div>
+            </div>
+            <div class="contact-row">
+              <span class="contact-row__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <div><dt>E-mail</dt><dd><a href="mailto:anas.pizza.original@gmail.com">anas.pizza.original@gmail.com</a></dd></div>
+            </div>
+            <div class="contact-row">
+              <span class="contact-row__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M14 9h4l4 4v4a1 1 0 0 1-1 1h-1"/><circle cx="7.5" cy="18" r="2.5"/><circle cx="17.5" cy="18" r="2.5"/></svg></span>
+              <div><dt>Services</dt><dd>Sur place · À emporter · Livraison</dd></div>
+            </div>
+          </dl>
+          <div class="btn-row" style="margin-top:1.3rem">
+            <a class="btn btn--sm" href="tel:+33259100198">Appeler</a>
+            <a class="btn btn--ghost btn--sm" href="mailto:anas.pizza.original@gmail.com">Écrire</a>
+          </div>
+        </div>
+
+        <a class="mapcard" data-reveal href="https://www.google.com/maps/dir/?api=1&amp;destination=10+all%C3%A9e+Duguay+Trouin+44000+Nantes" target="_blank" rel="noopener">
+          <span class="mapcard__pin" aria-hidden="true"></span>
+          <span class="mapcard__body">
+            <strong>10 allée Duguay Trouin — 44000 Nantes</strong>
+            <span>Nantes centre, à deux pas du Cours des 50 Otages et du quartier Bouffay. Tramway et bus à proximité immédiate.</span>
+          </span>
+          <span class="btn btn--sm btn--gold" style="justify-self:start;pointer-events:none">Ouvrir l’itinéraire</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Commander ══════════════════════════════════════════════════════ -->
+  <section class="section" id="commander" aria-labelledby="t-commander">
+    <div class="container">
+      <div class="sec-head center" data-reveal>
+        <p class="eyebrow eyebrow--center">Trois façons de commander</p>
+        <h2 class="h-l" id="t-commander">On s’en occupe</h2>
+        <p class="lead">Un appel pour venir la chercher, ou une livraison à votre porte. À vous de voir.</p>
+      </div>
+
+      <div class="order__grid">
+        <article class="ordercard ordercard--tel" data-reveal>
+          <span class="ordercard__badge">Le plus rapide</span>
+          <p class="ordercard__logo">Par téléphone</p>
+          <p>Vous appelez, on prépare, vous passez la récupérer. Idéal pour les commandes à emporter et les grandes tablées.</p>
+          <a class="btn btn--block" href="tel:+33259100198">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+            02 59 10 01 98
+          </a>
+        </article>
+
+        <!-- data-order : remplacer par l'URL exacte de la fiche restaurant -->
+        <article class="ordercard ordercard--uber" data-reveal>
+          <span class="ordercard__badge">Livraison</span>
+          <p class="ordercard__logo">Uber Eats</p>
+          <p>Suivi de commande en direct, paiement en ligne, livraison dans tout Nantes.</p>
+          <a class="btn btn--block" data-order="ubereats" href="https://www.ubereats.com/fr/search?q=Anas%20Pizza%20Original" target="_blank" rel="noopener">Commander sur Uber Eats</a>
+        </article>
+
+        <article class="ordercard ordercard--deliveroo" data-reveal>
+          <span class="ordercard__badge">Livraison</span>
+          <p class="ordercard__logo">Deliveroo</p>
+          <p>Quelques clics et votre pizza arrive encore chaude, chez vous ou au bureau.</p>
+          <a class="btn btn--block" data-order="deliveroo" href="https://deliveroo.fr/fr/search?q=Anas%20Pizza%20Original" target="_blank" rel="noopener">Commander sur Deliveroo</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ════════════════════════════════════════════════════════════ -->
+  <section class="section" id="faq" aria-labelledby="t-faq" style="padding-top:0">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <p class="eyebrow">Questions fréquentes</p>
+        <h2 class="h-l" id="t-faq">Vous vous demandez…</h2>
+      </div>
+
+      <div class="faq" data-reveal>
+        <details class="faq__item">
+          <summary>Quels sont les horaires d’Anas Pizza Original à Nantes ?</summary>
+          <div class="faq__body"><p>Nous sommes ouverts 7 jours sur 7 à partir de 11h30. Du dimanche au jeudi jusqu’à minuit, le vendredi et le samedi jusqu’à 2h du matin.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Où se trouve Anas Pizza Original ?</summary>
+          <div class="faq__body"><p>Au 10 allée Duguay Trouin, 44000 Nantes, en plein centre-ville, à quelques minutes à pied du Cours des 50 Otages et du quartier Bouffay.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Peut-on se faire livrer une pizza ?</summary>
+          <div class="faq__body"><p>Oui. La livraison est assurée sur Nantes via Uber Eats et Deliveroo. Vous pouvez aussi appeler le <a href="tel:+33259100198">02 59 10 01 98</a> pour commander à emporter.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Peut-on manger sur place ?</summary>
+          <div class="faq__body"><p>Oui, la salle vous accueille pour manger sur place, et vous pouvez également commander à emporter.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Combien coûte une pizza chez Anas Pizza Original ?</summary>
+          <div class="faq__body"><p>Les pizzas traditionnelles et végétariennes démarrent à 6,90 € en medium et 9,90 € en large. Les pizzas base tomate et crème fraîche sont à 7,90 € (medium) et 10,90 € (large). Les pizzas signature sont à 9,90 € et 12,90 €.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Y a-t-il une offre spéciale dans la semaine ?</summary>
+          <div class="faq__body"><p>Oui : tous les mardis, toutes nos pizzas sont à 5,90 €.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
 </main>
+
+<!-- ══ Pied de page ═════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <span class="brand">
+          <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="38" height="38">
+          <span class="brand__txt">
+            <span class="brand__a">Anas <i>Pizza</i></span>
+            <span class="brand__b">Original</span>
+          </span>
+        </span>
+        <p>Pizzeria à Nantes centre. Pizzas cuites à la commande : sur place, à emporter ou en livraison. Ouvert 7j/7 dès 11h30.</p>
+
+        <!-- Réseaux sociaux : renseignez les URL puis retirez l'attribut « hidden ». -->
+        <div class="socials" hidden>
+          <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1Z"/></svg></a>
+          <a href="#" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.4 2.2 1.9 3.7 4 3.9v2.9c-1.5.1-2.9-.4-4.1-1.2v5.6a5.6 5.6 0 1 1-4.8-5.5v3a2.6 2.6 0 1 0 1.9 2.5V3h3Z"/></svg></a>
+        </div>
+      </div>
+
+      <nav aria-labelledby="f-nav1">
+        <h4 id="f-nav1">Le restaurant</h4>
+        <div class="footer__list">
+          <a href="#carte">La carte</a>
+          <a href="#mardi">Offre du mardi</a>
+          <a href="#maison">La maison</a>
+          <a href="#infos">Infos &amp; horaires</a>
+          <a href="#faq">Questions fréquentes</a>
+        </div>
+      </nav>
+
+      <nav aria-labelledby="f-nav2">
+        <h4 id="f-nav2">Commander</h4>
+        <div class="footer__list">
+          <a href="tel:+33259100198">02 59 10 01 98</a>
+          <a href="https://www.ubereats.com/fr/search?q=Anas%20Pizza%20Original" data-order="ubereats" target="_blank" rel="noopener">Uber Eats</a>
+          <a href="https://deliveroo.fr/fr/search?q=Anas%20Pizza%20Original" data-order="deliveroo" target="_blank" rel="noopener">Deliveroo</a>
+          <a href="mailto:anas.pizza.original@gmail.com">Nous écrire</a>
+        </div>
+      </nav>
+
+      <nav aria-labelledby="f-nav3">
+        <h4 id="f-nav3">Informations</h4>
+        <div class="footer__list">
+          <a href="mentions-legales.html">Mentions légales</a>
+          <a href="politique-de-confidentialite.html">Politique de confidentialité</a>
+          <a href="politique-de-confidentialite.html#cookies">Cookies</a>
+          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=10+all%C3%A9e+Duguay+Trouin+44000+Nantes" target="_blank" rel="noopener">Itinéraire</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© <span data-year>2026</span> Anas Pizza Original — 10 allée Duguay Trouin, 44000 Nantes.</p>
+      <nav aria-label="Liens légaux">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="politique-de-confidentialite.html">Confidentialité</a>
+        <a href="#top">Haut de page ↑</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ Barre d'action mobile ════════════════════════════════════════════ -->
+<nav class="actionbar" aria-label="Actions rapides">
+  <a href="tel:+33259100198" class="is-primary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+    Appeler
+  </a>
+  <a href="#commander">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M14 9h4l4 4v4a1 1 0 0 1-1 1h-1"/><circle cx="7.5" cy="18" r="2.5"/><circle cx="17.5" cy="18" r="2.5"/></svg>
+    Livraison
+  </a>
+  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=10+all%C3%A9e+Duguay+Trouin+44000+Nantes" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+    Itinéraire
+  </a>
+</nav>
+
 </body>
 </html>

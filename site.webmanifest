@@ -1,0 +1,16 @@
+{
+  "name": "Anas Pizza Original — Nantes",
+  "short_name": "Anas Pizza",
+  "description": "Pizzeria à Nantes centre : plus de 40 pizzas cuites à la commande, sur place, à emporter ou en livraison.",
+  "lang": "fr-FR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A101E",
+  "theme_color": "#0A101E",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/img/emblem.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
