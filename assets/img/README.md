@@ -1,7 +1,11 @@
 # Photos du restaurant
 
-Déposez ici les **vraies photos** d'Anas Pizza Original. Elles s'affichent
-automatiquement dans la section « La maison » de la page d'accueil.
+La section « La maison » affiche par défaut des **illustrations vectorielles**
+dessinées d'après le restaurant (devanture, salle, pizza). Elles sont intégrées
+directement dans `index.html` : rien à installer, le site est complet sans photo.
+
+Dès qu'un fichier photo portant le bon nom est déposé dans ce dossier, il
+**passe automatiquement par-dessus l'illustration**. Aucun code à toucher.
 
 ## La méthode la plus courte (3 clics, sans git)
 
@@ -26,8 +30,8 @@ Seul le **nom** compte, pas l'extension :
 `devanture.avif` et leurs variantes en majuscules fonctionnent toutes : le site
 essaie chaque extension à tour de rôle. Inutile de convertir quoi que ce soit.
 
-Tant qu'une photo est absente, un emplacement neutre s'affiche à sa place et sa
-légende est masquée : **rien ne casse**, il manque juste l'image.
+Tant qu'une photo est absente, l'illustration correspondante reste affichée :
+**rien ne casse**, et la section reste finie.
 
 ## Conseils
 

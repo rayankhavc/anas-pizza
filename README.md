@@ -28,10 +28,12 @@ assets/img/                         logo, favicon, image de partage, photos
    grep -rl "anaspizza-nantes.fr" . --include="*.html" --include="*.xml" --include="*.txt" \
      | xargs sed -i 's|https://www.anaspizza-nantes.fr|https://VOTRE-DOMAINE|g'
    ```
-2. **Photos** — déposer `devanture`, `salle` et `pizza` dans `assets/img/`.
-   L'extension n'a pas d'importance (`.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`,
-   majuscules comprises) : le script essaie chacune à tour de rôle. Voir
-   `assets/img/README.md`.
+2. **Photos (facultatif)** — la section « La maison » est illustrée par des
+   dessins vectoriels intégrés : le site est complet tel quel. Pour passer aux
+   vraies photos, déposer `devanture`, `salle` ou `pizza` dans `assets/img/` ;
+   l'extension n'a pas d'importance (`.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`,
+   majuscules comprises). La photo recouvre l'illustration automatiquement.
+   Voir `assets/img/README.md`.
 3. **Mentions légales** — compléter les coordonnées du médiateur de la consommation,
    et adapter l'hébergeur si le site n'est pas sur GitHub Pages.
 

@@ -314,7 +314,7 @@
    * 9. Photos du restaurant — tolérance sur l'extension du fichier.
    *    On dépose devanture.jpg (ou .jpeg, .png, .webp, .avif) dans
    *    assets/img/ : le script essaie chaque extension avant d'abandonner.
-   *    Si aucune photo n'est présente, l'emplacement stylé prend le relais.
+   *    Si aucune photo n'est présente, l'illustration de fond reste visible.
    * ------------------------------------------------------------------ */
   var EXTS = ['jpg', 'jpeg', 'png', 'webp', 'avif', 'JPG', 'JPEG', 'PNG', 'WEBP'];
 
@@ -322,14 +322,8 @@
     var base = (img.getAttribute('src') || '').replace(/\.[a-z0-9]+$/i, '');
     var next = 0;
 
-    var giveUp = function () {
-      var fig = img.parentElement;
-      var ph = fig ? fig.querySelector('.shot__ph') : null;
-      var cap = fig ? fig.querySelector('figcaption') : null;
-      img.remove();
-      if (ph) ph.hidden = false;
-      if (cap) cap.hidden = true;
-    };
+    // Aucune photo trouvée : on retire l'image et l'illustration de fond reste.
+    var giveUp = function () { img.remove(); };
 
     img.addEventListener('error', function () {
       if (!base) return giveUp();

@@ -644,30 +644,153 @@
         <!-- Déposez vos photos dans assets/img/ (voir assets/img/README.md).
              Tant qu'un fichier est absent, un emplacement neutre s'affiche. -->
         <div class="gallery">
+          <!-- Illustrations dessinées d'après les photos du restaurant.
+               Elles servent de fond : dès qu'un fichier devanture/salle/pizza
+               est déposé dans assets/img/, la vraie photo passe par-dessus. -->
           <figure class="shot shot--wide">
+            <svg class="shot__art" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration de la devanture d’Anas Pizza Original, 10 allée Duguay Trouin à Nantes">
+              <rect width="800" height="500" fill="#CFC7B8"/>
+              <g stroke="#BCB3A1" stroke-width="2">
+                <path d="M0 36h800M0 168h800M0 300h800M0 432h800"/>
+                <path d="M120 0v36M420 0v36M700 0v36M60 36v132M300 36v132M540 36v132M760 36v132M180 300v132M660 300v132"/>
+              </g>
+
+              <!-- panneau de l'enseigne -->
+              <rect x="86" y="34" width="628" height="120" fill="#1C2B3E"/>
+              <rect x="86" y="146" width="628" height="10" fill="#121D2C"/>
+              <text class="art-serif" x="196" y="106" font-size="62" fill="#F6F1E7">Anas</text>
+              <text class="art-display" x="386" y="104" font-size="56" fill="#EFAA3C">PIZZA</text>
+              <g stroke="#F6F1E7" stroke-width="2" opacity=".85">
+                <path d="M300 133h34M470 133h34"/>
+              </g>
+              <text class="art-body" x="346" y="139" font-size="15" letter-spacing="6" fill="#F6F1E7">ORIGINAL</text>
+
+              <!-- numéro 4 -->
+              <circle cx="46" cy="196" r="25" fill="#C0392B"/>
+              <text class="art-body" x="46" y="206" font-size="26" fill="#F6F1E7" text-anchor="middle" font-weight="700">4</text>
+
+              <!-- arcade -->
+              <path d="M150 500V420a250 250 0 0 1 500 0v80Z" fill="#12161B"/>
+              <path d="M168 500V420a232 232 0 0 1 464 0v80Z" fill="#1C2B3E"/>
+
+              <!-- couloir orange, porte ouverte -->
+              <path d="M186 500V420a214 214 0 0 1 62-151v231Z" fill="#D8560B"/>
+              <rect x="248" y="252" width="86" height="248" fill="#F4650F"/>
+              <rect x="262" y="300" width="58" height="200" fill="#E1580C"/>
+              <rect x="270" y="392" width="7" height="16" rx="3" fill="#F6F1E7"/>
+
+              <!-- vitrine -->
+              <path d="M348 500V282a212 212 0 0 1 272 138v80Z" fill="#9FB2B0"/>
+              <g fill="#B8C7C3">
+                <path d="M372 500 486 286h44L406 500Z"/>
+                <path d="M470 500 574 306h22L494 500Z"/>
+              </g>
+              <g fill="#2A3138">
+                <rect x="336" y="252" width="12" height="248"/>
+                <rect x="348" y="404" width="284" height="10"/>
+              </g>
+              <!-- tables en salle, vues à travers la vitre -->
+              <g fill="#3B3F46">
+                <rect x="404" y="424" width="96" height="9" rx="3"/>
+                <rect x="536" y="430" width="86" height="9" rx="3"/>
+              </g>
+              <g fill="#5D6169">
+                <rect x="418" y="433" width="7" height="42"/><rect x="480" y="433" width="7" height="42"/>
+                <rect x="550" y="439" width="7" height="38"/><rect x="602" y="439" width="7" height="38"/>
+              </g>
+              <g fill="#71767F">
+                <rect x="386" y="430" width="26" height="34" rx="10"/>
+                <rect x="510" y="436" width="24" height="32" rx="10"/>
+              </g>
+            </svg>
             <img src="assets/img/devanture.jpg" alt="Devanture d’Anas Pizza Original, 10 allée Duguay Trouin à Nantes" loading="lazy" decoding="async" width="800" height="500">
-            <div class="shot__ph" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
-              <span>Photo — devanture</span>
-            </div>
             <figcaption>Notre devanture, allée Duguay Trouin</figcaption>
           </figure>
 
           <figure class="shot">
+            <svg class="shot__art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration de la salle d’Anas Pizza Original, murs orange et tables noires">
+              <rect width="400" height="500" fill="#F2ECE2"/>
+              <!-- plafond -->
+              <path d="M0 0h400v96l-145 24L0 62Z" fill="#EFE8DC"/>
+              <g fill="#FFF8E9" stroke="#E2D8C6" stroke-width="2">
+                <circle cx="70" cy="40" r="9"/><circle cx="196" cy="30" r="9"/><circle cx="320" cy="58" r="9"/>
+              </g>
+              <g fill="none" stroke="#7C818B" stroke-width="3">
+                <rect x="238" y="52" width="34" height="26"/><rect x="258" y="66" width="34" height="26"/>
+              </g>
+              <!-- mur orange -->
+              <path d="M0 62l255 58v250L0 440Z" fill="#F4650F"/>
+              <path d="M0 62l255 58v34L0 96Z" fill="#FF7A22"/>
+              <g fill="#F6F1E7">
+                <rect x="128" y="286" width="16" height="16" rx="3"/>
+                <rect x="196" y="298" width="16" height="16" rx="3"/>
+              </g>
+              <!-- baie vitrée -->
+              <path d="M282 372V240a58 58 0 0 1 116 0v132Z" fill="#D9E4E1"/>
+              <g fill="#4E7A46">
+                <circle cx="316" cy="268" r="30"/><circle cx="360" cy="252" r="24"/><circle cx="386" cy="286" r="22"/>
+              </g>
+              <path d="M282 372V240a58 58 0 0 1 116 0v132Z" fill="none" stroke="#2A3138" stroke-width="9"/>
+              <!-- sol -->
+              <path d="M0 440l255-70 145 26v104H0Z" fill="#E7DDCF"/>
+              <g stroke="#D5C9B7" stroke-width="2">
+                <path d="M0 470l400-30M0 500l400-40M96 452v48M212 424v76M312 404v96"/>
+              </g>
+              <!-- tables et chaises -->
+              <g fill="#3B3F46">
+                <rect x="46" y="356" width="180" height="14" rx="4"/>
+                <rect x="222" y="308" width="132" height="12" rx="4"/>
+              </g>
+              <g fill="#5D6169">
+                <rect x="66" y="370" width="9" height="76"/><rect x="200" y="370" width="9" height="70"/>
+                <rect x="240" y="320" width="8" height="56"/><rect x="336" y="320" width="8" height="52"/>
+              </g>
+              <g fill="#6F737C">
+                <rect x="10" y="360" width="46" height="62" rx="20"/>
+                <rect x="228" y="352" width="42" height="58" rx="18"/>
+                <rect x="292" y="316" width="36" height="50" rx="16"/>
+              </g>
+              <g fill="#C94D06" opacity=".55">
+                <rect x="96" y="360" width="46" height="6" rx="2"/>
+                <rect x="262" y="311" width="40" height="5" rx="2"/>
+              </g>
+            </svg>
             <img src="assets/img/salle.jpg" alt="La salle d’Anas Pizza Original à Nantes" loading="lazy" decoding="async" width="400" height="500">
-            <div class="shot__ph" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
-              <span>Photo — la salle</span>
-            </div>
             <figcaption>La salle</figcaption>
           </figure>
 
           <figure class="shot">
+            <svg class="shot__art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration d’une pizza sortie du four">
+              <rect width="400" height="500" fill="#1C2B3E"/>
+              <g transform="translate(200 250)">
+                <circle r="158" fill="#2A3B52"/>
+                <circle r="142" fill="#D9932F"/>
+                <circle r="124" fill="#F5C95B"/>
+                <g stroke="#D9932F" stroke-width="3">
+                  <path d="M-124 0h248M0-124v248M-88-88 88 88M88-88-88 88"/>
+                </g>
+                <g fill="#FBE3A6">
+                  <ellipse cx="-42" cy="-46" rx="20" ry="13" transform="rotate(-18 -42 -46)"/>
+                  <ellipse cx="52" cy="-30" rx="17" ry="11" transform="rotate(24 52 -30)"/>
+                  <ellipse cx="-18" cy="58" rx="21" ry="12" transform="rotate(-8 -18 58)"/>
+                  <ellipse cx="62" cy="54" rx="14" ry="10" transform="rotate(32 62 54)"/>
+                </g>
+                <g fill="#C63A2E">
+                  <circle cx="-62" cy="-26" r="18"/><circle cx="30" cy="-62" r="15"/>
+                  <circle cx="72" cy="8" r="16"/><circle cx="-38" cy="46" r="15"/>
+                  <circle cx="36" cy="76" r="17"/><circle cx="-4" cy="-6" r="14"/>
+                  <circle cx="-84" cy="46" r="11"/>
+                </g>
+                <g fill="#2E2A33">
+                  <circle cx="-24" cy="-78" r="7"/><circle cx="84" cy="-38" r="6"/><circle cx="-72" cy="88" r="6"/>
+                </g>
+                <g fill="#4A9153">
+                  <path d="M20 22c13-7 26-2 27 11-12 8-26 2-27-11Z"/>
+                  <path d="M-96 -4c12-8 25-3 27 10-11 8-26 4-27-10Z"/>
+                </g>
+              </g>
+            </svg>
             <img src="assets/img/pizza.jpg" alt="Une pizza sortie du four chez Anas Pizza Original" loading="lazy" decoding="async" width="400" height="500">
-            <div class="shot__ph" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
-              <span>Photo — nos pizzas</span>
-            </div>
             <figcaption>Sortie du four</figcaption>
           </figure>
         </div>
