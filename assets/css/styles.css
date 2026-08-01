@@ -33,26 +33,27 @@
    2. Palette — relevée sur la devanture et la salle
    -------------------------------------------------------------------------- */
 :root{
-  --navy-900:#0F1A2C;   /* pied de page */
-  --navy-800:#16243C;   /* bleu de l'enseigne — fond principal */
-  --navy-700:#1D3050;
-  --navy-600:#2A4166;
-  --orange:#F4610D;     /* orange des murs de la salle */
+  --navy-900:#131F2E;   /* pied de page */
+  --navy-800:#1C2B3E;   /* bleu du panneau de l'enseigne — fond principal */
+  --navy-700:#25384F;
+  --navy-600:#33495F;
+  --orange:#F4650F;     /* orange des murs de la salle */
   --orange-800:#C94D06;
   --red:#D0202A;        /* rouge du logo rond */
   --red-800:#A5151E;
+  --brand-gold:#EFAA3C; /* le « PIZZA » doré de l'enseigne */
   --gold:#F5B325;       /* jaune des titres de la carte */
-  --cream:#F7F0E4;
+  --cream:#F6F1E7;      /* blanc cassé du lettrage */
   --cream-2:#EBE0CD;
 
   /* rôles — redéfinis par les thèmes de section ci-dessous */
   --bg:var(--navy-800);
   --fg:var(--cream);
-  --fg-2:#A6B6CE;
-  --rule:rgba(247,240,228,.16);
-  --rule-2:rgba(247,240,228,.09);
-  --surface:#1B2C49;
-  --surface-2:#20355A;
+  --fg-2:#A7B5C8;
+  --rule:rgba(246,241,231,.16);
+  --rule-2:rgba(246,241,231,.09);
+  --surface:#223349;
+  --surface-2:#2A3E56;
 
   /* typographie */
   --f-display:Anton,"Arial Narrow",Impact,sans-serif;
@@ -75,19 +76,19 @@
 .t-cream{
   --bg:var(--cream);
   --fg:var(--navy-800);
-  --fg-2:#5C6D87;
-  --rule:rgba(22,36,60,.16);
-  --rule-2:rgba(22,36,60,.09);
+  --fg-2:#5C6C83;
+  --rule:rgba(28,43,62,.17);
+  --rule-2:rgba(28,43,62,.1);
   --surface:#FFFDF8;
   --surface-2:var(--cream-2);
 }
 /* thème orange plein : le bandeau de repères */
 .t-orange{
   --bg:var(--orange);
-  --fg:#16243C;
-  --fg-2:rgba(22,36,60,.8);
-  --rule:rgba(22,36,60,.25);
-  --rule-2:rgba(22,36,60,.14);
+  --fg:#1C2B3E;
+  --fg-2:rgba(28,43,62,.82);
+  --rule:rgba(28,43,62,.26);
+  --rule-2:rgba(28,43,62,.15);
   --surface:rgba(255,255,255,.16);
   --surface-2:rgba(255,255,255,.1);
 }
@@ -203,15 +204,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   border-bottom:1px solid transparent;
   transition:border-color .2s var(--ease);
 }
-.header.is-stuck{border-bottom-color:rgba(247,240,228,.14)}
+.header.is-stuck{border-bottom-color:rgba(246,241,231,.14)}
 .header__inner{display:flex;align-items:center;gap:.9rem;height:var(--hdr)}
 
 .brand{display:inline-flex;align-items:center;gap:.6rem;color:var(--cream);flex:none}
 .brand__mark{width:36px;height:36px;flex:none}
 .brand__txt{display:grid;line-height:1}
 .brand__a{font:700 italic 1.2rem/1 var(--f-serif)}
-.brand__a i{font-style:normal;color:var(--orange);font-family:var(--f-cond);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.95em}
-.brand__b{font:600 .53rem/1 var(--f-body);letter-spacing:.4em;text-transform:uppercase;color:#8FA0BA;margin-top:3px}
+.brand__a i{font-style:normal;color:var(--brand-gold);font-family:var(--f-cond);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.95em}
+.brand__b{display:flex;align-items:center;gap:.45em;margin-top:4px;color:var(--cream);opacity:.85}
+.brand__b span{font:600 .53rem/1 var(--f-body);letter-spacing:.4em;text-transform:uppercase;margin-right:-.4em}
+.brand__b::before,.brand__b::after{content:"";flex:none;width:11px;height:1px;background:currentColor;opacity:.7}
 
 .nav{display:none}
 .header__spacer{flex:1}
@@ -219,14 +222,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .header__tel{
   display:inline-flex;align-items:center;gap:.4rem;flex:none;
   padding:.45rem .8rem;border-radius:var(--r);
-  border:1.5px solid rgba(247,240,228,.28);color:var(--cream);
+  border:1.5px solid rgba(246,241,231,.28);color:var(--cream);
   font:700 .9rem/1 var(--f-cond);letter-spacing:.04em;
   transition:background-color .18s,border-color .18s,color .18s;
 }
 .header__tel svg{width:15px;height:15px}
 .header__tel:hover{background:var(--orange);border-color:var(--orange);color:#fff}
 
-.burger{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:var(--r);border:1.5px solid rgba(247,240,228,.28)}
+.burger{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:var(--r);border:1.5px solid rgba(246,241,231,.28)}
 .burger span{display:block;width:18px;height:2px;background:var(--cream);transition:transform .3s var(--ease),opacity .16s}
 .burger span+span{margin-top:5px}
 .burger[aria-expanded=true] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -443,7 +446,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .mapcard::before{
   content:"";position:absolute;inset:0;opacity:.28;
-  background-image:linear-gradient(rgba(247,240,228,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(247,240,228,.22) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(246,241,231,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(246,241,231,.22) 1px,transparent 1px);
   background-size:34px 34px;
 }
 .mapcard__pin{position:absolute;top:34%;left:50%;translate:-50% -50%;width:34px;height:34px;border-radius:50% 50% 50% 2px;rotate:-45deg;background:var(--red);border:3px solid var(--cream)}
@@ -496,13 +499,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .footer__list{display:grid;gap:.55rem}
 .footer__list a{color:#A6B6CE;font-size:.94rem}
 .footer__list a:hover{color:var(--gold)}
-.footer__bottom{border-top:1px solid rgba(247,240,228,.14);padding-top:1.3rem;display:grid;gap:.7rem;font-size:.85rem;color:#8FA0BA}
+.footer__bottom{border-top:1px solid rgba(246,241,231,.14);padding-top:1.3rem;display:grid;gap:.7rem;font-size:.85rem;color:#8FA0BA}
 .footer__bottom nav{display:flex;flex-wrap:wrap;gap:.3rem 1rem}
 .footer__bottom a:hover{color:var(--gold)}
 .credit{
   max-width:none;
   display:flex;align-items:center;gap:.45rem;
-  margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid rgba(247,240,228,.14);
+  margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid rgba(246,241,231,.14);
   font-size:.82rem;color:#8FA0BA;
 }
 .credit a{color:var(--cream);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--orange);text-decoration-thickness:2px}
@@ -514,7 +517,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .actionbar{
   position:fixed;left:0;right:0;bottom:0;z-index:65;
   display:grid;grid-template-columns:1fr 1fr 1fr;
-  background:var(--navy-900);border-top:1px solid rgba(247,240,228,.16);
+  background:var(--navy-900);border-top:1px solid rgba(246,241,231,.16);
   padding-bottom:env(safe-area-inset-bottom);
   transform:translateY(102%);transition:transform .28s var(--ease);
 }
@@ -522,7 +525,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .actionbar a{
   display:grid;justify-items:center;gap:.2rem;padding:.6rem .3rem;
   color:var(--cream);font:700 .66rem/1 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;
-  border-right:1px solid rgba(247,240,228,.14);
+  border-right:1px solid rgba(246,241,231,.14);
 }
 .actionbar a:last-child{border-right:0}
 .actionbar a svg{width:18px;height:18px;color:var(--gold)}

@@ -28,11 +28,11 @@ assets/img/                         logo, favicon, image de partage, photos
    grep -rl "anaspizza-nantes.fr" . --include="*.html" --include="*.xml" --include="*.txt" \
      | xargs sed -i 's|https://www.anaspizza-nantes.fr|https://VOTRE-DOMAINE|g'
    ```
-2. **Photos** — déposer `devanture.jpg`, `salle.jpg` et `pizza.jpg` dans `assets/img/`
-   (voir `assets/img/README.md`).
-3. **Crédit agence** — dans le pied de page d'`index.html`, remplacer le `href` du
-   lien `data-credit` par l'URL du site de Raythan Web Design.
-4. **Mentions légales** — compléter les coordonnées du médiateur de la consommation,
+2. **Photos** — déposer `devanture`, `salle` et `pizza` dans `assets/img/`.
+   L'extension n'a pas d'importance (`.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`,
+   majuscules comprises) : le script essaie chacune à tour de rôle. Voir
+   `assets/img/README.md`.
+3. **Mentions légales** — compléter les coordonnées du médiateur de la consommation,
    et adapter l'hébergeur si le site n'est pas sur GitHub Pages.
 
 ## Modifier la carte
@@ -78,11 +78,15 @@ déclarées une seule fois en haut de `assets/css/styles.css` :
 
 | Jeton       | Valeur    | Origine                          |
 |-------------|-----------|----------------------------------|
-| `--navy-800`| `#16243C` | Bleu du panneau de l'enseigne    |
-| `--orange`  | `#F4610D` | Orange des murs de la salle      |
-| `--red`     | `#D0202A` | Rouge du logo rond               |
-| `--gold`    | `#F5B325` | Jaune des titres de la carte     |
-| `--cream`   | `#F7F0E4` | Blanc cassé du lettrage          |
+| `--navy-800`  | `#1C2B3E` | Bleu du panneau de l'enseigne          |
+| `--orange`    | `#F4650F` | Orange des murs de la salle            |
+| `--red`       | `#D0202A` | Rouge du logo rond                     |
+| `--brand-gold`| `#EFAA3C` | Doré du « PIZZA » de l'enseigne        |
+| `--gold`      | `#F5B325` | Jaune des titres de la carte           |
+| `--cream`     | `#F6F1E7` | Blanc cassé du lettrage                |
+
+Le logotype reprend la composition du panneau : « Anas » en serif crème,
+« PIZZA » en doré, « — ORIGINAL — » en dessous entre deux filets.
 
 Chaque section porte un thème (`t-cream`, `t-orange`, `t-red`) qui redéfinit
 localement `--bg`, `--fg`, `--rule` et `--surface`. Pour changer l'ambiance
