@@ -1,29 +1,47 @@
 # Photos du restaurant
 
-Déposez ici les **vraies photos** d'Anas Pizza Original. Elles s'affichent
-automatiquement dans la section « La maison » de la page d'accueil.
+La section « La maison » affiche par défaut des **illustrations vectorielles**
+dessinées d'après le restaurant (devanture, salle, pizza). Elles sont intégrées
+directement dans `index.html` : rien à installer, le site est complet sans photo.
 
-Tant qu'un fichier est absent, le site affiche un emplacement stylé à sa place :
-**rien ne casse**, il manque juste la photo.
+Dès qu'un fichier photo portant le bon nom est déposé dans ce dossier, il
+**passe automatiquement par-dessus l'illustration**. Aucun code à toucher.
 
-## Fichiers attendus
+## La méthode la plus courte (3 clics, sans git)
 
-| Fichier          | Emplacement sur le site | Format conseillé            |
-|------------------|-------------------------|-----------------------------|
-| `devanture.jpg`  | Grande image du haut    | Paysage, 1600 × 1000 px     |
-| `salle.jpg`      | Vignette de gauche      | Portrait, 800 × 1000 px     |
-| `pizza.jpg`      | Vignette de droite      | Portrait, 800 × 1000 px     |
+1. Sur GitHub, ouvrez le dossier `assets/img/` du dépôt.
+2. Bouton **Add file** → **Upload files**.
+3. Glissez vos photos, puis **Commit changes**.
+
+Vercel redéploie tout seul dans la foulée : les photos sont en ligne en une
+minute environ.
+
+## Noms de fichiers
+
+Seul le **nom** compte, pas l'extension :
+
+| Nom à donner | Emplacement sur le site | Cadrage        |
+|--------------|-------------------------|----------------|
+| `devanture`  | Grande image du haut    | Paysage, 16/10 |
+| `salle`      | Vignette de gauche      | Portrait, 4/5  |
+| `pizza`      | Vignette de droite      | Portrait, 4/5  |
+
+`devanture.jpg`, `devanture.jpeg`, `devanture.png`, `devanture.webp`,
+`devanture.avif` et leurs variantes en majuscules fonctionnent toutes : le site
+essaie chaque extension à tour de rôle. Inutile de convertir quoi que ce soit.
+
+Tant qu'une photo est absente, l'illustration correspondante reste affichée :
+**rien ne casse**, et la section reste finie.
 
 ## Conseils
 
-- **Poids** : viser moins de 250 Ko par photo (compression JPEG qualité 80 environ).
-  Une photo de téléphone brute pèse 4 Mo et ralentit fortement le site sur mobile.
+- **Poids** : viser moins de 250 Ko par photo. Une photo de téléphone brute
+  pèse 4 Mo et ralentit fortement le site sur mobile.
 - **Cadrage** : les vignettes sont rognées en portrait (4/5), la grande en 16/10.
   Laissez de la marge autour du sujet.
-- **Lumière** : les photos prises en journée, devanture ouverte, rendent le mieux.
-- Les photos de pizzas sortie du four sont les plus efficaces commercialement :
-  n'hésitez pas à en ajouter d'autres et à dupliquer un bloc `<figure class="shot">`
-  dans `index.html`.
+- Les photos de pizzas sortie du four sont les plus efficaces commercialement.
+  Pour en ajouter d'autres, dupliquez un bloc `<figure class="shot">` dans
+  `index.html`.
 
 ## Fichiers générés (ne pas supprimer)
 

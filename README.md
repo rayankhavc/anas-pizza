@@ -28,13 +28,13 @@ assets/img/                         logo, favicon, image de partage, photos
    grep -rl "anaspizza-nantes.fr" . --include="*.html" --include="*.xml" --include="*.txt" \
      | xargs sed -i 's|https://www.anaspizza-nantes.fr|https://VOTRE-DOMAINE|g'
    ```
-2. **Liens de commande** — remplacer les URL Uber Eats / Deliveroo
-   (chercher `data-order` dans `index.html`) par les liens exacts des fiches restaurant.
-3. **Photos** — déposer `devanture.jpg`, `salle.jpg` et `pizza.jpg` dans `assets/img/`
-   (voir `assets/img/README.md`).
-4. **Réseaux sociaux** — renseigner les URL dans le bloc `.socials` du pied de page
-   d'`index.html`, puis retirer l'attribut `hidden`.
-5. **Mentions légales** — compléter les coordonnées du médiateur de la consommation,
+2. **Photos (facultatif)** — la section « La maison » est illustrée par des
+   dessins vectoriels intégrés : le site est complet tel quel. Pour passer aux
+   vraies photos, déposer `devanture`, `salle` ou `pizza` dans `assets/img/` ;
+   l'extension n'a pas d'importance (`.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`,
+   majuscules comprises). La photo recouvre l'illustration automatiquement.
+   Voir `assets/img/README.md`.
+3. **Mentions légales** — compléter les coordonnées du médiateur de la consommation,
    et adapter l'hébergeur si le site n'est pas sur GitHub Pages.
 
 ## Modifier la carte
@@ -72,6 +72,27 @@ Pensez aussi au bloc `openingHoursSpecification` du JSON-LD dans `<head>`.
 python3 -m http.server 8000
 # puis ouvrir http://localhost:8000
 ```
+
+## Charte graphique
+
+Les couleurs sont relevées sur la devanture et la salle du restaurant, et
+déclarées une seule fois en haut de `assets/css/styles.css` :
+
+| Jeton       | Valeur    | Origine                          |
+|-------------|-----------|----------------------------------|
+| `--navy-800`  | `#1C2B3E` | Bleu du panneau de l'enseigne          |
+| `--orange`    | `#F4650F` | Orange des murs de la salle            |
+| `--red`       | `#D0202A` | Rouge du logo rond                     |
+| `--brand-gold`| `#EFAA3C` | Doré du « PIZZA » de l'enseigne        |
+| `--gold`      | `#F5B325` | Jaune des titres de la carte           |
+| `--cream`     | `#F6F1E7` | Blanc cassé du lettrage                |
+
+Le logotype reprend la composition du panneau : « Anas » en serif crème,
+« PIZZA » en doré, « — ORIGINAL — » en dessous entre deux filets.
+
+Chaque section porte un thème (`t-cream`, `t-orange`, `t-red`) qui redéfinit
+localement `--bg`, `--fg`, `--rule` et `--surface`. Pour changer l'ambiance
+d'une section, il suffit de changer sa classe — aucun autre style à toucher.
 
 ## Accessibilité & performances
 

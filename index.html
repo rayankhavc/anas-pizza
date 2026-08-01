@@ -3,18 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0A101E">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#1C2B3E">
+<meta name="color-scheme" content="dark light">
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      ⚙️  À PERSONNALISER AVANT LA MISE EN LIGNE
      1. Remplacer https://www.anaspizza-nantes.fr par le vrai nom de domaine
         (canonical, og:url, JSON-LD, sitemap.xml, robots.txt).
-     2. Remplacer les liens Uber Eats / Deliveroo (chercher « data-order »)
-        par les URL exactes des fiches restaurant.
-     3. Déposer les photos dans assets/img/ : devanture.jpg · salle.jpg ·
+     2. Déposer les photos dans assets/img/ : devanture.jpg · salle.jpg ·
         pizza.jpg (voir assets/img/README.md).
-     4. Activer les réseaux sociaux : bloc « .socials » dans le pied de page.
+     3. Pied de page : remplacer le lien « Raythan Web Design » par l'URL
+        du site de l'agence (chercher « data-credit »).
      ═══════════════════════════════════════════════════════════════════════ -->
 
 <title>Anas Pizza Original — Pizzeria à Nantes centre | À emporter &amp; livraison</title>
@@ -84,6 +83,19 @@
         { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday","Monday","Tuesday","Wednesday","Thursday"], "opens": "11:30", "closes": "00:00" },
         { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "11:30", "closes": "02:00" }
       ],
+      "potentialAction": {
+        "@type": "OrderAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.ubereats.com/fr/store/anas-pizza-original/c4e36jj6SKufKrNpApOBlQ",
+          "inLanguage": "fr-FR",
+          "actionPlatform": [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/IOSPlatform",
+            "http://schema.org/AndroidPlatform"
+          ]
+        }
+      },
       "hasMenu": { "@id": "https://www.anaspizza-nantes.fr/#menu" }
     },
     {
@@ -120,7 +132,7 @@
         { "@type": "Question", "name": "Où se trouve Anas Pizza Original ?",
           "acceptedAnswer": { "@type": "Answer", "text": "Au 10 allée Duguay Trouin, 44000 Nantes, en plein centre-ville, à quelques minutes à pied du Cours des 50 Otages et du quartier Bouffay." } },
         { "@type": "Question", "name": "Peut-on se faire livrer une pizza Anas Pizza Original ?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Oui. La livraison est assurée sur Nantes via Uber Eats et Deliveroo. Vous pouvez aussi appeler le 02 59 10 01 98 pour commander à emporter." } },
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui. La livraison sur Nantes est assurée par Uber Eats. Vous pouvez aussi appeler le 02 59 10 01 98 pour commander à emporter et venir la récupérer." } },
         { "@type": "Question", "name": "Peut-on manger sur place ?",
           "acceptedAnswer": { "@type": "Answer", "text": "Oui, la salle vous accueille pour manger sur place, et vous pouvez également commander à emporter." } },
         { "@type": "Question", "name": "Combien coûte une pizza chez Anas Pizza Original ?",
@@ -141,17 +153,17 @@
 <div class="ticker">
   <div class="ticker__track">
     <div class="ticker__group">
-      <span class="ticker__item">🔥 Tous les mardis : toutes nos pizzas à 5,90 €</span>
+      <span class="ticker__item">Tous les mardis : toutes nos pizzas à 5,90 €</span>
       <span class="ticker__item">Ouvert 7j/7 dès 11h30</span>
       <span class="ticker__item">Sur place · À emporter · Livraison</span>
-      <span class="ticker__item">☎ 02 59 10 01 98</span>
+      <span class="ticker__item">02 59 10 01 98</span>
       <span class="ticker__item">Nantes centre — 10 allée Duguay Trouin</span>
     </div>
     <div class="ticker__group" aria-hidden="true">
-      <span class="ticker__item">🔥 Tous les mardis : toutes nos pizzas à 5,90 €</span>
+      <span class="ticker__item">Tous les mardis : toutes nos pizzas à 5,90 €</span>
       <span class="ticker__item">Ouvert 7j/7 dès 11h30</span>
       <span class="ticker__item">Sur place · À emporter · Livraison</span>
-      <span class="ticker__item">☎ 02 59 10 01 98</span>
+      <span class="ticker__item">02 59 10 01 98</span>
       <span class="ticker__item">Nantes centre — 10 allée Duguay Trouin</span>
     </div>
   </div>
@@ -161,10 +173,10 @@
 <header class="header">
   <div class="container header__inner">
     <a class="brand" href="#top" aria-label="Anas Pizza Original — accueil">
-      <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="38" height="38">
+      <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="36" height="36">
       <span class="brand__txt">
         <span class="brand__a">Anas <i>Pizza</i></span>
-        <span class="brand__b">Original</span>
+        <span class="brand__b"><span>Original</span></span>
       </span>
     </a>
 
@@ -202,12 +214,12 @@
       <button class="drawer__close" type="button" data-drawer-close aria-label="Fermer le menu">✕</button>
     </div>
 
-    <a class="drawer__link" style="--i:0" href="#carte">La carte <span aria-hidden="true">→</span></a>
-    <a class="drawer__link" style="--i:1" href="#mardi">Offre du mardi <span aria-hidden="true">→</span></a>
-    <a class="drawer__link" style="--i:2" href="#maison">La maison <span aria-hidden="true">→</span></a>
-    <a class="drawer__link" style="--i:3" href="#infos">Infos &amp; horaires <span aria-hidden="true">→</span></a>
-    <a class="drawer__link" style="--i:4" href="#faq">Questions fréquentes <span aria-hidden="true">→</span></a>
-    <a class="drawer__link" style="--i:5" href="#commander">Commander <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" href="#carte">La carte <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" href="#mardi">Offre du mardi <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" href="#maison">La maison <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" href="#infos">Infos &amp; horaires <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" href="#faq">Questions fréquentes <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" href="#commander">Commander <span aria-hidden="true">→</span></a>
 
     <div class="drawer__foot">
       <a class="btn btn--block" href="tel:+33259100198">
@@ -224,21 +236,18 @@
 
   <!-- ══ Hero ═══════════════════════════════════════════════════════════ -->
   <section class="hero">
-    <div class="hero__bg" aria-hidden="true"></div>
-    <div class="hero__grid-lines" aria-hidden="true"></div>
-
     <div class="container hero__inner">
       <div class="hero__copy">
         <p class="status" data-status>
           <span class="status__dot" aria-hidden="true"></span>
           <span data-status-label>Ouvert 7j/7</span>
-          <span class="status__sub" data-status-sub>· dès 11h30</span>
+          <span class="status__sub" data-status-sub>dès 11h30</span>
         </p>
 
         <h1 class="h-xl">
           <span class="line" style="--i:0"><span>Le goût</span></span>
           <span class="line" style="--i:1"><span>authentique</span></span>
-          <span class="line" style="--i:2"><span class="word-stroke">de la pizza</span></span>
+          <span class="line" style="--i:2"><span class="rule">de la pizza</span></span>
         </h1>
 
         <p class="lead">
@@ -256,109 +265,92 @@
         </div>
 
         <ul class="hero__meta">
-          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Cuisson à la commande</li>
-          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Uber Eats &amp; Deliveroo</li>
-          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Salle &amp; à emporter</li>
+          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Cuisson à la commande</li>
+          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Livraison Uber Eats</li>
+          <li class="tagpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Salle &amp; à emporter</li>
         </ul>
       </div>
 
       <div class="hero__art">
-        <svg class="pizza" viewBox="0 0 500 500" role="img" aria-label="Illustration d’une pizza dont une part se soulève">
-          <defs>
-            <radialGradient id="pz-crust" cx="38%" cy="30%">
-              <stop offset="0" stop-color="#F6C86B"/>
-              <stop offset="70%" stop-color="#E09B36"/>
-              <stop offset="100%" stop-color="#B96C1C"/>
-            </radialGradient>
-            <radialGradient id="pz-cheese" cx="40%" cy="32%">
-              <stop offset="0" stop-color="#FFE9A9"/>
-              <stop offset="65%" stop-color="#FFCB59"/>
-              <stop offset="100%" stop-color="#F0A32E"/>
-            </radialGradient>
-            <radialGradient id="pz-pep" cx="35%" cy="30%">
-              <stop offset="0" stop-color="#E8483A"/>
-              <stop offset="100%" stop-color="#B01F1B"/>
-            </radialGradient>
-          </defs>
+        <!-- Le disque et la part appartiennent au même groupe : la part reste
+             solidaire de la pizza quand l'ensemble tourne. -->
+        <svg class="pizza" viewBox="0 0 616 616" role="img" aria-label="Illustration d’une pizza dont une part est sortie">
+          <g class="pizza__wheel"><g transform="translate(58 58)">
+            <!-- disque entamé -->
+            <path d="M250 250 L326.5 65.2 A200 200 0 1 1 173.5 65.2 Z" fill="#D9932F"/>
+            <path d="M250 250 L317.4 87.4 A176 176 0 1 1 182.6 87.4 Z" fill="#F5C95B"/>
 
-          <g class="pizza__disc">
-            <path d="M250 250 L326.5 65.2 A200 200 0 1 1 173.5 65.2 Z" fill="url(#pz-crust)"/>
-            <path d="M250 250 L317.4 87.4 A176 176 0 1 1 182.6 87.4 Z" fill="url(#pz-cheese)"/>
-
-            <g stroke="rgba(170,100,26,.32)" stroke-width="3" stroke-linecap="round">
+            <g stroke="#D9932F" stroke-width="3">
               <path d="M250 250 96 250"/><path d="M250 250 404 250"/>
               <path d="M250 250 141 359"/><path d="M250 250 359 359"/>
               <path d="M250 250 250 424"/>
             </g>
 
-            <g fill="rgba(255,246,208,.5)">
-              <ellipse cx="196" cy="196" rx="26" ry="17" transform="rotate(-18 196 196)"/>
-              <ellipse cx="318" cy="216" rx="22" ry="14" transform="rotate(24 318 216)"/>
-              <ellipse cx="230" cy="330" rx="27" ry="16" transform="rotate(-8 230 330)"/>
-              <ellipse cx="330" cy="330" rx="19" ry="13" transform="rotate(32 330 330)"/>
-              <ellipse cx="160" cy="278" rx="18" ry="12" transform="rotate(12 160 278)"/>
+            <g fill="#FBE3A6">
+              <ellipse cx="196" cy="196" rx="25" ry="16" transform="rotate(-18 196 196)"/>
+              <ellipse cx="318" cy="216" rx="21" ry="13" transform="rotate(24 318 216)"/>
+              <ellipse cx="230" cy="330" rx="26" ry="15" transform="rotate(-8 230 330)"/>
+              <ellipse cx="330" cy="330" rx="18" ry="12" transform="rotate(32 330 330)"/>
+              <ellipse cx="160" cy="278" rx="17" ry="11" transform="rotate(12 160 278)"/>
             </g>
 
-            <g fill="url(#pz-pep)">
-              <circle cx="168" cy="214" r="23"/>
-              <circle cx="286" cy="176" r="19"/>
-              <circle cx="336" cy="262" r="21"/>
-              <circle cx="200" cy="306" r="20"/>
-              <circle cx="292" cy="342" r="22"/>
-              <circle cx="248" cy="392" r="16"/>
-              <circle cx="150" cy="322" r="15"/>
-              <circle cx="236" cy="240" r="18"/>
+            <g fill="#C63A2E">
+              <circle cx="168" cy="214" r="22"/>
+              <circle cx="286" cy="176" r="18"/>
+              <circle cx="336" cy="262" r="20"/>
+              <circle cx="200" cy="306" r="19"/>
+              <circle cx="292" cy="342" r="21"/>
+              <circle cx="248" cy="392" r="15"/>
+              <circle cx="150" cy="322" r="14"/>
+              <circle cx="236" cy="240" r="17"/>
             </g>
 
-            <g>
-              <circle cx="218" cy="176" r="9" fill="#2E2A33"/><circle cx="218" cy="176" r="3.4" fill="#8C7A5A"/>
-              <circle cx="352" cy="206" r="8" fill="#2E2A33"/><circle cx="352" cy="206" r="3" fill="#8C7A5A"/>
-              <circle cx="182" cy="368" r="8" fill="#2E2A33"/><circle cx="182" cy="368" r="3" fill="#8C7A5A"/>
-              <circle cx="330" cy="392" r="7.5" fill="#2E2A33"/><circle cx="330" cy="392" r="2.8" fill="#8C7A5A"/>
-              <path d="M272 274c16-9 32-2 34 14-15 9-33 3-34-14Z" fill="#3E8E4A"/>
-              <path d="M138 250c15-10 31-4 34 12-14 10-32 5-34-12Z" fill="#468F4E"/>
-              <path d="M258 322c14-8 28-2 30 12-13 8-29 3-30-12Z" fill="#3E8E4A"/>
+            <g fill="#2E2A33">
+              <circle cx="218" cy="176" r="8"/><circle cx="352" cy="206" r="7"/>
+              <circle cx="182" cy="368" r="7"/><circle cx="330" cy="392" r="6.5"/>
             </g>
-          </g>
+            <g fill="#4A9153">
+              <path d="M272 274c16-9 32-2 34 14-15 9-33 3-34-14Z"/>
+              <path d="M138 250c15-10 31-4 34 12-14 10-32 5-34-12Z"/>
+              <path d="M258 322c14-8 28-2 30 12-13 8-29 3-30-12Z"/>
+            </g>
 
-          <g class="pizza__slice">
-            <path d="M250 250 L173.5 65.2 A200 200 0 0 1 326.5 65.2 Z" fill="url(#pz-crust)"/>
-            <path d="M250 250 L182.6 87.4 A176 176 0 0 1 317.4 87.4 Z" fill="url(#pz-cheese)"/>
-            <ellipse cx="250" cy="152" rx="30" ry="18" fill="rgba(255,246,208,.5)"/>
-            <circle cx="228" cy="126" r="17" fill="url(#pz-pep)"/>
-            <circle cx="276" cy="164" r="15" fill="url(#pz-pep)"/>
-            <circle cx="250" cy="208" r="12" fill="url(#pz-pep)"/>
-            <circle cx="286" cy="112" r="7" fill="#2E2A33"/>
-            <path d="M212 178c13-8 27-2 29 11-13 8-27 3-29-11Z" fill="#3E8E4A"/>
-          </g>
+            <!-- la part sortie, décalée hors de l'encoche -->
+            <g transform="translate(68 -76) rotate(7 250 160)">
+              <path d="M250 250 L173.5 65.2 A200 200 0 0 1 326.5 65.2 Z" fill="#D9932F"/>
+              <path d="M250 250 L182.6 87.4 A176 176 0 0 1 317.4 87.4 Z" fill="#F5C95B"/>
+              <ellipse cx="250" cy="152" rx="28" ry="16" fill="#FBE3A6"/>
+              <circle cx="228" cy="126" r="16" fill="#C63A2E"/>
+              <circle cx="276" cy="164" r="14" fill="#C63A2E"/>
+              <circle cx="250" cy="208" r="11" fill="#C63A2E"/>
+              <circle cx="286" cy="112" r="6.5" fill="#2E2A33"/>
+              <path d="M212 178c13-8 27-2 29 11-13 8-27 3-29-11Z" fill="#4A9153"/>
+            </g>
+          </g></g>
         </svg>
-
-        <span class="floaty floaty--1 chip"><span class="chip__ico" aria-hidden="true">€</span> Dès <b>6,90 €</b></span>
-        <span class="floaty floaty--2 chip"><span class="chip__ico" aria-hidden="true">★</span> <b>42</b> recettes</span>
-        <span class="floaty floaty--3 chip"><span class="chip__ico" aria-hidden="true">⏱</span> Cuite <b>minute</b></span>
       </div>
     </div>
   </section>
 
-  <!-- ══ Bandeau chiffres ═══════════════════════════════════════════════ -->
-  <section class="band" aria-label="Anas Pizza Original en chiffres">
+  <!-- ══ Bandeau de repères ═════════════════════════════════════════════ -->
+  <section class="band t-orange" aria-label="Anas Pizza Original en chiffres">
     <div class="container">
       <div class="band__grid">
-        <div class="band__cell" data-reveal>
-          <p class="band__n"><span data-count="42" data-suffix="">42</span></p>
+        <div class="band__cell">
+          <p class="band__n"><span data-count="42">42</span></p>
           <p class="band__l">Recettes de pizza</p>
         </div>
-        <div class="band__cell" data-reveal>
+        <div class="band__cell">
           <p class="band__n"><span data-count="7">7</span>j/7</p>
           <p class="band__l">Ouvert toute la semaine</p>
         </div>
-        <div class="band__cell" data-reveal>
+        <div class="band__cell">
           <p class="band__n">11h30</p>
           <p class="band__l">Service en continu</p>
         </div>
-        <div class="band__cell" data-reveal>
-          <p class="band__n">2 <span style="font-size:.58em">tailles</span></p>
-          <p class="band__l">Medium ou large</p>
+        <div class="band__cell">
+          <p class="band__n">6,90 €</p>
+          <p class="band__l">La pizza à partir de</p>
         </div>
       </div>
     </div>
@@ -367,8 +359,8 @@
   <!-- ══ Nos engagements ════════════════════════════════════════════════ -->
   <section class="section" aria-labelledby="t-engagements">
     <div class="container">
-      <div class="sec-head center" data-reveal>
-        <p class="eyebrow eyebrow--center">Pizzeria à Nantes centre</p>
+      <div class="sec-head" data-reveal>
+        <p class="eyebrow">Pizzeria à Nantes centre</p>
         <h2 class="h-l" id="t-engagements">Une pizza <span class="tint">faite pour vous</span></h2>
         <p class="lead">Pas de pizza qui attend sous la lampe : chaque commande part au four au moment
           où vous la passez. Trois minutes de plus, beaucoup de goût en plus.</p>
@@ -385,13 +377,12 @@
           <div class="special__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
           <h3 class="h-m">42 recettes au choix</h3>
           <p>Sauce tomate, crème fraîche, curry, barbecue, algérienne, chili thaï… et nos signatures maison.</p>
-          <span class="special__tag">La carte</span>
         </article>
 
         <article class="special" data-reveal>
           <div class="special__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M14 9h4l4 4v4a1 1 0 0 1-1 1h-1"/><circle cx="7.5" cy="18" r="2.5"/><circle cx="17.5" cy="18" r="2.5"/></svg></div>
           <h3 class="h-m">Livrée chez vous</h3>
-          <p>Uber Eats et Deliveroo livrent Anas Pizza Original partout dans Nantes, le midi comme le soir.</p>
+          <p>Uber Eats livre Anas Pizza Original partout dans Nantes, le midi comme le soir.</p>
         </article>
 
         <article class="special" data-reveal>
@@ -404,7 +395,7 @@
   </section>
 
   <!-- ══ La carte ═══════════════════════════════════════════════════════ -->
-  <section class="section" id="carte" aria-labelledby="t-carte">
+  <section class="section t-cream" id="carte" aria-labelledby="t-carte">
     <div class="container">
       <div class="sec-head sec-head--split" data-reveal>
         <div>
@@ -596,23 +587,21 @@
   </section>
 
   <!-- ══ Offre du mardi ═════════════════════════════════════════════════ -->
-  <section class="section" id="mardi" aria-labelledby="t-mardi" style="padding-top:0">
+  <section class="section t-red promo" id="mardi" aria-labelledby="t-mardi">
     <div class="container">
-      <div class="promo" data-reveal="zoom">
-        <div class="promo__grid">
-          <div class="promo__price" aria-hidden="true">
-            <b>5,90 €</b>
-            <span>La pizza</span>
-          </div>
-          <div>
-            <p class="eyebrow">L’offre de la semaine</p>
-            <h2 class="h-l" id="t-mardi">Tous les mardis, la pizza à 5,90 €</h2>
-            <p>Toutes nos pizzas à 5,90 € le mardi, toute la journée, de 11h30 à minuit.
-              Prévenez les collègues.</p>
-            <div class="btn-row" style="margin-top:1.4rem">
-              <a class="btn btn--gold" href="tel:+33259100198">Réserver ma pizza du mardi</a>
-              <a class="btn btn--ghost" href="#carte">Choisir sur la carte</a>
-            </div>
+      <div class="promo__grid">
+        <div class="promo__price" aria-hidden="true">
+          <b>5,90 €</b>
+          <span>La pizza</span>
+        </div>
+        <div>
+          <p class="eyebrow">L’offre de la semaine</p>
+          <h2 class="h-l" id="t-mardi">Tous les mardis, la pizza à 5,90 €</h2>
+          <p class="lead">Toutes nos pizzas à 5,90 € le mardi, toute la journée, de 11h30 à minuit.
+            Prévenez les collègues.</p>
+          <div class="btn-row" style="margin-top:1.4rem">
+            <a class="btn btn--gold" href="tel:+33259100198">Réserver ma pizza du mardi</a>
+            <a class="btn btn--ghost" href="#carte">Choisir sur la carte</a>
           </div>
         </div>
       </div>
@@ -622,7 +611,7 @@
   <!-- ══ La maison ══════════════════════════════════════════════════════ -->
   <section class="section" id="maison" aria-labelledby="t-maison">
     <div class="container about__grid">
-      <div class="about__copy" data-reveal="left">
+      <div class="about__copy" data-reveal>
         <p class="eyebrow">La maison</p>
         <h2 class="h-l" id="t-maison">Une vraie pizzeria de quartier, <span class="tint">au centre de Nantes</span></h2>
         <p class="lead">Au 10 allée Duguay Trouin, entre le Cours des 50 Otages et le quartier Bouffay,
@@ -651,34 +640,157 @@
         </div>
       </div>
 
-      <div class="about__media" data-reveal="right">
+      <div class="about__media" data-reveal>
         <!-- Déposez vos photos dans assets/img/ (voir assets/img/README.md).
-             Tant qu'un fichier est absent, un emplacement stylé s'affiche à la place. -->
+             Tant qu'un fichier est absent, un emplacement neutre s'affiche. -->
         <div class="gallery">
+          <!-- Illustrations dessinées d'après les photos du restaurant.
+               Elles servent de fond : dès qu'un fichier devanture/salle/pizza
+               est déposé dans assets/img/, la vraie photo passe par-dessus. -->
           <figure class="shot shot--wide">
+            <svg class="shot__art" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration de la devanture d’Anas Pizza Original, 10 allée Duguay Trouin à Nantes">
+              <rect width="800" height="500" fill="#CFC7B8"/>
+              <g stroke="#BCB3A1" stroke-width="2">
+                <path d="M0 36h800M0 168h800M0 300h800M0 432h800"/>
+                <path d="M120 0v36M420 0v36M700 0v36M60 36v132M300 36v132M540 36v132M760 36v132M180 300v132M660 300v132"/>
+              </g>
+
+              <!-- panneau de l'enseigne -->
+              <rect x="86" y="34" width="628" height="120" fill="#1C2B3E"/>
+              <rect x="86" y="146" width="628" height="10" fill="#121D2C"/>
+              <text class="art-serif" x="196" y="106" font-size="62" fill="#F6F1E7">Anas</text>
+              <text class="art-display" x="386" y="104" font-size="56" fill="#EFAA3C">PIZZA</text>
+              <g stroke="#F6F1E7" stroke-width="2" opacity=".85">
+                <path d="M300 133h34M470 133h34"/>
+              </g>
+              <text class="art-body" x="346" y="139" font-size="15" letter-spacing="6" fill="#F6F1E7">ORIGINAL</text>
+
+              <!-- numéro 4 -->
+              <circle cx="46" cy="196" r="25" fill="#C0392B"/>
+              <text class="art-body" x="46" y="206" font-size="26" fill="#F6F1E7" text-anchor="middle" font-weight="700">4</text>
+
+              <!-- arcade -->
+              <path d="M150 500V420a250 250 0 0 1 500 0v80Z" fill="#12161B"/>
+              <path d="M168 500V420a232 232 0 0 1 464 0v80Z" fill="#1C2B3E"/>
+
+              <!-- couloir orange, porte ouverte -->
+              <path d="M186 500V420a214 214 0 0 1 62-151v231Z" fill="#D8560B"/>
+              <rect x="248" y="252" width="86" height="248" fill="#F4650F"/>
+              <rect x="262" y="300" width="58" height="200" fill="#E1580C"/>
+              <rect x="270" y="392" width="7" height="16" rx="3" fill="#F6F1E7"/>
+
+              <!-- vitrine -->
+              <path d="M348 500V282a212 212 0 0 1 272 138v80Z" fill="#9FB2B0"/>
+              <g fill="#B8C7C3">
+                <path d="M372 500 486 286h44L406 500Z"/>
+                <path d="M470 500 574 306h22L494 500Z"/>
+              </g>
+              <g fill="#2A3138">
+                <rect x="336" y="252" width="12" height="248"/>
+                <rect x="348" y="404" width="284" height="10"/>
+              </g>
+              <!-- tables en salle, vues à travers la vitre -->
+              <g fill="#3B3F46">
+                <rect x="404" y="424" width="96" height="9" rx="3"/>
+                <rect x="536" y="430" width="86" height="9" rx="3"/>
+              </g>
+              <g fill="#5D6169">
+                <rect x="418" y="433" width="7" height="42"/><rect x="480" y="433" width="7" height="42"/>
+                <rect x="550" y="439" width="7" height="38"/><rect x="602" y="439" width="7" height="38"/>
+              </g>
+              <g fill="#71767F">
+                <rect x="386" y="430" width="26" height="34" rx="10"/>
+                <rect x="510" y="436" width="24" height="32" rx="10"/>
+              </g>
+            </svg>
             <img src="assets/img/devanture.jpg" alt="Devanture d’Anas Pizza Original, 10 allée Duguay Trouin à Nantes" loading="lazy" decoding="async" width="800" height="500">
-            <div class="shot__ph" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
-              <span>Photo — devanture</span>
-            </div>
             <figcaption>Notre devanture, allée Duguay Trouin</figcaption>
           </figure>
 
           <figure class="shot">
+            <svg class="shot__art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration de la salle d’Anas Pizza Original, murs orange et tables noires">
+              <rect width="400" height="500" fill="#F2ECE2"/>
+              <!-- plafond -->
+              <path d="M0 0h400v96l-145 24L0 62Z" fill="#EFE8DC"/>
+              <g fill="#FFF8E9" stroke="#E2D8C6" stroke-width="2">
+                <circle cx="70" cy="40" r="9"/><circle cx="196" cy="30" r="9"/><circle cx="320" cy="58" r="9"/>
+              </g>
+              <g fill="none" stroke="#7C818B" stroke-width="3">
+                <rect x="238" y="52" width="34" height="26"/><rect x="258" y="66" width="34" height="26"/>
+              </g>
+              <!-- mur orange -->
+              <path d="M0 62l255 58v250L0 440Z" fill="#F4650F"/>
+              <path d="M0 62l255 58v34L0 96Z" fill="#FF7A22"/>
+              <g fill="#F6F1E7">
+                <rect x="128" y="286" width="16" height="16" rx="3"/>
+                <rect x="196" y="298" width="16" height="16" rx="3"/>
+              </g>
+              <!-- baie vitrée -->
+              <path d="M282 372V240a58 58 0 0 1 116 0v132Z" fill="#D9E4E1"/>
+              <g fill="#4E7A46">
+                <circle cx="316" cy="268" r="30"/><circle cx="360" cy="252" r="24"/><circle cx="386" cy="286" r="22"/>
+              </g>
+              <path d="M282 372V240a58 58 0 0 1 116 0v132Z" fill="none" stroke="#2A3138" stroke-width="9"/>
+              <!-- sol -->
+              <path d="M0 440l255-70 145 26v104H0Z" fill="#E7DDCF"/>
+              <g stroke="#D5C9B7" stroke-width="2">
+                <path d="M0 470l400-30M0 500l400-40M96 452v48M212 424v76M312 404v96"/>
+              </g>
+              <!-- tables et chaises -->
+              <g fill="#3B3F46">
+                <rect x="46" y="356" width="180" height="14" rx="4"/>
+                <rect x="222" y="308" width="132" height="12" rx="4"/>
+              </g>
+              <g fill="#5D6169">
+                <rect x="66" y="370" width="9" height="76"/><rect x="200" y="370" width="9" height="70"/>
+                <rect x="240" y="320" width="8" height="56"/><rect x="336" y="320" width="8" height="52"/>
+              </g>
+              <g fill="#6F737C">
+                <rect x="10" y="360" width="46" height="62" rx="20"/>
+                <rect x="228" y="352" width="42" height="58" rx="18"/>
+                <rect x="292" y="316" width="36" height="50" rx="16"/>
+              </g>
+              <g fill="#C94D06" opacity=".55">
+                <rect x="96" y="360" width="46" height="6" rx="2"/>
+                <rect x="262" y="311" width="40" height="5" rx="2"/>
+              </g>
+            </svg>
             <img src="assets/img/salle.jpg" alt="La salle d’Anas Pizza Original à Nantes" loading="lazy" decoding="async" width="400" height="500">
-            <div class="shot__ph" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
-              <span>Photo — la salle</span>
-            </div>
             <figcaption>La salle</figcaption>
           </figure>
 
           <figure class="shot">
+            <svg class="shot__art" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration d’une pizza sortie du four">
+              <rect width="400" height="500" fill="#1C2B3E"/>
+              <g transform="translate(200 250)">
+                <circle r="158" fill="#2A3B52"/>
+                <circle r="142" fill="#D9932F"/>
+                <circle r="124" fill="#F5C95B"/>
+                <g stroke="#D9932F" stroke-width="3">
+                  <path d="M-124 0h248M0-124v248M-88-88 88 88M88-88-88 88"/>
+                </g>
+                <g fill="#FBE3A6">
+                  <ellipse cx="-42" cy="-46" rx="20" ry="13" transform="rotate(-18 -42 -46)"/>
+                  <ellipse cx="52" cy="-30" rx="17" ry="11" transform="rotate(24 52 -30)"/>
+                  <ellipse cx="-18" cy="58" rx="21" ry="12" transform="rotate(-8 -18 58)"/>
+                  <ellipse cx="62" cy="54" rx="14" ry="10" transform="rotate(32 62 54)"/>
+                </g>
+                <g fill="#C63A2E">
+                  <circle cx="-62" cy="-26" r="18"/><circle cx="30" cy="-62" r="15"/>
+                  <circle cx="72" cy="8" r="16"/><circle cx="-38" cy="46" r="15"/>
+                  <circle cx="36" cy="76" r="17"/><circle cx="-4" cy="-6" r="14"/>
+                  <circle cx="-84" cy="46" r="11"/>
+                </g>
+                <g fill="#2E2A33">
+                  <circle cx="-24" cy="-78" r="7"/><circle cx="84" cy="-38" r="6"/><circle cx="-72" cy="88" r="6"/>
+                </g>
+                <g fill="#4A9153">
+                  <path d="M20 22c13-7 26-2 27 11-12 8-26 2-27-11Z"/>
+                  <path d="M-96 -4c12-8 25-3 27 10-11 8-26 4-27-10Z"/>
+                </g>
+              </g>
+            </svg>
             <img src="assets/img/pizza.jpg" alt="Une pizza sortie du four chez Anas Pizza Original" loading="lazy" decoding="async" width="400" height="500">
-            <div class="shot__ph" hidden>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m4 17 5-4 4 3 3-2 4 3"/></svg>
-              <span>Photo — nos pizzas</span>
-            </div>
             <figcaption>Sortie du four</figcaption>
           </figure>
         </div>
@@ -687,7 +799,7 @@
   </section>
 
   <!-- ══ Infos pratiques ════════════════════════════════════════════════ -->
-  <section class="section" id="infos" aria-labelledby="t-infos">
+  <section class="section t-cream" id="infos" aria-labelledby="t-infos">
     <div class="container">
       <div class="sec-head" data-reveal>
         <p class="eyebrow">Infos pratiques</p>
@@ -706,7 +818,7 @@
             <div class="hours__row" data-day="samedi"><dt>Samedi</dt><dd>11h30 – 02h00</dd></div>
             <div class="hours__row" data-day="dimanche"><dt>Dimanche</dt><dd>11h30 – 00h00</dd></div>
           </dl>
-          <p style="margin-top:1rem;font-size:.9rem;color:var(--muted)">Service en continu, midi et soir. Un doute un jour férié ? Un coup de fil suffit.</p>
+          <p style="margin-top:1rem;font-size:.9rem;color:var(--fg-2)">Service en continu, midi et soir. Un doute un jour férié ? Un coup de fil suffit.</p>
         </div>
 
         <div class="panel" data-reveal>
@@ -741,7 +853,7 @@
             <strong>10 allée Duguay Trouin — 44000 Nantes</strong>
             <span>Nantes centre, à deux pas du Cours des 50 Otages et du quartier Bouffay. Tramway et bus à proximité immédiate.</span>
           </span>
-          <span class="btn btn--sm btn--gold" style="justify-self:start;pointer-events:none">Ouvrir l’itinéraire</span>
+          <span class="btn btn--sm btn--gold">Ouvrir l’itinéraire</span>
         </a>
       </div>
     </div>
@@ -750,15 +862,15 @@
   <!-- ══ Commander ══════════════════════════════════════════════════════ -->
   <section class="section" id="commander" aria-labelledby="t-commander">
     <div class="container">
-      <div class="sec-head center" data-reveal>
-        <p class="eyebrow eyebrow--center">Trois façons de commander</p>
+      <div class="sec-head" data-reveal>
+        <p class="eyebrow">Deux façons de commander</p>
         <h2 class="h-l" id="t-commander">On s’en occupe</h2>
         <p class="lead">Un appel pour venir la chercher, ou une livraison à votre porte. À vous de voir.</p>
       </div>
 
       <div class="order__grid">
         <article class="ordercard ordercard--tel" data-reveal>
-          <span class="ordercard__badge">Le plus rapide</span>
+          <p class="ordercard__badge">Le plus rapide</p>
           <p class="ordercard__logo">Par téléphone</p>
           <p>Vous appelez, on prépare, vous passez la récupérer. Idéal pour les commandes à emporter et les grandes tablées.</p>
           <a class="btn btn--block" href="tel:+33259100198">
@@ -767,19 +879,11 @@
           </a>
         </article>
 
-        <!-- data-order : remplacer par l'URL exacte de la fiche restaurant -->
         <article class="ordercard ordercard--uber" data-reveal>
-          <span class="ordercard__badge">Livraison</span>
+          <p class="ordercard__badge">Livraison</p>
           <p class="ordercard__logo">Uber Eats</p>
           <p>Suivi de commande en direct, paiement en ligne, livraison dans tout Nantes.</p>
-          <a class="btn btn--block" data-order="ubereats" href="https://www.ubereats.com/fr/search?q=Anas%20Pizza%20Original" target="_blank" rel="noopener">Commander sur Uber Eats</a>
-        </article>
-
-        <article class="ordercard ordercard--deliveroo" data-reveal>
-          <span class="ordercard__badge">Livraison</span>
-          <p class="ordercard__logo">Deliveroo</p>
-          <p>Quelques clics et votre pizza arrive encore chaude, chez vous ou au bureau.</p>
-          <a class="btn btn--block" data-order="deliveroo" href="https://deliveroo.fr/fr/search?q=Anas%20Pizza%20Original" target="_blank" rel="noopener">Commander sur Deliveroo</a>
+          <a class="btn btn--block" href="https://www.ubereats.com/fr/store/anas-pizza-original/c4e36jj6SKufKrNpApOBlQ" target="_blank" rel="noopener">Commander sur Uber Eats</a>
         </article>
       </div>
     </div>
@@ -804,7 +908,7 @@
         </details>
         <details class="faq__item">
           <summary>Peut-on se faire livrer une pizza ?</summary>
-          <div class="faq__body"><p>Oui. La livraison est assurée sur Nantes via Uber Eats et Deliveroo. Vous pouvez aussi appeler le <a href="tel:+33259100198">02 59 10 01 98</a> pour commander à emporter.</p></div>
+          <div class="faq__body"><p>Oui. La livraison sur Nantes est assurée par Uber Eats. Vous pouvez aussi appeler le <a href="tel:+33259100198">02 59 10 01 98</a> pour commander à emporter et venir la récupérer.</p></div>
         </details>
         <details class="faq__item">
           <summary>Peut-on manger sur place ?</summary>
@@ -829,20 +933,13 @@
     <div class="footer__grid">
       <div>
         <span class="brand">
-          <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="38" height="38">
+          <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="36" height="36">
           <span class="brand__txt">
             <span class="brand__a">Anas <i>Pizza</i></span>
-            <span class="brand__b">Original</span>
+            <span class="brand__b"><span>Original</span></span>
           </span>
         </span>
         <p>Pizzeria à Nantes centre. Pizzas cuites à la commande : sur place, à emporter ou en livraison. Ouvert 7j/7 dès 11h30.</p>
-
-        <!-- Réseaux sociaux : renseignez les URL puis retirez l'attribut « hidden ». -->
-        <div class="socials" hidden>
-          <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-          <a href="#" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1Z"/></svg></a>
-          <a href="#" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.4 2.2 1.9 3.7 4 3.9v2.9c-1.5.1-2.9-.4-4.1-1.2v5.6a5.6 5.6 0 1 1-4.8-5.5v3a2.6 2.6 0 1 0 1.9 2.5V3h3Z"/></svg></a>
-        </div>
       </div>
 
       <nav aria-labelledby="f-nav1">
@@ -860,8 +957,7 @@
         <h4 id="f-nav2">Commander</h4>
         <div class="footer__list">
           <a href="tel:+33259100198">02 59 10 01 98</a>
-          <a href="https://www.ubereats.com/fr/search?q=Anas%20Pizza%20Original" data-order="ubereats" target="_blank" rel="noopener">Uber Eats</a>
-          <a href="https://deliveroo.fr/fr/search?q=Anas%20Pizza%20Original" data-order="deliveroo" target="_blank" rel="noopener">Deliveroo</a>
+          <a href="https://www.ubereats.com/fr/store/anas-pizza-original/c4e36jj6SKufKrNpApOBlQ" target="_blank" rel="noopener">Uber Eats</a>
           <a href="mailto:anas.pizza.original@gmail.com">Nous écrire</a>
         </div>
       </nav>
@@ -885,6 +981,15 @@
         <a href="#top">Haut de page ↑</a>
       </nav>
     </div>
+
+    <!-- data-credit : remplacer le href par l'URL du site de l'agence -->
+    <p class="credit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="m8 18-6-6 6-6"/><path d="m16 6 6 6-6 6"/></svg>
+      Site conçu et réalisé par
+      <a data-credit href="https://raythan.fr" target="_blank" rel="noopener">Raythan Web Design</a>
+      <span aria-hidden="true">·</span>
+      <a href="mailto:raythanwebdesign@gmail.com">raythanwebdesign@gmail.com</a>
+    </p>
   </div>
 </footer>
 
@@ -894,7 +999,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
     Appeler
   </a>
-  <a href="#commander">
+  <a href="https://www.ubereats.com/fr/store/anas-pizza-original/c4e36jj6SKufKrNpApOBlQ" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M14 9h4l4 4v4a1 1 0 0 1-1 1h-1"/><circle cx="7.5" cy="18" r="2.5"/><circle cx="17.5" cy="18" r="2.5"/></svg>
     Livraison
   </a>

@@ -311,15 +311,29 @@
   }
 
   /* ------------------------------------------------------------------ *
-   * 9. Photos optionnelles : si le fichier n'existe pas encore, on garde
-   *    l'emplacement stylé plutôt qu'une image cassée.
+   * 9. Photos du restaurant — tolérance sur l'extension du fichier.
+   *    On dépose devanture.jpg (ou .jpeg, .png, .webp, .avif) dans
+   *    assets/img/ : le script essaie chaque extension avant d'abandonner.
+   *    Si aucune photo n'est présente, l'illustration de fond reste visible.
    * ------------------------------------------------------------------ */
+  var EXTS = ['jpg', 'jpeg', 'png', 'webp', 'avif', 'JPG', 'JPEG', 'PNG', 'WEBP'];
+
   $$('.shot img').forEach(function (img) {
+    var base = (img.getAttribute('src') || '').replace(/\.[a-z0-9]+$/i, '');
+    var next = 0;
+
+    // Aucune photo trouvée : on retire l'image et l'illustration de fond reste.
+    var giveUp = function () { img.remove(); };
+
     img.addEventListener('error', function () {
-      var ph = img.parentElement ? img.parentElement.querySelector('.shot__ph') : null;
-      img.remove();
-      if (ph) ph.hidden = false;
+      if (!base) return giveUp();
+      while (next < EXTS.length) {
+        var candidate = base + '.' + EXTS[next++];
+        if (candidate !== img.getAttribute('src')) { img.src = candidate; return; }
+      }
+      giveUp();
     });
+
     if (img.complete && img.naturalWidth === 0) img.dispatchEvent(new Event('error'));
   });
 
