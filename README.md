@@ -62,6 +62,42 @@ quelques-unes et compléter au fil du temps.
 ### Photos du restaurant
 
 Même principe à la racine d'`assets/img/` : `devanture`, `salle`, `pizza`.
+Tant qu'une de ces photos manque, la construction retire purement et simplement
+la balise `<img>` correspondante : l'illustration de fond reste visible et
+aucune requête inutile n'est envoyée au serveur.
+
+### Photos qui ne sont pas celles du restaurant
+
+Toute photo qui ne vient pas de la pizzeria doit être **libre de droits**, et
+son auteur doit être cité. Les photos sous licence Creative Commons «&nbsp;BY&nbsp;»
+imposent quatre mentions : titre, auteur, lien vers l'original, licence — c'est
+la contrepartie de la gratuité, et son absence rend l'usage contrefaisant.
+
+Ces mentions vivent dans la section **5. Crédits photographiques** de
+`mentions-legales.html`, atteignable depuis le pied de page et depuis le bas de
+la carte. Une photo ajoutée, une ligne ajoutée :
+
+```html
+<li><b>Nom du plat</b> — «&nbsp;Titre de la photo&nbsp;» par Auteur,
+  <a href="URL-DE-L-ORIGINAL" target="_blank" rel="noopener">source</a>,
+  <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener">CC BY 2.0</a>.</li>
+```
+
+Si la photo a été recadrée ou retouchée, l'indiquer (« recadrée ») : la licence
+BY l'exige aussi.
+
+Deux licences sont à **éviter** :
+
+- **BY-SA** (partage dans les mêmes conditions) : sa clause contamine le site
+  entier, qui devrait alors être republié sous la même licence ;
+- **NC** (pas d'utilisation commerciale) : un site de restaurant est un usage
+  commercial.
+
+Enfin, une photo d'illustration ne doit jamais laisser croire qu'elle montre le
+plat réellement servi — d'où la mention « photos non contractuelles » sous la
+carte. Une photo qui ne correspond pas à la recette (viande absente de la carte,
+plat qui n'est pas une pizza…) n'a rien à faire sur le site : l'illustration
+vectorielle, tracée à partir des ingrédients réels, est alors plus honnête.
 
 ### La méthode la plus courte, sans git
 
