@@ -16,11 +16,11 @@
    *    minutes depuis minuit ; une fermeture > 1440 déborde sur le lendemain
    * ------------------------------------------------------------------ */
   var HOURS = [
-    { open: 690, close: 1440 }, // dimanche  11:30 – 00:00
-    { open: 690, close: 1440 }, // lundi     11:30 – 00:00
-    { open: 690, close: 1440 }, // mardi     11:30 – 00:00
-    { open: 690, close: 1440 }, // mercredi  11:30 – 00:00
-    { open: 690, close: 1440 }, // jeudi     11:30 – 00:00
+    { open: 690, close: 1560 }, // dimanche  11:30 – 02:00
+    { open: 690, close: 1560 }, // lundi     11:30 – 02:00
+    { open: 690, close: 1560 }, // mardi     11:30 – 02:00
+    { open: 690, close: 1560 }, // mercredi  11:30 – 02:00
+    { open: 690, close: 1560 }, // jeudi     11:30 – 02:00
     { open: 690, close: 1560 }, // vendredi  11:30 – 02:00
     { open: 690, close: 1560 }  // samedi    11:30 – 02:00
   ];
