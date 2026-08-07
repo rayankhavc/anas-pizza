@@ -337,6 +337,75 @@
     if (img.complete && img.naturalWidth === 0) img.dispatchEvent(new Event('error'));
   });
 
+
+  /* ------------------------------------------------------------------ *
+   * 11. Fiche détaillée d'un plat
+   *     Tout est lu dans le DOM de la carte : aucune donnée dupliquée,
+   *     modifier un plat dans index.html met la fiche à jour d'office.
+   * ------------------------------------------------------------------ */
+  var sheet = $('#fiche');
+  if (sheet) {
+    var fill = function (item) {
+      var cat = item.closest('.menu-cat');
+      var img = $('.item__img', item);
+      var name = $('.item__name', item);
+      var desc = $('.item__desc', item);
+      var unit = $('.item__price', item);
+
+      var sImg = $('#fiche-img', sheet);
+      if (img) {
+        sImg.src = img.getAttribute('src');
+        sImg.alt = '';
+        sImg.hidden = false;
+      } else {
+        sImg.hidden = true;
+      }
+
+      $('#fiche-nom', sheet).textContent = name ? name.textContent : '';
+
+      // badges (végé, piquante, best-seller) recopiés tels quels
+      var badges = $$('.badge', item).map(function (b) {
+        return '<span class="' + b.className + '">' + b.textContent + '</span>';
+      }).join('');
+      $('#fiche-badges', sheet).innerHTML = badges;
+
+      // prix : ceux de la rubrique, ou le prix à l'unité du plat
+      var prices = '';
+      if (unit) {
+        prices = '<span class="price-tag"><span>Prix</span><b>' + unit.textContent + '</b></span>';
+      } else if (cat) {
+        prices = $$('.price-tag', cat).map(function (t) { return t.outerHTML; }).join('');
+      }
+      $('#fiche-prix', sheet).innerHTML = prices;
+
+      // ingrédients : la description découpée en pastilles
+      var list = $('#fiche-ing', sheet);
+      list.innerHTML = '';
+      var txt = desc ? desc.textContent.replace(/\.$/, '') : '';
+      txt.split(/,(?![^(]*\))/).forEach(function (part) {
+        var v = part.trim();
+        if (!v) return;
+        var li = document.createElement('li');
+        li.textContent = v.charAt(0).toUpperCase() + v.slice(1);
+        list.appendChild(li);
+      });
+      list.hidden = list.children.length === 0;
+    };
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.item__more');
+      if (!btn) return;
+      fill(btn.closest('.item'));
+      if (typeof sheet.showModal === 'function') sheet.showModal();
+      else sheet.setAttribute('open', '');
+    });
+
+    sheet.addEventListener('click', function (e) {
+      // clic sur le fond ou sur la croix
+      if (e.target === sheet || e.target.closest('[data-sheet-close]')) sheet.close();
+    });
+  }
+
   /* ------------------------------------------------------------------ *
    * 10. Année courante dans le pied de page
    * ------------------------------------------------------------------ */
