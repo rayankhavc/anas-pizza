@@ -96,12 +96,23 @@ async function main() {
   // ── photos du restaurant ────────────────────────────────────────────────
   for (const [slug, width] of Object.entries(SCENES)) {
     const found = listRasters(IMG).find((r) => r.slug === slug);
-    if (!found) continue;
     const dest = path.join(IMG, slug + '.opt.webp');
-    if (!(await convert(found.abs, dest, width))) continue;
-    html = html.split(IMG + '/' + slug + '.jpg').join(IMG + '/' + slug + '.opt.webp');
-    done++;
-    console.log('[build] ' + found.file + ' → ' + slug + '.opt.webp (' + ko(dest) + ')');
+
+    if (found && (await convert(found.abs, dest, width))) {
+      html = html.split(IMG + '/' + slug + '.jpg').join(IMG + '/' + slug + '.opt.webp');
+      done++;
+      console.log('[build] ' + found.file + ' → ' + slug + '.opt.webp (' + ko(dest) + ')');
+      continue;
+    }
+
+    // Pas de photo : on retire la balise <img> plutôt que de laisser le
+    // navigateur chercher un fichier absent. L'illustration de fond reste
+    // visible, et aucune requête inutile n'est envoyée.
+    const tag = new RegExp('\\s*<img[^>]*src="' + IMG + '/' + slug + '\\.jpg"[^>]*>', 'g');
+    if (tag.test(html)) {
+      html = html.replace(tag, '');
+      console.log('[build] pas de photo « ' + slug + ' » : illustration conservée');
+    }
   }
 
   fs.writeFileSync('index.html', html);
