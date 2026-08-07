@@ -132,6 +132,8 @@
           "acceptedAnswer": { "@type": "Answer", "text": "Au 10 allée Duguay Trouin, 44000 Nantes, en plein centre-ville, à quelques minutes à pied du Cours des 50 Otages et du quartier Bouffay." } },
         { "@type": "Question", "name": "Peut-on se faire livrer une pizza Anas Pizza Original ?",
           "acceptedAnswer": { "@type": "Answer", "text": "Oui. La livraison sur Nantes est assurée par Uber Eats. Vous pouvez aussi appeler le 02 59 10 01 98 pour commander à emporter et venir la récupérer." } },
+        { "@type": "Question", "name": "Jusqu’où livre Anas Pizza Original et à partir de quel montant ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Nous livrons Nantes et les communes limitrophes, jusqu’à Saint-Herblain et Saint-Sébastien-sur-Loire. La commande minimum est de 10 € et les frais de livraison sont de 1 €. Comptez 30 à 40 minutes selon l’affluence." } },
         { "@type": "Question", "name": "Peut-on manger sur place ?",
           "acceptedAnswer": { "@type": "Answer", "text": "Oui, la salle vous accueille pour manger sur place, et vous pouvez également commander à emporter." } },
         { "@type": "Question", "name": "Combien coûte une pizza chez Anas Pizza Original ?",
@@ -424,6 +426,7 @@
           <button class="filter" type="button" data-filter="veggie" aria-pressed="false">Végétariennes</button>
           <button class="filter" type="button" data-filter="snacks" aria-pressed="false">Finger food</button>
           <button class="filter" type="button" data-filter="desserts" aria-pressed="false">Desserts</button>
+          <button class="filter" type="button" data-filter="supplements" aria-pressed="false">Suppléments</button>
         </div>
       </div>
 
@@ -437,18 +440,18 @@
           </div>
         </div>
         <div class="items">
-          <article class="item"><p class="item__top"><span class="item__name">4 Fromages</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, chèvre, parmesan.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Sicilienne</span></p><p class="item__desc">Base tomate, mozzarella, câpres, anchois, olives.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Cannibale</span></p><p class="item__desc">Sauce tomate, mozzarella, poulet mariné, viande hachée.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Tikka</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Sauce tomate, mozzarella, poulet mariné, pommes de terre, poivrons.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Mexicaine</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Base tomate, mozzarella, merguez, pepperoni, poivrons, olives.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Campione</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, champignons, œuf.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Regina</span></p><p class="item__desc">Base tomate, mozzarella, chorizo, champignons, olives.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Hamburger</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, oignons, cornichon, cheddar.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Brésilienne</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Oriental</span></p><p class="item__desc">Base tomate, mozzarella, merguez, champignons, œuf.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Salmon Pizza</span></p><p class="item__desc">Sauce tomate, mozzarella, saumon.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Hot Pepper</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, poulet mariné, jalapeños.</p></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/4-fromages.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">4 Fromages</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, chèvre, parmesan.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/sicilienne.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Sicilienne</span></p><p class="item__desc">Base tomate, mozzarella, câpres, anchois, olives.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/cannibale.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Cannibale</span></p><p class="item__desc">Sauce tomate, mozzarella, poulet mariné, viande hachée.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/tikka.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Tikka</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Sauce tomate, mozzarella, poulet mariné, pommes de terre, poivrons.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/mexicaine.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Mexicaine</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Base tomate, mozzarella, merguez, pepperoni, poivrons, olives.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/campione.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Campione</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, champignons, œuf.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/regina.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Regina</span></p><p class="item__desc">Base tomate, mozzarella, chorizo, champignons, olives.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/hamburger.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Hamburger</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, oignons, cornichon, cheddar.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/bresilienne.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Brésilienne</span></p><p class="item__desc">Sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/oriental.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Oriental</span></p><p class="item__desc">Base tomate, mozzarella, merguez, champignons, œuf.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/salmon-pizza.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Salmon Pizza</span></p><p class="item__desc">Sauce tomate, mozzarella, saumon.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/hot-pepper.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Hot Pepper</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, poulet mariné, jalapeños.</p></div></article>
         </div>
       </div>
 
@@ -462,19 +465,19 @@
           </div>
         </div>
         <div class="items">
-          <article class="item"><p class="item__top"><span class="item__name">Chèvre Miel</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Crème fraîche, mozzarella, fromage de chèvre, jambon, miel.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Campagnarde</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, pomme de terre, champignons, boursin.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">La Farmer</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, tenders, boursin, pommes de terre, oignons rouges.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Chicken</span></p><p class="item__desc">Crème fraîche, mozzarella, pomme de terre, poulet fumé.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Kebab</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Crème fraîche, mozzarella, oignons rouges, tomates cerise, kebab, cheddar.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Tartiflette</span></p><p class="item__desc">Crème fraîche, mozzarella, lardons de veau, reblochon, pomme de terre, oignons.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Burger</span></p><p class="item__desc">Crème fraîche, mozzarella, viande hachée, oignons rouges, pickles, cheddar, ketchup.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Western</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Crème fraîche, mozzarella, poulet épicé, poivrons, champignons.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Paysanne</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, oignons rouges, pomme de terre.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Chicago</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, viande hachée, cheddar, œuf.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Française</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon de dinde, lardons de volaille, champignons, olives.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Norvégienne</span></p><p class="item__desc">Crème fraîche, mozzarella, saumon.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Tasty Kabab</span></p><p class="item__desc">Crème fraîche, mozzarella, viande kebab, oignons, poivrons.</p></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/chevre-miel.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Chèvre Miel</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Crème fraîche, mozzarella, fromage de chèvre, jambon, miel.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/campagnarde.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Campagnarde</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, pomme de terre, champignons, boursin.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/la-farmer.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">La Farmer</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, tenders, boursin, pommes de terre, oignons rouges.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/chicken.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Chicken</span></p><p class="item__desc">Crème fraîche, mozzarella, pomme de terre, poulet fumé.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/kebab.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Kebab</span><span class="badge badge--star">Best-seller</span></p><p class="item__desc">Crème fraîche, mozzarella, oignons rouges, tomates cerise, kebab, cheddar.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/tartiflette.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Tartiflette</span></p><p class="item__desc">Crème fraîche, mozzarella, lardons de veau, reblochon, pomme de terre, oignons.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/burger.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Burger</span></p><p class="item__desc">Crème fraîche, mozzarella, viande hachée, oignons rouges, pickles, cheddar, ketchup.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/western.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Western</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Crème fraîche, mozzarella, poulet épicé, poivrons, champignons.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/paysanne.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Paysanne</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, oignons rouges, pomme de terre.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/chicago.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Chicago</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon, viande hachée, cheddar, œuf.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/francaise.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Française</span></p><p class="item__desc">Crème fraîche, mozzarella, jambon de dinde, lardons de volaille, champignons, olives.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/norvegienne.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Norvégienne</span></p><p class="item__desc">Crème fraîche, mozzarella, saumon.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/tasty-kabab.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Tasty Kabab</span></p><p class="item__desc">Crème fraîche, mozzarella, viande kebab, oignons, poivrons.</p></div></article>
         </div>
       </div>
 
@@ -488,11 +491,11 @@
           </div>
         </div>
         <div class="items">
-          <article class="item"><p class="item__top"><span class="item__name">Bollywood</span></p><p class="item__desc">Sauce curry, crème fraîche, mozzarella, poulet mariné, oignons, poivrons.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Buffalo BBQ</span></p><p class="item__desc">Sauce barbecue, sauce tomate, mozzarella, viande hachée, poivrons, oignons.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Algérienne</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Sauce algérienne, sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">La Boursin</span></p><p class="item__desc">Boursin, crème fraîche, mozzarella, poulet mariné, champignons.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Pimento</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Sauce chili thaï, mozzarella, poulet mariné, chorizo, jalapeños, olives.</p></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/bollywood.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Bollywood</span></p><p class="item__desc">Sauce curry, crème fraîche, mozzarella, poulet mariné, oignons, poivrons.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/buffalo-bbq.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Buffalo BBQ</span></p><p class="item__desc">Sauce barbecue, sauce tomate, mozzarella, viande hachée, poivrons, oignons.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/algerienne.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Algérienne</span><span class="badge badge--hot">Relevée</span></p><p class="item__desc">Sauce algérienne, sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/la-boursin.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">La Boursin</span></p><p class="item__desc">Boursin, crème fraîche, mozzarella, poulet mariné, champignons.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/pimento.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Pimento</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Sauce chili thaï, mozzarella, poulet mariné, chorizo, jalapeños, olives.</p></div></article>
         </div>
       </div>
 
@@ -507,9 +510,9 @@
           <p class="menu-cat__note">Les créations de la maison — celles qu’on ne trouve nulle part ailleurs.</p>
         </div>
         <div class="items">
-          <article class="item"><p class="item__top"><span class="item__name">L’Originale</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Crème fraîche, mozzarella, cordon bleu, tenders, boursin, poivrons.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Carnivore</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Sauce tomate, cordon bleu, tenders, bacon de bœuf, viande hachée, cheddar.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">La Burrata</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Sauce tomate, mozzarella, tomates cerises, roquette, basilic, boule de burrata (100 g), crème de vinaigre balsamique.</p></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/loriginale.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">L’Originale</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Crème fraîche, mozzarella, cordon bleu, tenders, boursin, poivrons.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/carnivore.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Carnivore</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Sauce tomate, cordon bleu, tenders, bacon de bœuf, viande hachée, cheddar.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/la-burrata.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">La Burrata</span><span class="badge badge--star">Signature</span></p><p class="item__desc">Sauce tomate, mozzarella, tomates cerises, roquette, basilic, boule de burrata (100 g), crème de vinaigre balsamique.</p></div></article>
         </div>
       </div>
 
@@ -523,11 +526,11 @@
           </div>
         </div>
         <div class="items">
-          <article class="item"><p class="item__top"><span class="item__name">Pêcheur</span></p><p class="item__desc">Sauce tomate, mozzarella, thon, œuf, olives.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Calzone</span></p><p class="item__desc">Sauce tomate, mozzarella, thon ou viande hachée ou jambon.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">L’Original Pepperoni</span></p><p class="item__desc">Sauce tomate, mozzarella, pepperoni.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Hawaïenne</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, ananas.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">4 Saisons</span></p><p class="item__desc">Base tomate, jambon, champignons, artichauts, olives.</p></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/pecheur.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Pêcheur</span></p><p class="item__desc">Sauce tomate, mozzarella, thon, œuf, olives.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/calzone.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Calzone</span></p><p class="item__desc">Sauce tomate, mozzarella, thon ou viande hachée ou jambon.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/loriginal-pepperoni.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">L’Original Pepperoni</span></p><p class="item__desc">Sauce tomate, mozzarella, pepperoni.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/hawaienne.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Hawaïenne</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, ananas.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/4-saisons.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">4 Saisons</span></p><p class="item__desc">Base tomate, jambon, champignons, artichauts, olives.</p></div></article>
         </div>
       </div>
 
@@ -541,10 +544,10 @@
           </div>
         </div>
         <div class="items">
-          <article class="item"><p class="item__top"><span class="item__name">Margherita</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, origan.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Végétarienne</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, poivrons, tomates fraîches, origan, olives.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Veggie Spicy</span><span class="badge badge--veg">Végé</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Base tomate, mozzarella, poivrons, pomme de terre, maïs, jalapeños.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Reine</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, champignons.</p></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/margherita.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Margherita</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, origan.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/vegetarienne.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Végétarienne</span><span class="badge badge--veg">Végé</span></p><p class="item__desc">Base tomate, mozzarella, poivrons, tomates fraîches, origan, olives.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/veggie-spicy.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Veggie Spicy</span><span class="badge badge--veg">Végé</span><span class="badge badge--hot">Piquante</span></p><p class="item__desc">Base tomate, mozzarella, poivrons, pomme de terre, maïs, jalapeños.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/reine.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Reine</span></p><p class="item__desc">Sauce tomate, mozzarella, jambon de dinde, champignons.</p></div></article>
         </div>
       </div>
 
@@ -555,10 +558,10 @@
           <p class="menu-cat__note">Parfait à partager. Ou pas.</p>
         </div>
         <div class="items">
-          <article class="item"><p class="item__top"><span class="item__name">Mozzarella Sticks</span><span class="item__price">4,90 €</span></p><p class="item__desc">6 pièces, servies avec sauce.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Wings</span><span class="item__price">5,90 €</span></p><p class="item__desc">6 ailes de poulet croustillantes.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Nuggets</span><span class="item__price">4,90 €</span></p><p class="item__desc">6 pièces, servies avec sauce.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Maxi Tenders</span><span class="item__price">5,90 €</span></p><p class="item__desc">6 tenders de poulet panés.</p></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/mozzarella-sticks.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Mozzarella Sticks</span><span class="item__price">4,90 €</span></p><p class="item__desc">6 pièces, servies avec sauce.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/wings.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Wings</span><span class="item__price">5,90 €</span></p><p class="item__desc">6 ailes de poulet croustillantes.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/nuggets.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Nuggets</span><span class="item__price">4,90 €</span></p><p class="item__desc">6 pièces, servies avec sauce.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/maxi-tenders.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Maxi Tenders</span><span class="item__price">5,90 €</span></p><p class="item__desc">6 tenders de poulet panés.</p></div></article>
         </div>
       </div>
 
@@ -569,9 +572,23 @@
           <div class="prices"><span class="price-tag"><span>À l’unité</span><b>3,50 €</b></span></div>
         </div>
         <div class="items">
-          <article class="item"><p class="item__top"><span class="item__name">Gâteau amandes &amp; Daim</span><span class="item__price">3,50 €</span></p><p class="item__desc">Le petit gâteau qui fait basculer la fin de repas.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Tiramisu</span><span class="item__price">3,50 €</span></p><p class="item__desc">Mascarpone, café, cacao.</p></article>
-          <article class="item"><p class="item__top"><span class="item__name">Brownie</span><span class="item__price">3,50 €</span></p><p class="item__desc">Chocolat fondant, cœur moelleux.</p></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/gateau-amandes-daim.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Gâteau amandes &amp; Daim</span><span class="item__price">3,50 €</span></p><p class="item__desc">Le petit gâteau qui fait basculer la fin de repas.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/tiramisu.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Tiramisu</span><span class="item__price">3,50 €</span></p><p class="item__desc">Mascarpone, café, cacao.</p></div></article>
+          <article class="item"><img class="item__img" src="assets/img/plats/brownie.svg" alt="" loading="lazy" decoding="async" width="400" height="400"><div class="item__body"><p class="item__top"><span class="item__name">Brownie</span><span class="item__price">3,50 €</span></p><p class="item__desc">Chocolat fondant, cœur moelleux.</p></div></article>
+        </div>
+      </div>
+
+
+      <!-- ─ Suppléments ─ -->
+      <div class="menu-cat" data-cat="supplements">
+        <div class="menu-cat__head">
+          <h3 class="menu-cat__title">Les <em>suppléments</em></h3>
+          <p class="menu-cat__note">À ajouter à n’importe quelle pizza de la carte.</p>
+        </div>
+        <div class="items">
+          <article class="item"><div class="item__body"><p class="item__top"><span class="item__name">Supplément fromage</span><span class="item__price">+ 0,50 €</span></p><p class="item__desc">Mozzarella, chèvre, cheddar, parmesan, boursin, reblochon.</p></div></article>
+          <article class="item"><div class="item__body"><p class="item__top"><span class="item__name">Supplément viande</span><span class="item__price">+ 1,00 €</span></p><p class="item__desc">Viande hachée, merguez, poulet, kebab, chorizo, pepperoni, jambon, lardons, tenders.</p></div></article>
+          <article class="item"><div class="item__body"><p class="item__top"><span class="item__name">Légumes &amp; œuf</span><span class="item__price">+ 0,50 €</span></p><p class="item__desc">Champignons, poivrons, oignons, olives, maïs, jalapeños, pomme de terre, œuf.</p></div></article>
         </div>
       </div>
 
@@ -846,6 +863,17 @@
           </div>
         </div>
 
+
+        <div class="panel review" data-reveal>
+          <h3 class="h-m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.8 6.2 20.8l1.1-6.4L2.6 9.8l6.5-.9Z"/></svg> Vous avez aimé ?</h3>
+          <p>Un avis Google, c’est deux minutes pour vous et beaucoup pour un restaurant de quartier.
+            C’est ce qui décide les gens qui cherchent une pizzeria à Nantes ce soir.</p>
+          <div class="btn-row" style="margin-top:1.1rem">
+            <!-- ⚠️ Remplacer par le lien court fourni par la fiche Google Business Profile
+                 (Google Business Profile → « Demander des avis »). -->
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Anas+Pizza+Original+10+all%C3%A9e+Duguay+Trouin+44000+Nantes" target="_blank" rel="noopener">Laisser un avis Google</a>
+          </div>
+        </div>
         <a class="mapcard" data-reveal href="https://www.google.com/maps/dir/?api=1&amp;destination=10+all%C3%A9e+Duguay+Trouin+44000+Nantes" target="_blank" rel="noopener">
           <span class="mapcard__pin" aria-hidden="true"></span>
           <span class="mapcard__body">
@@ -885,6 +913,18 @@
           <a class="btn btn--block" href="https://www.ubereats.com/fr/store/anas-pizza-original/c4e36jj6SKufKrNpApOBlQ" target="_blank" rel="noopener">Commander sur Uber Eats</a>
         </article>
       </div>
+
+      <div class="delivery" data-reveal>
+        <h3 class="h-m">Livraison à Nantes et alentours</h3>
+        <dl class="delivery__grid">
+          <div><dt>Zone livrée</dt><dd>Nantes et communes limitrophes, jusqu’à Saint-Herblain et Saint-Sébastien-sur-Loire</dd></div>
+          <div><dt>Commande minimum</dt><dd>10 €</dd></div>
+          <div><dt>Frais de livraison</dt><dd>1 €</dd></div>
+          <div><dt>Délai moyen</dt><dd>30 à 40 min en livraison · 15 à 20 min à emporter</dd></div>
+        </dl>
+        <p class="delivery__note">Délais indicatifs, variables selon l’affluence. Un doute sur votre adresse ?
+          Appelez-nous au <a href="tel:+33259100198">02 59 10 01 98</a>.</p>
+      </div>
     </div>
   </section>
 
@@ -908,6 +948,10 @@
         <details class="faq__item">
           <summary>Peut-on se faire livrer une pizza ?</summary>
           <div class="faq__body"><p>Oui. La livraison sur Nantes est assurée par Uber Eats. Vous pouvez aussi appeler le <a href="tel:+33259100198">02 59 10 01 98</a> pour commander à emporter et venir la récupérer.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Jusqu’où livrez-vous, et à partir de quel montant ?</summary>
+          <div class="faq__body"><p>Nous livrons Nantes et les communes limitrophes, jusqu’à Saint-Herblain et Saint-Sébastien-sur-Loire. La commande minimum est de 10 € et les frais de livraison sont de 1 €. Comptez 30 à 40 minutes selon l’affluence.</p></div>
         </details>
         <details class="faq__item">
           <summary>Peut-on manger sur place ?</summary>
