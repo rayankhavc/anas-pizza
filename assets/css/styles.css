@@ -696,3 +696,56 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (min-width:600px){
   .delivery__grid{grid-template-columns:repeat(2,1fr);gap:1.1rem 2rem}
 }
+
+/* --------------------------------------------------------------------------
+   26. Fiche détaillée d'un plat
+   -------------------------------------------------------------------------- */
+.item{position:relative}
+.item__more{
+  position:absolute;inset:0;width:100%;border-radius:var(--r);
+  background:none;cursor:pointer;
+}
+.item__more:hover{background:rgba(28,43,62,.04)}
+.item__more:focus-visible{outline:3px solid var(--orange);outline-offset:-3px}
+
+.sheet{
+  width:min(94vw,520px);max-height:88svh;padding:0;border:0;
+  border-radius:var(--r-l);overflow:auto;overscroll-behavior:contain;
+  background:var(--cream);color:var(--navy-800);
+  --fg:var(--navy-800);--fg-2:#5C6C83;--rule:rgba(28,43,62,.17);--rule-2:rgba(28,43,62,.1);
+  --surface:#FFFDF8;--surface-2:var(--cream-2);
+}
+.sheet::backdrop{background:rgba(15,26,44,.72)}
+.sheet[open]{animation:sheetIn .28s var(--ease)}
+@keyframes sheetIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.sheet__close{
+  position:absolute;top:.7rem;right:.7rem;z-index:2;
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:var(--navy-800);color:var(--cream);font-size:1rem;
+}
+.sheet__close:hover{background:var(--orange)}
+.sheet__img{width:100%;height:auto;aspect-ratio:5/4;object-fit:cover;background:var(--cream-2);display:block}
+.sheet__body{padding:clamp(1.2rem,4vw,1.7rem)}
+.sheet__badges{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.5rem}
+.sheet__badges:empty{display:none}
+.sheet h2{margin-bottom:.5rem}
+.sheet__prices{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.2rem}
+.sheet__label{
+  font:700 .68rem/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fg-2);margin:1.2rem 0 .55rem;padding-bottom:.4rem;border-bottom:1px solid var(--rule);
+}
+.sheet__ing{display:flex;flex-wrap:wrap;gap:.4rem}
+.sheet__ing li{
+  padding:.35rem .7rem;border:1px solid var(--rule);border-radius:var(--r);
+  font:600 .88rem/1 var(--f-body);background:var(--surface);
+}
+.sheet__supp{font-size:.93rem;font-weight:600}
+.sheet__allerg{
+  margin-top:1.3rem;padding:.85rem 1rem;border-left:4px solid var(--orange);
+  background:var(--cream-2);font-size:.86rem;color:#42536B;
+}
+.sheet .btn-row{margin-top:1.3rem}
+@media (min-width:560px){
+  .sheet{width:min(94vw,760px);display:grid;grid-template-columns:260px 1fr}
+  .sheet__img{height:100%;aspect-ratio:auto}
+}
