@@ -354,7 +354,8 @@
 
       var sImg = $('#fiche-img', sheet);
       if (img) {
-        sImg.src = img.getAttribute('src');
+        // les vignettes optimisées existent en 256 et 720 : la fiche prend la grande
+        sImg.src = img.getAttribute('src').replace('-256.webp', '-720.webp');
         sImg.alt = '';
         sImg.hidden = false;
       } else {

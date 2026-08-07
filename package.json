@@ -1,0 +1,11 @@
+{
+  "name": "anas-pizza",
+  "private": true,
+  "description": "Site vitrine d'Anas Pizza Original, Nantes.",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.0"
+  }
+}
