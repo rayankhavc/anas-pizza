@@ -56,8 +56,10 @@ redimensionner ou de compresser : une photo de téléphone de 4 Mo devient une
 vignette de 1 à 2 Ko et une grande image de 5 à 15 Ko. L'orientation EXIF est
 respectée, donc les photos prises à la verticale ne se retrouvent pas couchées.
 
-Un plat sans photo garde son illustration. On peut donc n'en ajouter que
-quelques-unes et compléter au fil du temps.
+Un plat sans photo garde son illustration : on peut donc remplacer les photos
+une par une, au fil du temps, sans jamais casser la page. Les 49 illustrations
+générées restent dans le dépôt et reprennent le relais dès qu'une photo est
+retirée.
 
 ### Photos du restaurant
 
