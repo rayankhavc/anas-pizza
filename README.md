@@ -28,14 +28,52 @@ assets/img/                         logo, favicon, image de partage, photos
    grep -rl "anaspizza-nantes.fr" . --include="*.html" --include="*.xml" --include="*.txt" \
      | xargs sed -i 's|https://www.anaspizza-nantes.fr|https://VOTRE-DOMAINE|g'
    ```
-2. **Photos (facultatif)** — la section « La maison » est illustrée par des
-   dessins vectoriels intégrés : le site est complet tel quel. Pour passer aux
-   vraies photos, déposer `devanture`, `salle` ou `pizza` dans `assets/img/` ;
-   l'extension n'a pas d'importance (`.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`,
-   majuscules comprises). La photo recouvre l'illustration automatiquement.
-   Voir `assets/img/README.md`.
+2. **Photos** — voir « Ajouter une photo » ci-dessous : il suffit de déposer
+   un fichier au bon nom, tout le reste est automatique.
 3. **Mentions légales** — compléter les coordonnées du médiateur de la consommation,
    et adapter l'hébergeur si le site n'est pas sur GitHub Pages.
+
+## Ajouter une photo
+
+**Une seule chose à faire : déposer le fichier au bon nom.** Le reste est
+automatique à chaque déploiement — redimensionnement, conversion en WebP,
+remplacement de l'illustration.
+
+### Photo d'un plat
+
+Le nom du fichier doit reprendre celui du plat, sans accent ni majuscule, les
+espaces remplacés par des tirets. Le nom exact est celui du fichier `.svg`
+déjà présent dans `assets/img/plats/` :
+
+| Plat | Fichier à déposer |
+|------|-------------------|
+| Tikka | `assets/img/plats/tikka.jpg` |
+| Chèvre Miel | `assets/img/plats/chevre-miel.jpg` |
+| L'Originale | `assets/img/plats/l-originale.jpg` |
+
+`.jpg`, `.jpeg`, `.png`, `.webp`, `.avif` et `.tiff` fonctionnent. Inutile de
+redimensionner ou de compresser : une photo de téléphone de 4 Mo devient une
+vignette de 1 à 2 Ko et une grande image de 5 à 15 Ko. L'orientation EXIF est
+respectée, donc les photos prises à la verticale ne se retrouvent pas couchées.
+
+Un plat sans photo garde son illustration. On peut donc n'en ajouter que
+quelques-unes et compléter au fil du temps.
+
+### Photos du restaurant
+
+Même principe à la racine d'`assets/img/` : `devanture`, `salle`, `pizza`.
+
+### La méthode la plus courte, sans git
+
+Sur GitHub, ouvrir le dossier `assets/img/plats/` → **Add file** → **Upload
+files** → glisser les photos → **Commit changes**. Vercel reconstruit tout seul,
+les photos sont en ligne en une minute.
+
+### Vérifier ce qui s'est passé
+
+Le journal de construction Vercel indique, pour chaque photo, le fichier
+source, les tailles produites et le poids obtenu. Si un nom ne correspond à
+aucun plat, il le signale sans interrompre le déploiement.
 
 ## Modifier la carte
 
