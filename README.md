@@ -125,7 +125,8 @@ cuisine.html                  écran cuisine (interne, non indexé)
 cgv.html                      conditions de vente + tableau des allergènes
 assets/data/carte.json        catalogue généré — ne pas modifier à la main
 api/_panier.js                calcul du prix, côté serveur
-api/commande.js               POST : recalcule, vérifie, ouvre le paiement Stripe
+api/_paiement.js              ouverture de la page de paiement (SumUp ou Stripe)
+api/commande.js               POST : recalcule, vérifie, ouvre le paiement
 api/cuisine.js                GET  : les commandes payées du service en cours
 outils/carte.js               index.html → carte.json
 outils/cgv.js                 carte.json → tableau des allergènes dans cgv.html
@@ -153,16 +154,44 @@ npm test           # vérifie que les prix tombent juste
 
 Le déploiement fait les deux tout seul (`npm run build`).
 
-### Variables d'environnement (Vercel)
+### Prestataire de paiement
+
+Le restaurant encaisse déjà par **SumUp** au comptoir. Le site utilise le
+même compte&nbsp;: pas de second compte marchand à ouvrir, et les recettes du
+site tombent au même endroit que celles de la boutique — une seule
+réconciliation bancaire.
+
+`api/_paiement.js` sait parler aux deux prestataires et choisit selon les
+variables présentes. Passer de l'un à l'autre ne demande aucune modification
+de code, seulement un changement de variables.
 
 | Variable | Rôle | Sans elle |
 |---|---|---|
-| `STRIPE_SECRET_KEY` | clé secrète du compte Stripe **du restaurant** | la page de commande fonctionne, le bouton de paiement affiche « commandez par téléphone » |
+| `SUMUP_API_KEY` | clé API du compte SumUp du restaurant (`sup_sk_…`) | — |
+| `SUMUP_MERCHANT_CODE` | code marchand SumUp | — |
+| `STRIPE_SECRET_KEY` | solution de repli si le compte bascule sur Stripe | — |
 | `CUISINE_CODE` | code d'accès de l'écran cuisine | `/cuisine` répond « non configuré » |
 
-Le compte Stripe doit être celui d'ANAS PIZZA, avec son SIREN et son IBAN.
-Un compte au nom de l'agence ferait de l'agence le vendeur&nbsp;: elle
-encaisserait le chiffre d'affaires du restaurant et répondrait des litiges.
+Sans aucune de ces clés, la page de commande fonctionne de bout en bout et le
+bouton de paiement renvoie vers le téléphone. Rien ne casse&nbsp;: le site
+reste vendeur par téléphone tant que le paiement n'est pas branché.
+
+Le compte doit rester **celui d'ANAS PIZZA**. Un compte au nom de l'agence
+ferait de l'agence le vendeur&nbsp;: elle encaisserait le chiffre d'affaires
+du restaurant et répondrait des litiges clients.
+
+### Le ticket de cuisine
+
+SumUp n'offre pas de champ de métadonnées libre comme Stripe. Le ticket
+voyage donc dans le champ `description` du paiement, sous une forme dense
+relue par l'écran cuisine&nbsp;:
+
+```
+LIVRAISON | 2× Tikka — Large + Merguez ; 1× Coca-Cola | Dupont 0612345678 | 3 rue des Olivettes 44000 Nantes | NOTE : sans olives
+```
+
+Une commande courante tient en 130 caractères, le format est tronqué à 380 par
+sécurité, et `npm test` vérifie qu'un ticket écrit est relu à l'identique.
 
 ### Zone de livraison, minimum, frais
 
