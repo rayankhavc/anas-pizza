@@ -38,7 +38,7 @@
   --navy-700:#25384F;
   --navy-600:#33495F;
   --orange:#F4650F;     /* orange des murs de la salle */
-  --orange-800:#C94D06;
+  --orange-800:#A63C06;   /* orange foncé : 5,7:1 sur crème, 4,9:1 sur encadré, 6:1 sous du blanc */
   --red:#D0202A;        /* rouge du logo rond */
   --red-800:#A5151E;
   --brand-gold:#EFAA3C; /* le « PIZZA » doré de l'enseigne */
@@ -106,6 +106,11 @@
    3. Base
    -------------------------------------------------------------------------- */
 *,*::before,*::after{box-sizing:border-box}
+/* Un display: explicite l'emporte sur la règle [hidden] du navigateur. Sans
+   cette ligne, masquer un élément en JavaScript ne le masque pas dès qu'il
+   porte un display: dans la feuille — le formulaire d'accès de l'écran
+   cuisine restait visible après déverrouillage pour cette seule raison. */
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--hdr) + 12px)}
 body{
   margin:0;
@@ -167,7 +172,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
   padding:.85rem 1.4rem;min-height:50px;border-radius:var(--r);
-  background:var(--orange);color:#fff;border:2px solid var(--orange);
+  background:var(--orange-800);color:#fff;border:2px solid var(--orange-800);
   font:700 1rem/1 var(--f-cond);letter-spacing:.07em;text-transform:uppercase;
   white-space:nowrap;
   transition:background-color .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease);
@@ -210,7 +215,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .header.is-stuck{border-bottom-color:rgba(246,241,231,.14)}
 .header__inner{display:flex;align-items:center;gap:.9rem;height:var(--hdr)}
 
-.brand{display:inline-flex;align-items:center;gap:.6rem;color:var(--cream);flex:none}
+.brand{display:inline-flex;align-items:center;gap:.6rem;color:var(--cream);flex:none;min-height:44px}
 .brand__mark{width:36px;height:36px;flex:none}
 .brand__txt{display:grid;line-height:1}
 .brand__a{font:700 italic 1.2rem/1 var(--f-serif)}
@@ -232,7 +237,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .header__tel svg{width:15px;height:15px}
 .header__tel:hover{background:var(--orange);border-color:var(--orange);color:#fff}
 
-.burger{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:var(--r);border:1.5px solid rgba(246,241,231,.28)}
+.burger{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:var(--r);border:1.5px solid rgba(246,241,231,.28)}
 .burger span{display:block;width:18px;height:2px;background:var(--cream);transition:transform .3s var(--ease),opacity .16s}
 .burger span+span{margin-top:5px}
 .burger[aria-expanded=true] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -251,7 +256,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .drawer.is-open .drawer__panel{transform:none}
 .drawer__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.drawer__close{width:42px;height:42px;border-radius:var(--r);border:1.5px solid var(--rule);display:grid;place-items:center;font-size:1.2rem}
+.drawer__close{width:44px;height:44px;border-radius:var(--r);border:1.5px solid var(--rule);display:grid;place-items:center;font-size:1.2rem}
 .drawer__link{
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
   padding:.9rem .1rem;border-bottom:1px solid var(--rule-2);
@@ -357,7 +362,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .filter[aria-pressed=true]{background:var(--navy-800);border-color:var(--navy-800);color:var(--cream)}
 
 .menu-cat{margin-bottom:clamp(2rem,4.5vw,3rem);scroll-margin-top:calc(var(--hdr) + 110px)}
-.menu-cat[hidden]{display:none}
 .menu-cat__head{
   display:flex;flex-wrap:wrap;align-items:flex-end;gap:.5rem 1rem;
   padding-bottom:.6rem;margin-bottom:1rem;border-bottom:3px solid var(--navy-800);
@@ -375,7 +379,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   display:grid;grid-template-columns:64px 1fr;gap:.85rem;align-items:start;
   padding:.8rem 0;border-bottom:1px solid var(--rule-2);
 }
-.item[hidden]{display:none}
 .item__img{
   width:64px;height:64px;border-radius:50%;flex:none;
   background:var(--surface-2);
@@ -516,7 +519,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .footer__list a{color:#A6B6CE;font-size:.94rem}
 .footer__list a:hover{color:var(--gold)}
 .footer__bottom{border-top:1px solid rgba(246,241,231,.14);padding-top:1.3rem;display:grid;gap:.7rem;font-size:.85rem;color:#8FA0BA}
-.footer__bottom nav{display:flex;flex-wrap:wrap;gap:.3rem 1rem}
+.footer__bottom nav{display:flex;flex-wrap:wrap;gap:0 1rem}
+/* liens légaux : 22 px de haut au clic, on remonte à la cible de 44 px */
+.footer__bottom nav a{display:inline-flex;align-items:center;min-height:44px}
 .footer__bottom a:hover{color:var(--gold)}
 .credit{
   max-width:none;
@@ -552,7 +557,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    19. Pages internes (mentions légales, confidentialité, 404)
    -------------------------------------------------------------------------- */
 .page-hero{background:var(--navy-800);color:var(--cream);padding-block:clamp(2.2rem,6vw,3.4rem) clamp(1.6rem,4vw,2.2rem);border-bottom:3px solid var(--orange)}
-.crumbs{display:flex;flex-wrap:wrap;gap:.35rem;font-size:.85rem;color:#A6B6CE;margin-bottom:.9rem}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;font-size:.85rem;color:#A6B6CE;margin-bottom:.9rem}
+.crumbs a{display:inline-flex;align-items:center;min-height:44px}
 .crumbs a:hover{color:var(--gold)}
 .prose{max-width:74ch;padding-block:clamp(2rem,5vw,3rem)}
 .section .prose{padding-block:0}
@@ -562,6 +568,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .prose p,.prose li{color:#42536B}
 .prose p+p{margin-top:.8rem}
 .prose a{color:var(--orange-800);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+/* Un bouton reste un bouton, même au milieu d'un texte : sans cette ligne,
+   « .prose a » l'emporte sur « .btn » et le libellé devient orange sur
+   orange, illisible. */
+.prose a.btn{color:#fff;text-decoration:none}
+.prose a.btn--ghost{color:var(--fg)}
+.prose a.btn--ghost:hover{color:#fff}
 .prose ul{margin:.7rem 0;display:grid;gap:.4rem}
 .prose ul li{position:relative;padding-left:1.2rem}
 .prose ul li::before{content:"";position:absolute;left:.1rem;top:.6em;width:5px;height:5px;background:var(--orange)}
@@ -577,7 +589,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .note{padding:1rem 1.1rem;border-left:4px solid var(--orange);background:var(--surface-2);margin:1.2rem 0;font-size:.93rem}
 .toc{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.8rem}
-.toc a{padding:.4rem .75rem;border:1px solid var(--rule);color:var(--fg-2);font:600 .82rem/1 var(--f-body)}
+.toc a{display:inline-flex;align-items:center;min-height:44px;padding:.4rem .75rem;border:1px solid var(--rule);color:var(--fg-2);font:600 .82rem/1 var(--f-body)}
 .toc a:hover{background:var(--navy-800);border-color:var(--navy-800);color:var(--cream)}
 
 .err{min-height:60vh;display:grid;place-content:center;text-align:center;gap:1.1rem;padding-block:4rem}
@@ -594,7 +606,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    -------------------------------------------------------------------------- */
 @media (max-width:419px){
   .header__tel span{display:none}
-  .header__tel{width:42px;height:42px;padding:0;justify-content:center}
+  .header__tel{width:44px;height:44px;padding:0;justify-content:center}
   .header__inner{gap:.55rem}
 }
 
@@ -761,7 +773,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .page-commande .footer{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
 .page-commande .actionbar{display:none!important}
 
-.cmd__panel[hidden]{display:none}
 .cmd__panel .lead{margin-bottom:1.6rem}
 .cmd__note{font-size:.88rem;color:var(--fg-2);margin-top:1.2rem}
 .cmd__note--pay{display:flex;align-items:center;gap:.5rem;justify-content:center;text-align:left}
@@ -770,7 +781,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   margin:1rem 0;padding:.85rem 1rem;border-left:4px solid var(--red);
   background:#FDECEC;color:#8C1219;font-size:.9rem;font-weight:600;
 }
-.cmd__erreur[hidden]{display:none}
 .cmd__legal{font-size:.82rem;color:var(--fg-2);margin:1.4rem 0 1rem;line-height:1.55}
 .cmd__back{
   display:inline-flex;align-items:center;min-height:44px;margin-bottom:.4rem;
@@ -791,7 +801,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .steps__i span{
   width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
-  background:var(--rule);color:var(--fg-2);font-size:.68rem;
+  background:var(--navy-800);color:var(--cream);font-size:.68rem;
 }
 .steps__i.is-on{border-color:var(--navy-800);color:var(--fg)}
 .steps__i.is-on span{background:var(--navy-800);color:var(--cream)}
@@ -813,7 +823,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* étape 2 — rubriques */
 .cmd__tabs{margin-bottom:1.4rem}
-.cmd__cat[hidden]{display:none}
 .cmd__cats .item__more{cursor:pointer}
 
 /* fiche produit : options */
@@ -879,7 +888,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background:var(--navy-900);border-top:1px solid rgba(246,241,231,.16);
   padding-bottom:env(safe-area-inset-bottom);
 }
-.cart[hidden]{display:none}
 .cart__inner{display:flex;align-items:center;gap:.7rem;padding-block:.6rem}
 .cart__see{display:flex;align-items:center;gap:.6rem;flex:1;min-height:48px;color:var(--cream);text-align:left}
 .cart__n{
@@ -891,7 +899,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .cart__go{flex:none}
 .cart__go[disabled]{opacity:.45;pointer-events:none}
 .cart__list{max-height:46vh;overflow-y:auto;border-top:1px solid rgba(246,241,231,.16);padding:.6rem clamp(1rem,4vw,2rem)}
-.cart__list[hidden]{display:none}
 .cart__line{display:grid;grid-template-columns:auto 1fr auto auto;gap:.6rem;align-items:center;padding:.45rem 0;color:var(--cream)}
 .cart__q{font:700 .9rem/1 var(--f-cond);color:var(--gold)}
 .cart__n2{font-size:.9rem}
@@ -904,7 +911,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   padding:.6rem clamp(1rem,4vw,2rem);background:var(--red);color:#fff;
   font-size:.85rem;font-weight:600;text-align:center;
 }
-.cart__avert[hidden]{display:none}
 
 /* tableau des allergènes (CGV) */
 .allerg{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.9rem}
@@ -914,7 +920,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   font:700 .7rem/1.2 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;
   position:sticky;top:calc(var(--hdr) - 1px);z-index:1;
 }
-.allerg tbody th{font-weight:700;color:var(--fg);width:42%}
+/* .prose th donne un fond bleu marine à TOUTES les cellules d'en-tête ;
+   sans cette remise à zéro, les noms de plats sont bleu sur bleu. */
+.allerg tbody th{background:transparent;font-weight:700;color:var(--fg);width:42%}
 .allerg td{color:#42536B}
 .allerg__cat th{
   background:var(--cream-2);color:var(--orange-800);
@@ -993,4 +1001,3 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ordercard--site .ordercard__badge{background:var(--orange);color:#fff}
 .merci__ref{margin:-1rem 0 1.6rem;font-size:.92rem;color:var(--fg-2)}
 .merci__ref b{font:700 1.1rem/1 var(--f-cond);color:var(--fg);letter-spacing:.06em}
-.merci__ref[hidden]{display:none}

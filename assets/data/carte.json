@@ -181,7 +181,7 @@
      "id": "4-fromages",
      "nom": "4 Fromages",
      "description": "Base tomate, mozzarella, chèvre, parmesan.",
-     "photo": "assets/img/plats/4-fromages.svg",
+     "photo": "assets/img/plats/opt/4-fromages-256.webp",
      "badges": [
       {
        "type": "veg",
@@ -203,7 +203,7 @@
      "id": "sicilienne",
      "nom": "Sicilienne",
      "description": "Base tomate, mozzarella, câpres, anchois, olives.",
-     "photo": "assets/img/plats/sicilienne.svg",
+     "photo": "assets/img/plats/opt/sicilienne-256.webp",
      "badges": [],
      "ingredients": [
       "Base tomate",
@@ -223,7 +223,7 @@
      "id": "cannibale",
      "nom": "Cannibale",
      "description": "Sauce tomate, mozzarella, poulet mariné, viande hachée.",
-     "photo": "assets/img/plats/cannibale.svg",
+     "photo": "assets/img/plats/opt/cannibale-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -240,7 +240,7 @@
      "id": "tikka",
      "nom": "Tikka",
      "description": "Sauce tomate, mozzarella, poulet mariné, pommes de terre, poivrons.",
-     "photo": "assets/img/plats/tikka.svg",
+     "photo": "assets/img/plats/opt/tikka-256.webp",
      "badges": [
       {
        "type": "star",
@@ -263,7 +263,7 @@
      "id": "mexicaine",
      "nom": "Mexicaine",
      "description": "Base tomate, mozzarella, merguez, pepperoni, poivrons, olives.",
-     "photo": "assets/img/plats/mexicaine.svg",
+     "photo": "assets/img/plats/opt/mexicaine-256.webp",
      "badges": [
       {
        "type": "hot",
@@ -280,15 +280,14 @@
      ],
      "allergenes": [
       "gluten",
-      "lait",
-      "sulfites"
+      "lait"
      ]
     },
     {
      "id": "campione",
      "nom": "Campione",
      "description": "Sauce tomate, mozzarella, viande hachée, champignons, œuf.",
-     "photo": "assets/img/plats/campione.svg",
+     "photo": "assets/img/plats/opt/campione-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -298,7 +297,6 @@
       "œuf"
      ],
      "allergenes": [
-      "fruits à coque",
       "gluten",
       "lait",
       "oeufs"
@@ -308,7 +306,7 @@
      "id": "regina",
      "nom": "Regina",
      "description": "Base tomate, mozzarella, chorizo, champignons, olives.",
-     "photo": "assets/img/plats/regina.svg",
+     "photo": "assets/img/plats/opt/regina-256.webp",
      "badges": [],
      "ingredients": [
       "Base tomate",
@@ -318,17 +316,15 @@
       "olives"
      ],
      "allergenes": [
-      "fruits à coque",
       "gluten",
-      "lait",
-      "sulfites"
+      "lait"
      ]
     },
     {
      "id": "hamburger",
      "nom": "Hamburger",
      "description": "Sauce tomate, mozzarella, viande hachée, oignons, cornichon, cheddar.",
-     "photo": "assets/img/plats/hamburger.svg",
+     "photo": "assets/img/plats/opt/hamburger-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -347,7 +343,7 @@
      "id": "bresilienne",
      "nom": "Brésilienne",
      "description": "Sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.",
-     "photo": "assets/img/plats/bresilienne.svg",
+     "photo": "assets/img/plats/opt/bresilienne-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -359,15 +355,14 @@
      ],
      "allergenes": [
       "gluten",
-      "lait",
-      "sulfites"
+      "lait"
      ]
     },
     {
      "id": "oriental",
      "nom": "Oriental",
      "description": "Base tomate, mozzarella, merguez, champignons, œuf.",
-     "photo": "assets/img/plats/oriental.svg",
+     "photo": "assets/img/plats/opt/oriental-256.webp",
      "badges": [],
      "ingredients": [
       "Base tomate",
@@ -377,7 +372,6 @@
       "œuf"
      ],
      "allergenes": [
-      "fruits à coque",
       "gluten",
       "lait",
       "oeufs"
@@ -387,7 +381,7 @@
      "id": "salmon-pizza",
      "nom": "Salmon Pizza",
      "description": "Sauce tomate, mozzarella, saumon.",
-     "photo": "assets/img/plats/salmon-pizza.svg",
+     "photo": "assets/img/plats/opt/salmon-pizza-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -404,7 +398,7 @@
      "id": "hot-pepper",
      "nom": "Hot Pepper",
      "description": "Sauce tomate, mozzarella, jambon de dinde, poulet mariné, jalapeños.",
-     "photo": "assets/img/plats/hot-pepper.svg",
+     "photo": "assets/img/plats/opt/hot-pepper-256.webp",
      "badges": [
       {
        "type": "hot",
@@ -446,7 +440,7 @@
      "id": "chevre-miel",
      "nom": "Chèvre Miel",
      "description": "Crème fraîche, mozzarella, fromage de chèvre, jambon, miel.",
-     "photo": "assets/img/plats/chevre-miel.svg",
+     "photo": "assets/img/plats/opt/chevre-miel-256.webp",
      "badges": [
       {
        "type": "star",
@@ -469,7 +463,7 @@
      "id": "campagnarde",
      "nom": "Campagnarde",
      "description": "Crème fraîche, mozzarella, jambon, pomme de terre, champignons, boursin.",
-     "photo": "assets/img/plats/campagnarde.svg",
+     "photo": "assets/img/plats/opt/campagnarde-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -480,7 +474,6 @@
       "boursin"
      ],
      "allergenes": [
-      "fruits à coque",
       "gluten",
       "lait"
      ]
@@ -489,7 +482,7 @@
      "id": "la-farmer",
      "nom": "La Farmer",
      "description": "Crème fraîche, mozzarella, jambon, tenders, boursin, pommes de terre, oignons rouges.",
-     "photo": "assets/img/plats/la-farmer.svg",
+     "photo": "assets/img/plats/opt/la-farmer-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -509,7 +502,7 @@
      "id": "chicken",
      "nom": "Chicken",
      "description": "Crème fraîche, mozzarella, pomme de terre, poulet fumé.",
-     "photo": "assets/img/plats/chicken.svg",
+     "photo": "assets/img/plats/opt/chicken-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -526,7 +519,7 @@
      "id": "kebab",
      "nom": "Kebab",
      "description": "Crème fraîche, mozzarella, oignons rouges, tomates cerise, kebab, cheddar.",
-     "photo": "assets/img/plats/kebab.svg",
+     "photo": "assets/img/plats/opt/kebab-256.webp",
      "badges": [
       {
        "type": "star",
@@ -550,7 +543,7 @@
      "id": "tartiflette",
      "nom": "Tartiflette",
      "description": "Crème fraîche, mozzarella, lardons de veau, reblochon, pomme de terre, oignons.",
-     "photo": "assets/img/plats/tartiflette.svg",
+     "photo": "assets/img/plats/opt/tartiflette-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -569,7 +562,7 @@
      "id": "burger",
      "nom": "Burger",
      "description": "Crème fraîche, mozzarella, viande hachée, oignons rouges, pickles, cheddar, ketchup.",
-     "photo": "assets/img/plats/burger.svg",
+     "photo": "assets/img/plats/opt/burger-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -589,7 +582,7 @@
      "id": "western",
      "nom": "Western",
      "description": "Crème fraîche, mozzarella, poulet épicé, poivrons, champignons.",
-     "photo": "assets/img/plats/western.svg",
+     "photo": "assets/img/plats/opt/western-256.webp",
      "badges": [
       {
        "type": "hot",
@@ -604,7 +597,6 @@
       "champignons"
      ],
      "allergenes": [
-      "fruits à coque",
       "gluten",
       "lait"
      ]
@@ -613,7 +605,7 @@
      "id": "paysanne",
      "nom": "Paysanne",
      "description": "Crème fraîche, mozzarella, jambon, oignons rouges, pomme de terre.",
-     "photo": "assets/img/plats/paysanne.svg",
+     "photo": "assets/img/plats/opt/paysanne-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -631,7 +623,7 @@
      "id": "chicago",
      "nom": "Chicago",
      "description": "Crème fraîche, mozzarella, jambon, viande hachée, cheddar, œuf.",
-     "photo": "assets/img/plats/chicago.svg",
+     "photo": "assets/img/plats/opt/chicago-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -651,7 +643,7 @@
      "id": "francaise",
      "nom": "Française",
      "description": "Crème fraîche, mozzarella, jambon de dinde, lardons de volaille, champignons, olives.",
-     "photo": "assets/img/plats/francaise.svg",
+     "photo": "assets/img/plats/opt/francaise-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -662,17 +654,15 @@
       "olives"
      ],
      "allergenes": [
-      "fruits à coque",
       "gluten",
-      "lait",
-      "sulfites"
+      "lait"
      ]
     },
     {
      "id": "norvegienne",
      "nom": "Norvégienne",
      "description": "Crème fraîche, mozzarella, saumon.",
-     "photo": "assets/img/plats/norvegienne.svg",
+     "photo": "assets/img/plats/opt/norvegienne-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -689,7 +679,7 @@
      "id": "tasty-kabab",
      "nom": "Tasty Kabab",
      "description": "Crème fraîche, mozzarella, viande kebab, oignons, poivrons.",
-     "photo": "assets/img/plats/tasty-kabab.svg",
+     "photo": "assets/img/plats/opt/tasty-kabab-256.webp",
      "badges": [],
      "ingredients": [
       "Crème fraîche",
@@ -726,7 +716,7 @@
      "id": "bollywood",
      "nom": "Bollywood",
      "description": "Sauce curry, crème fraîche, mozzarella, poulet mariné, oignons, poivrons.",
-     "photo": "assets/img/plats/bollywood.svg",
+     "photo": "assets/img/plats/opt/bollywood-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce curry",
@@ -745,7 +735,7 @@
      "id": "buffalo-bbq",
      "nom": "Buffalo BBQ",
      "description": "Sauce barbecue, sauce tomate, mozzarella, viande hachée, poivrons, oignons.",
-     "photo": "assets/img/plats/buffalo-bbq.svg",
+     "photo": "assets/img/plats/opt/buffalo-bbq-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce barbecue",
@@ -765,7 +755,7 @@
      "id": "algerienne",
      "nom": "Algérienne",
      "description": "Sauce algérienne, sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.",
-     "photo": "assets/img/plats/algerienne.svg",
+     "photo": "assets/img/plats/opt/algerienne-256.webp",
      "badges": [
       {
        "type": "hot",
@@ -784,15 +774,14 @@
      "allergenes": [
       "gluten",
       "lait",
-      "moutarde",
-      "sulfites"
+      "moutarde"
      ]
     },
     {
      "id": "la-boursin",
      "nom": "La Boursin",
      "description": "Boursin, crème fraîche, mozzarella, poulet mariné, champignons.",
-     "photo": "assets/img/plats/la-boursin.svg",
+     "photo": "assets/img/plats/opt/la-boursin-256.webp",
      "badges": [],
      "ingredients": [
       "Boursin",
@@ -802,7 +791,6 @@
       "champignons"
      ],
      "allergenes": [
-      "fruits à coque",
       "gluten",
       "lait"
      ]
@@ -811,7 +799,7 @@
      "id": "pimento",
      "nom": "Pimento",
      "description": "Sauce chili thaï, mozzarella, poulet mariné, chorizo, jalapeños, olives.",
-     "photo": "assets/img/plats/pimento.svg",
+     "photo": "assets/img/plats/opt/pimento-256.webp",
      "badges": [
       {
        "type": "hot",
@@ -828,8 +816,7 @@
      ],
      "allergenes": [
       "gluten",
-      "lait",
-      "sulfites"
+      "lait"
      ]
     }
    ]
@@ -855,7 +842,7 @@
      "id": "loriginale",
      "nom": "L’Originale",
      "description": "Crème fraîche, mozzarella, cordon bleu, tenders, boursin, poivrons.",
-     "photo": "assets/img/plats/loriginale.svg",
+     "photo": "assets/img/plats/opt/loriginale-256.webp",
      "badges": [
       {
        "type": "star",
@@ -880,7 +867,7 @@
      "id": "carnivore",
      "nom": "Carnivore",
      "description": "Sauce tomate, cordon bleu, tenders, bacon de bœuf, viande hachée, cheddar.",
-     "photo": "assets/img/plats/carnivore.svg",
+     "photo": "assets/img/plats/opt/carnivore-256.webp",
      "badges": [
       {
        "type": "star",
@@ -905,7 +892,7 @@
      "id": "la-burrata",
      "nom": "La Burrata",
      "description": "Sauce tomate, mozzarella, tomates cerises, roquette, basilic, boule de burrata (100 g), crème de vinaigre balsamique.",
-     "photo": "assets/img/plats/la-burrata.svg",
+     "photo": "assets/img/plats/opt/la-burrata-256.webp",
      "badges": [
       {
        "type": "star",
@@ -950,7 +937,7 @@
      "id": "pecheur",
      "nom": "Pêcheur",
      "description": "Sauce tomate, mozzarella, thon, œuf, olives.",
-     "photo": "assets/img/plats/pecheur.svg",
+     "photo": "assets/img/plats/opt/pecheur-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -963,15 +950,14 @@
       "gluten",
       "lait",
       "oeufs",
-      "poissons",
-      "sulfites"
+      "poissons"
      ]
     },
     {
      "id": "calzone",
      "nom": "Calzone",
      "description": "Sauce tomate, mozzarella, thon ou viande hachée ou jambon.",
-     "photo": "assets/img/plats/calzone.svg",
+     "photo": "assets/img/plats/opt/calzone-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -988,7 +974,7 @@
      "id": "loriginal-pepperoni",
      "nom": "L’Original Pepperoni",
      "description": "Sauce tomate, mozzarella, pepperoni.",
-     "photo": "assets/img/plats/loriginal-pepperoni.svg",
+     "photo": "assets/img/plats/opt/loriginal-pepperoni-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -1004,7 +990,7 @@
      "id": "hawaienne",
      "nom": "Hawaïenne",
      "description": "Sauce tomate, mozzarella, jambon de dinde, ananas.",
-     "photo": "assets/img/plats/hawaienne.svg",
+     "photo": "assets/img/plats/opt/hawaienne-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -1021,7 +1007,7 @@
      "id": "4-saisons",
      "nom": "4 Saisons",
      "description": "Base tomate, jambon, champignons, artichauts, olives.",
-     "photo": "assets/img/plats/4-saisons.svg",
+     "photo": "assets/img/plats/opt/4-saisons-256.webp",
      "badges": [],
      "ingredients": [
       "Base tomate",
@@ -1031,9 +1017,7 @@
       "olives"
      ],
      "allergenes": [
-      "fruits à coque",
-      "gluten",
-      "sulfites"
+      "gluten"
      ]
     }
    ]
@@ -1059,7 +1043,7 @@
      "id": "margherita",
      "nom": "Margherita",
      "description": "Base tomate, mozzarella, origan.",
-     "photo": "assets/img/plats/margherita.svg",
+     "photo": "assets/img/plats/opt/margherita-256.webp",
      "badges": [
       {
        "type": "veg",
@@ -1080,7 +1064,7 @@
      "id": "vegetarienne",
      "nom": "Végétarienne",
      "description": "Base tomate, mozzarella, poivrons, tomates fraîches, origan, olives.",
-     "photo": "assets/img/plats/vegetarienne.svg",
+     "photo": "assets/img/plats/opt/vegetarienne-256.webp",
      "badges": [
       {
        "type": "veg",
@@ -1097,15 +1081,14 @@
      ],
      "allergenes": [
       "gluten",
-      "lait",
-      "sulfites"
+      "lait"
      ]
     },
     {
      "id": "veggie-spicy",
      "nom": "Veggie Spicy",
      "description": "Base tomate, mozzarella, poivrons, pomme de terre, maïs, jalapeños.",
-     "photo": "assets/img/plats/veggie-spicy.svg",
+     "photo": "assets/img/plats/opt/veggie-spicy-256.webp",
      "badges": [
       {
        "type": "veg",
@@ -1133,7 +1116,7 @@
      "id": "reine",
      "nom": "Reine",
      "description": "Sauce tomate, mozzarella, jambon de dinde, champignons.",
-     "photo": "assets/img/plats/reine.svg",
+     "photo": "assets/img/plats/opt/reine-256.webp",
      "badges": [],
      "ingredients": [
       "Sauce tomate",
@@ -1142,7 +1125,6 @@
       "champignons"
      ],
      "allergenes": [
-      "fruits à coque",
       "gluten",
       "lait"
      ]
@@ -1159,7 +1141,7 @@
      "id": "mozzarella-sticks",
      "nom": "Mozzarella Sticks",
      "description": "6 pièces, servies avec sauce.",
-     "photo": "assets/img/plats/mozzarella-sticks.svg",
+     "photo": "assets/img/plats/opt/mozzarella-sticks-256.webp",
      "badges": [],
      "ingredients": [
       "6 pièces",
@@ -1175,7 +1157,7 @@
      "id": "wings",
      "nom": "Wings",
      "description": "6 ailes de poulet croustillantes.",
-     "photo": "assets/img/plats/wings.svg",
+     "photo": "assets/img/plats/opt/wings-256.webp",
      "badges": [],
      "ingredients": [
       "6 ailes de poulet croustillantes"
@@ -1189,7 +1171,7 @@
      "id": "nuggets",
      "nom": "Nuggets",
      "description": "6 pièces, servies avec sauce.",
-     "photo": "assets/img/plats/nuggets.svg",
+     "photo": "assets/img/plats/opt/nuggets-256.webp",
      "badges": [],
      "ingredients": [
       "6 pièces",
@@ -1204,7 +1186,7 @@
      "id": "maxi-tenders",
      "nom": "Maxi Tenders",
      "description": "6 tenders de poulet panés.",
-     "photo": "assets/img/plats/maxi-tenders.svg",
+     "photo": "assets/img/plats/opt/maxi-tenders-256.webp",
      "badges": [],
      "ingredients": [
       "6 tenders de poulet panés"
@@ -1226,7 +1208,7 @@
      "id": "coca-cola",
      "nom": "Coca-Cola",
      "description": "Canette 33 cl.",
-     "photo": "assets/img/plats/coca-cola.svg",
+     "photo": "assets/img/plats/opt/coca-cola-256.webp",
      "badges": [],
      "ingredients": [
       "Canette 33 cl"
@@ -1238,7 +1220,7 @@
      "id": "coca-cola-cherry",
      "nom": "Coca-Cola Cherry",
      "description": "Canette 33 cl.",
-     "photo": "assets/img/plats/coca-cola-cherry.svg",
+     "photo": "assets/img/plats/opt/coca-cola-cherry-256.webp",
      "badges": [],
      "ingredients": [
       "Canette 33 cl"
@@ -1250,7 +1232,7 @@
      "id": "pepsi",
      "nom": "Pepsi",
      "description": "Canette 33 cl.",
-     "photo": "assets/img/plats/pepsi.svg",
+     "photo": "assets/img/plats/opt/pepsi-256.webp",
      "badges": [],
      "ingredients": [
       "Canette 33 cl"
@@ -1262,7 +1244,7 @@
      "id": "fanta-orange",
      "nom": "Fanta Orange",
      "description": "Canette 33 cl.",
-     "photo": "assets/img/plats/fanta-orange.svg",
+     "photo": "assets/img/plats/opt/fanta-orange-256.webp",
      "badges": [],
      "ingredients": [
       "Canette 33 cl"
@@ -1274,7 +1256,7 @@
      "id": "sprite",
      "nom": "Sprite",
      "description": "Canette 33 cl.",
-     "photo": "assets/img/plats/sprite.svg",
+     "photo": "assets/img/plats/opt/sprite-256.webp",
      "badges": [],
      "ingredients": [
       "Canette 33 cl"
@@ -1286,7 +1268,7 @@
      "id": "orangina",
      "nom": "Orangina",
      "description": "Canette 33 cl.",
-     "photo": "assets/img/plats/orangina.svg",
+     "photo": "assets/img/plats/opt/orangina-256.webp",
      "badges": [],
      "ingredients": [
       "Canette 33 cl"
@@ -1298,7 +1280,7 @@
      "id": "lipton-ice-tea",
      "nom": "Lipton Ice Tea",
      "description": "Canette 33 cl.",
-     "photo": "assets/img/plats/lipton-ice-tea.svg",
+     "photo": "assets/img/plats/opt/lipton-ice-tea-256.webp",
      "badges": [],
      "ingredients": [
       "Canette 33 cl"
@@ -1310,7 +1292,7 @@
      "id": "tropico",
      "nom": "Tropico",
      "description": "Canette 33 cl.",
-     "photo": "assets/img/plats/tropico.svg",
+     "photo": "assets/img/plats/opt/tropico-256.webp",
      "badges": [],
      "ingredients": [
       "Canette 33 cl"
@@ -1322,7 +1304,7 @@
      "id": "bouteille-d-eau",
      "nom": "Bouteille d’eau",
      "description": "Eau plate, 50 cl.",
-     "photo": "assets/img/plats/bouteille-d-eau.svg",
+     "photo": "assets/img/plats/opt/bouteille-d-eau-256.webp",
      "badges": [],
      "ingredients": [
       "Eau plate",
@@ -1343,7 +1325,7 @@
      "id": "gateau-amandes-daim",
      "nom": "Gâteau amandes & Daim",
      "description": "Le petit gâteau qui fait basculer la fin de repas.",
-     "photo": "assets/img/plats/gateau-amandes-daim.svg",
+     "photo": "assets/img/plats/opt/gateau-amandes-daim-256.webp",
      "badges": [],
      "ingredients": [
       "Le petit gâteau qui fait basculer la fin de repas"
@@ -1360,7 +1342,7 @@
      "id": "tiramisu",
      "nom": "Tiramisu",
      "description": "Mascarpone, café, cacao.",
-     "photo": "assets/img/plats/tiramisu.svg",
+     "photo": "assets/img/plats/opt/tiramisu-256.webp",
      "badges": [],
      "ingredients": [
       "Mascarpone",
@@ -1378,7 +1360,7 @@
      "id": "brownie",
      "nom": "Brownie",
      "description": "Chocolat fondant, cœur moelleux.",
-     "photo": "assets/img/plats/brownie.svg",
+     "photo": "assets/img/plats/opt/brownie-256.webp",
      "badges": [],
      "ingredients": [
       "Chocolat fondant",
