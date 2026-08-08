@@ -113,6 +113,23 @@ for (let i = 0; i < 500; i++) refs.add(reference());
 ok(refs.size > 495, 'références distinctes', refs.size + '/500');
 ok(!/[IO01]/.test(Array.from(refs).join('')), 'aucun caractère ambigu (I, O, 0, 1)');
 
+console.log('\n── allergènes ─────────────────────────');
+const { allergenes } = require('./carte');
+const dit = (ing, nom, type) => allergenes(ing, type || 'pizza', nom || '');
+ok(!dit(['champignons', 'olives']).includes('fruits à coque'),
+   '« champignons » ne déclare pas de fruits à coque');
+ok(dit(['amandes', 'Daim'], 'Gâteau amandes & Daim', 'unite').includes('fruits à coque'),
+   'les amandes en déclarent bien');
+ok(dit(['sauce tomate', 'mozzarella']).join() === 'gluten,lait', 'margherita : gluten et lait',
+   dit(['sauce tomate', 'mozzarella']).join(', '));
+ok(dit(['sauce tomate', 'mozzarella', 'anchois', 'câpres']).includes('poissons'),
+   'les anchois déclarent le poisson');
+ok(dit(['crème fraîche', 'mozzarella', 'jambon de dinde', 'miel']).join() === 'gluten,lait',
+   'le miel ne déclare rien de plus', dit(['crème fraîche', 'mozzarella', 'miel']).join(', '));
+ok(dit([], 'Tiramisu', 'unite').join() === 'gluten,lait,oeufs', 'un dessert sans ingrédients listé se déduit du nom',
+   dit([], 'Tiramisu', 'unite').join(', '));
+ok(dit(['Eau plate', '50 cl'], 'Bouteille d’eau', 'unite').length === 0, 'l’eau ne déclare rien');
+
 console.log('\n── début de service ───────────────────');
 const { debutService } = require('../api/cuisine');
 const h18 = debutService(new Date('2026-08-08T18:00:00+02:00'));

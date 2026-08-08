@@ -66,29 +66,50 @@ function centimes(txt) {
 // Cette table est une aide à la lecture, jamais une garantie : la cuisine est
 // unique, les traces sont possibles partout, et c'est écrit sur la page.
 const ALLERGENES = {
-  gluten: ['pâte', 'pain', 'cordon bleu', 'tenders', 'nuggets', 'sticks', 'brownie',
-           'tiramisu', 'gâteau', 'tarte', 'kebab', 'pizza', 'calzone',
-           'croustillant', 'panée', 'pané', 'beignet'],
-  lait: ['mozzarella', 'chèvre', 'parmesan', 'cheddar', 'boursin', 'reblochon', 'crème',
-         'fromage', 'burrata', 'beurre', 'tiramisu', 'brownie', 'gâteau', 'raclette'],
-  oeufs: ['œuf', 'oeuf', 'mayonnaise', 'tiramisu', 'gâteau', 'brownie', 'cordon bleu'],
+  gluten: ['pate', 'pain', 'cordon bleu', 'tenders', 'nuggets', 'sticks', 'brownie',
+           'tiramisu', 'gateau', 'tarte', 'kebab', 'pizza', 'calzone',
+           'croustillantes', 'croustillant', 'panees', 'panee', 'pane', 'beignet'],
+  lait: ['mozzarella', 'chevre', 'parmesan', 'cheddar', 'boursin', 'reblochon', 'creme',
+         'fromage', 'fromages', 'burrata', 'beurre', 'tiramisu', 'brownie', 'gateau',
+         'raclette'],
+  oeufs: ['oeuf', 'mayonnaise', 'tiramisu', 'gateau', 'brownie', 'cordon bleu'],
   poissons: ['saumon', 'thon', 'anchois'],
-  'fruits à coque': ['amande', 'noix', 'noisette', 'daim', 'pignon'],
-  soja: ['sauce soja', 'soja'],
-  moutarde: ['moutarde', 'sauce algérienne', 'sauce barbecue'],
-  sesame: ['sésame'],
-  celeri: ['céleri'],
-  sulfites: ['vinaigre', 'olives', 'câpres']
+  'fruits à coque': ['amande', 'amandes', 'noix', 'noisette', 'noisettes', 'daim',
+                     'pignon', 'pignons', 'pistache', 'pistaches'],
+  soja: ['soja'],
+  moutarde: ['moutarde', 'sauce algerienne', 'sauce barbecue'],
+  sesame: ['sesame'],
+  celeri: ['celeri'],
+  sulfites: ['vinaigre', 'vinaigre balsamique', 'capres']
 };
+
+// Sans accent ni majuscule, pour comparer « Câpres » et « capres ».
+const aplati = (s) => s.replace(/œ/g, 'oe').replace(/æ/g, 'ae')
+  .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+/**
+ * Un ingrédient déclenche un allergène s'il contient le mot entier.
+ * La recherche par sous-chaîne se trompait : « champignons » contient
+ * « pignon », ce qui déclarait des fruits à coque sur toutes les pizzas aux
+ * champignons. Une déclaration fausse est inutile même quand elle penche du
+ * côté prudent : elle écarte un client de plats qu'il pouvait manger.
+ */
+function contientMot(texte, expression) {
+  const mots = aplati(texte).split(/[^a-z0-9]+/).filter(Boolean);
+  const cible = aplati(expression).split(/[^a-z0-9]+/).filter(Boolean);
+  if (cible.length === 1) return mots.includes(cible[0]);
+  // expression de plusieurs mots : on la cherche telle quelle
+  return (' ' + mots.join(' ') + ' ').includes(' ' + cible.join(' ') + ' ');
+}
 
 function allergenes(ingredients, type, nom) {
   // le nom compte autant que la description : « Tiramisu » et « Brownie »
   // n'ont pas de liste d'ingrédients, mais disent déjà ce qu'ils contiennent
-  const txt = ' ' + (nom || '').toLowerCase() + ' , ' + ingredients.join(' , ').toLowerCase() + ' ';
+  const txt = (nom || '') + ', ' + ingredients.join(', ');
   const out = new Set();
   if (type === 'pizza') out.add('gluten');   // la pâte
-  for (const [nom, mots] of Object.entries(ALLERGENES)) {
-    if (mots.some((m) => txt.includes(m))) out.add(nom);
+  for (const [allergene, mots] of Object.entries(ALLERGENES)) {
+    if (mots.some((m) => contientMot(txt, m))) out.add(allergene);
   }
   return Array.from(out).sort();
 }
