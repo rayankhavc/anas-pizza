@@ -85,5 +85,39 @@ ok(c.categories.every((x) => x.type !== 'pizza' || x.tailles.length === 2),
    'chaque rubrique de pizzas a deux tailles');
 ok(c.supplements.every((s) => s.prix > 0 && s.choix.length > 0), 'suppléments complets');
 
+console.log('\n── ticket transporté par le prestataire ──');
+const { ticket, lireTicket, reference } = require('../api/_paiement');
+const cmd = calculer([
+  { plat: 'tikka', taille: 'large', quantite: 2,
+    supplements: [{ groupe: 'supplement-viande', choix: 'merguez' }] },
+  { plat: 'coca-cola', quantite: 1 }
+], 'livraison');
+const cli = verifierAdresse({ nom: 'Dupont', telephone: '0612345678',
+  rue: '3 rue des Olivettes', codePostal: '44000', commentaire: 'Sans olives' });
+const t = ticket(cmd, cli, 'livraison');
+ok(t.length <= 380, 'ticket sous la limite du champ description', t.length + ' caractères');
+
+const relu = lireTicket({ id: 'A7F3-K2', horodatage: 1786000000, description: t, montant: cmd.total });
+ok(relu.mode === 'livraison', 'mode relu', relu.mode);
+ok(relu.nom === 'Dupont', 'nom relu', relu.nom);
+ok(relu.telephone === '0612345678', 'téléphone relu', relu.telephone);
+ok(relu.adresse.indexOf('Olivettes') !== -1, 'adresse relue', relu.adresse);
+ok(relu.commentaire === 'Sans olives', 'commentaire relu', relu.commentaire);
+ok(relu.articles.length === 2 && relu.articles[0].n === 2, 'articles relus',
+   relu.articles.map(function (a) { return a.n + '× ' + a.texte; }).join(' ; '));
+ok(relu.total === euros(cmd.total), 'total relu', relu.total);
+
+// une référence dictée au téléphone ne doit pas prêter à confusion
+const refs = new Set();
+for (let i = 0; i < 500; i++) refs.add(reference());
+ok(refs.size > 495, 'références distinctes', refs.size + '/500');
+ok(!/[IO01]/.test(Array.from(refs).join('')), 'aucun caractère ambigu (I, O, 0, 1)');
+
+console.log('\n── début de service ───────────────────');
+const { debutService } = require('../api/cuisine');
+const h18 = debutService(new Date('2026-08-08T18:00:00+02:00'));
+const h01 = debutService(new Date('2026-08-09T01:00:00+02:00'));
+ok(h18 === h01, 'une commande de 1h du matin appartient au service de la veille');
+
 console.log('\n' + (ko ? ko + ' contrôle(s) en échec' : 'Tout est vert.'));
 process.exit(ko ? 1 : 0);

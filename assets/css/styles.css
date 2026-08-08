@@ -991,3 +991,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .merci .btn-row{justify-content:center}
 .ordercard--site{border-color:var(--orange);background:var(--cream-2)}
 .ordercard--site .ordercard__badge{background:var(--orange);color:#fff}
+.merci__ref{margin:-1rem 0 1.6rem;font-size:.92rem;color:var(--fg-2)}
+.merci__ref b{font:700 1.1rem/1 var(--f-cond);color:var(--fg);letter-spacing:.06em}
+.merci__ref[hidden]{display:none}

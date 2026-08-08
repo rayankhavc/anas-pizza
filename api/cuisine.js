@@ -1,18 +1,18 @@
 /* ==========================================================================
    GET /api/cuisine — les commandes payées du service en cours.
    --------------------------------------------------------------------------
-   Aucune base de données : Stripe conserve déjà chaque commande payée, avec
-   son détail dans les métadonnées. On la relit directement. Une base de plus
-   serait une base à sauvegarder, à sécuriser et à payer, pour stocker ce qui
-   existe déjà ailleurs.
+   Aucune base de données : le prestataire de paiement conserve déjà chaque
+   commande, avec son ticket. On la relit directement. Une base de plus serait
+   une base à sauvegarder, à sécuriser et à payer, pour stocker ce qui existe
+   déjà ailleurs.
 
-   Protection : un mot de passe partagé (CUISINE_CODE), passé en en-tête ou en
-   paramètre. C'est un écran de comptoir, pas un compte utilisateur — mais sans
-   ce garde-fou, les nom, téléphone et adresse des clients seraient publics.
+   Protection : un mot de passe partagé (CUISINE_CODE). C'est un écran de
+   comptoir, pas un compte utilisateur — mais sans ce garde-fou, les nom,
+   téléphone et adresse des clients seraient publics.
    ========================================================================== */
 'use strict';
 
-const { euros } = require('./_panier');
+const { commandesPayees, prestataire } = require('./_paiement');
 
 function json(res, code, corps) {
   res.statusCode = code;
@@ -28,6 +28,20 @@ function memeCode(a, b) {
   let d = 0;
   for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return d === 0;
+}
+
+/**
+ * Début du service en cours, en secondes.
+ * Le restaurant sert de 11h30 à 2h du matin : entre minuit et 3h, la nuit
+ * appartient encore au service de la veille.
+ */
+function debutService(maintenant) {
+  const paris = new Date((maintenant || new Date())
+    .toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
+  const d = new Date(paris);
+  d.setHours(11, 0, 0, 0);
+  if (paris.getHours() < 3) d.setDate(d.getDate() - 1);
+  return Math.floor(d.getTime() / 1000);
 }
 
 module.exports = async function handler(req, res) {
@@ -46,52 +60,20 @@ module.exports = async function handler(req, res) {
     return json(res, 401, { erreur: 'Code incorrect.' });
   }
 
-  const cle = process.env.STRIPE_SECRET_KEY;
-  if (!cle) return json(res, 200, { commandes: [], note: 'Paiement en ligne pas encore activé.' });
+  if (!prestataire()) {
+    return json(res, 200, { commandes: [], note: 'Paiement en ligne pas encore activé.' });
+  }
 
-  const stripe = require('stripe')(cle);
-
-  // Service en cours : depuis 11h ce matin, ou depuis hier 11h si l'on est
-  // entre minuit et 3h — la nuit appartient au service de la veille.
-  const maintenant = new Date();
-  const paris = new Date(maintenant.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
-  const debut = new Date(paris);
-  debut.setHours(11, 0, 0, 0);
-  if (paris.getHours() < 3) debut.setDate(debut.getDate() - 1);
-  const depuis = Math.floor(debut.getTime() / 1000);
-
+  const depuis = debutService();
   try {
-    const liste = await stripe.checkout.sessions.list({
-      limit: 100,
-      created: { gte: depuis },
-      expand: ['data.payment_intent']
-    });
-
-    const commandes = liste.data
-      .filter((s) => s.payment_status === 'paid')
-      .map((s) => {
-        const m = s.metadata || {};
-        let articles = [];
-        try { articles = JSON.parse(m.panier || '[]'); } catch (e) { /* métadonnée tronquée */ }
-        return {
-          id: s.id.slice(-8).toUpperCase(),
-          heure: new Date(s.created * 1000).toLocaleTimeString('fr-FR',
-            { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit' }),
-          horodatage: s.created,
-          mode: m.mode || 'emporter',
-          nom: m.nom || '',
-          telephone: m.telephone || '',
-          adresse: m.adresse || '',
-          commentaire: m.commentaire || '',
-          articles: articles.map((a) => ({ n: a.n, texte: a.t, prix: euros(a.p) })),
-          total: euros(Number(m.total || s.amount_total || 0))
-        };
-      })
+    const commandes = (await commandesPayees(depuis))
+      .filter((c) => c.horodatage >= depuis)
       .sort((a, b) => b.horodatage - a.horodatage);
-
-    return json(res, 200, { commandes, service: debut.toISOString() });
+    return json(res, 200, { commandes, service: new Date(depuis * 1000).toISOString() });
   } catch (e) {
-    console.error('[cuisine] Stripe :', e.message);
-    return json(res, 502, { erreur: 'Impossible de joindre Stripe.' });
+    console.error('[cuisine] ' + e.message);
+    return json(res, 502, { erreur: 'Impossible de joindre le prestataire de paiement.' });
   }
 };
+
+module.exports.debutService = debutService;
