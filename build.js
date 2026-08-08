@@ -116,6 +116,9 @@ async function main() {
   }
 
   fs.writeFileSync('index.html', html);
+  // Le catalogue de la commande est régénéré juste après (npm run build) :
+  // il reprend alors les chemins des photos optimisées, pas ceux des
+  // illustrations.
   console.log(done
     ? '[build] ' + done + ' photo(s) intégrée(s). Les plats sans photo gardent leur illustration.'
     : '[build] aucune photo trouvée, le site utilise ses illustrations. Rien à signaler.');

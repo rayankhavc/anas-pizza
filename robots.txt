@@ -4,4 +4,9 @@
 User-agent: *
 Allow: /
 
+# écrans internes et retours de paiement
+Disallow: /cuisine
+Disallow: /commande-confirmee
+Disallow: /api/
+
 Sitemap: https://www.anaspizza-nantes.fr/sitemap.xml

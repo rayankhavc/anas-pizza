@@ -9,7 +9,8 @@ hébergement statique (GitHub Pages, Netlify, OVH, o2switch…).
 ## Structure
 
 ```
-index.html                          page unique : carte, horaires, commande, FAQ
+index.html                          page vitrine : carte, horaires, FAQ
+commander.html                      commande en ligne (voir plus bas)
 mentions-legales.html               obligatoire (LCEN)
 politique-de-confidentialite.html   obligatoire (RGPD) + section cookies
 404.html                            page d'erreur
@@ -112,6 +113,74 @@ les photos sont en ligne en une minute.
 Le journal de construction Vercel indique, pour chaque photo, le fichier
 source, les tailles produites et le poids obtenu. Si un nom ne correspond à
 aucun plat, il le signale sans interrompre le déploiement.
+
+## Commande en ligne
+
+La boutique vit sur trois pages et deux fonctions serveur.
+
+```
+commander.html                page de commande, quatre étapes
+commande-confirmee.html       retour de paiement
+cuisine.html                  écran cuisine (interne, non indexé)
+cgv.html                      conditions de vente + tableau des allergènes
+assets/data/carte.json        catalogue généré — ne pas modifier à la main
+api/_panier.js                calcul du prix, côté serveur
+api/commande.js               POST : recalcule, vérifie, ouvre le paiement Stripe
+api/cuisine.js                GET  : les commandes payées du service en cours
+outils/carte.js               index.html → carte.json
+outils/cgv.js                 carte.json → tableau des allergènes dans cgv.html
+outils/test-panier.js         contrôles du calcul (npm test)
+```
+
+### La règle qui tient tout
+
+**Le navigateur n'envoie jamais un prix.** Il envoie des identifiants de plats,
+des tailles, des quantités, des suppléments. Le serveur relit chaque prix dans
+`carte.json` et recalcule le total avant d'ouvrir le paiement. Modifier un
+montant dans les outils de développement ne change rien à ce qui est débité —
+c'est vérifié par `npm test`.
+
+### Une seule carte, partout
+
+`index.html` reste la seule source. `outils/carte.js` en tire `carte.json`,
+qui alimente la page de commande, le calcul serveur et le tableau des
+allergènes. Après avoir modifié un plat&nbsp;:
+
+```bash
+npm run carte      # régénère le catalogue et le tableau des allergènes
+npm test           # vérifie que les prix tombent juste
+```
+
+Le déploiement fait les deux tout seul (`npm run build`).
+
+### Variables d'environnement (Vercel)
+
+| Variable | Rôle | Sans elle |
+|---|---|---|
+| `STRIPE_SECRET_KEY` | clé secrète du compte Stripe **du restaurant** | la page de commande fonctionne, le bouton de paiement affiche « commandez par téléphone » |
+| `CUISINE_CODE` | code d'accès de l'écran cuisine | `/cuisine` répond « non configuré » |
+
+Le compte Stripe doit être celui d'ANAS PIZZA, avec son SIREN et son IBAN.
+Un compte au nom de l'agence ferait de l'agence le vendeur&nbsp;: elle
+encaisserait le chiffre d'affaires du restaurant et répondrait des litiges.
+
+### Zone de livraison, minimum, frais
+
+Tout est dans la constante `LIVRAISON` en haut d'`outils/carte.js`&nbsp;:
+codes postaux desservis, minimum de commande, frais, délai annoncé. Un code
+postal absent de la liste est refusé par le serveur, pas seulement masqué dans
+la page.
+
+### Écran cuisine
+
+`/cuisine` affiche les commandes payées depuis 11h (ou depuis la veille 11h
+si l'on est entre minuit et 3h). Il se rafraîchit toutes les quinze secondes
+et sonne à chaque nouvelle commande. Une commande marquée préparée passe en
+bas de l'écran et le reste après rechargement.
+
+Aucune base de données&nbsp;: les commandes sont relues directement chez
+Stripe, qui les conserve déjà. Une base de plus serait une base à sauvegarder,
+à sécuriser et à payer pour stocker ce qui existe ailleurs.
 
 ## Modifier la carte
 
