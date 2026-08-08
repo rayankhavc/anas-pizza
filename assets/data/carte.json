@@ -1,0 +1,1397 @@
+{
+ "genere": "2026-08-08",
+ "source": "index.html",
+ "livraison": {
+  "minimum": 1000,
+  "frais": 100,
+  "delai": "30 à 45 min",
+  "communes": [
+   {
+    "cp": "44000",
+    "nom": "Nantes"
+   },
+   {
+    "cp": "44100",
+    "nom": "Nantes"
+   },
+   {
+    "cp": "44200",
+    "nom": "Nantes"
+   },
+   {
+    "cp": "44300",
+    "nom": "Nantes"
+   },
+   {
+    "cp": "44800",
+    "nom": "Saint-Herblain"
+   },
+   {
+    "cp": "44230",
+    "nom": "Saint-Sébastien-sur-Loire"
+   },
+   {
+    "cp": "44400",
+    "nom": "Rezé"
+   },
+   {
+    "cp": "44700",
+    "nom": "Orvault"
+   },
+   {
+    "cp": "44300",
+    "nom": "Nantes Doulon"
+   }
+  ]
+ },
+ "supplements": [
+  {
+   "id": "supplement-fromage",
+   "nom": "Supplément fromage",
+   "prix": 50,
+   "choix": [
+    {
+     "id": "mozzarella",
+     "nom": "Mozzarella"
+    },
+    {
+     "id": "chevre",
+     "nom": "Chèvre"
+    },
+    {
+     "id": "cheddar",
+     "nom": "Cheddar"
+    },
+    {
+     "id": "parmesan",
+     "nom": "Parmesan"
+    },
+    {
+     "id": "boursin",
+     "nom": "Boursin"
+    },
+    {
+     "id": "reblochon",
+     "nom": "Reblochon"
+    }
+   ]
+  },
+  {
+   "id": "supplement-viande",
+   "nom": "Supplément viande",
+   "prix": 100,
+   "choix": [
+    {
+     "id": "viande-hachee",
+     "nom": "Viande hachée"
+    },
+    {
+     "id": "merguez",
+     "nom": "Merguez"
+    },
+    {
+     "id": "poulet",
+     "nom": "Poulet"
+    },
+    {
+     "id": "kebab",
+     "nom": "Kebab"
+    },
+    {
+     "id": "chorizo",
+     "nom": "Chorizo"
+    },
+    {
+     "id": "pepperoni",
+     "nom": "Pepperoni"
+    },
+    {
+     "id": "jambon",
+     "nom": "Jambon"
+    },
+    {
+     "id": "lardons",
+     "nom": "Lardons"
+    },
+    {
+     "id": "tenders",
+     "nom": "Tenders"
+    }
+   ]
+  },
+  {
+   "id": "legumes-oeuf",
+   "nom": "Légumes & œuf",
+   "prix": 50,
+   "choix": [
+    {
+     "id": "champignons",
+     "nom": "Champignons"
+    },
+    {
+     "id": "poivrons",
+     "nom": "Poivrons"
+    },
+    {
+     "id": "oignons",
+     "nom": "Oignons"
+    },
+    {
+     "id": "olives",
+     "nom": "Olives"
+    },
+    {
+     "id": "mais",
+     "nom": "Maïs"
+    },
+    {
+     "id": "jalapenos",
+     "nom": "Jalapeños"
+    },
+    {
+     "id": "pomme-de-terre",
+     "nom": "Pomme de terre"
+    },
+    {
+     "id": "oeuf",
+     "nom": "Œuf"
+    }
+   ]
+  }
+ ],
+ "categories": [
+  {
+   "id": "tomate",
+   "nom": "Base sauce tomate",
+   "type": "pizza",
+   "tailles": [
+    {
+     "id": "medium",
+     "nom": "Medium",
+     "prix": 790
+    },
+    {
+     "id": "large",
+     "nom": "Large",
+     "prix": 1090
+    }
+   ],
+   "plats": [
+    {
+     "id": "4-fromages",
+     "nom": "4 Fromages",
+     "description": "Base tomate, mozzarella, chèvre, parmesan.",
+     "photo": "assets/img/plats/4-fromages.svg",
+     "badges": [
+      {
+       "type": "veg",
+       "texte": "Végé"
+      }
+     ],
+     "ingredients": [
+      "Base tomate",
+      "mozzarella",
+      "chèvre",
+      "parmesan"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "sicilienne",
+     "nom": "Sicilienne",
+     "description": "Base tomate, mozzarella, câpres, anchois, olives.",
+     "photo": "assets/img/plats/sicilienne.svg",
+     "badges": [],
+     "ingredients": [
+      "Base tomate",
+      "mozzarella",
+      "câpres",
+      "anchois",
+      "olives"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "poissons",
+      "sulfites"
+     ]
+    },
+    {
+     "id": "cannibale",
+     "nom": "Cannibale",
+     "description": "Sauce tomate, mozzarella, poulet mariné, viande hachée.",
+     "photo": "assets/img/plats/cannibale.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "poulet mariné",
+      "viande hachée"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "tikka",
+     "nom": "Tikka",
+     "description": "Sauce tomate, mozzarella, poulet mariné, pommes de terre, poivrons.",
+     "photo": "assets/img/plats/tikka.svg",
+     "badges": [
+      {
+       "type": "star",
+       "texte": "Best-seller"
+      }
+     ],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "poulet mariné",
+      "pommes de terre",
+      "poivrons"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "mexicaine",
+     "nom": "Mexicaine",
+     "description": "Base tomate, mozzarella, merguez, pepperoni, poivrons, olives.",
+     "photo": "assets/img/plats/mexicaine.svg",
+     "badges": [
+      {
+       "type": "hot",
+       "texte": "Relevée"
+      }
+     ],
+     "ingredients": [
+      "Base tomate",
+      "mozzarella",
+      "merguez",
+      "pepperoni",
+      "poivrons",
+      "olives"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "sulfites"
+     ]
+    },
+    {
+     "id": "campione",
+     "nom": "Campione",
+     "description": "Sauce tomate, mozzarella, viande hachée, champignons, œuf.",
+     "photo": "assets/img/plats/campione.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "viande hachée",
+      "champignons",
+      "œuf"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "regina",
+     "nom": "Regina",
+     "description": "Base tomate, mozzarella, chorizo, champignons, olives.",
+     "photo": "assets/img/plats/regina.svg",
+     "badges": [],
+     "ingredients": [
+      "Base tomate",
+      "mozzarella",
+      "chorizo",
+      "champignons",
+      "olives"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait",
+      "sulfites"
+     ]
+    },
+    {
+     "id": "hamburger",
+     "nom": "Hamburger",
+     "description": "Sauce tomate, mozzarella, viande hachée, oignons, cornichon, cheddar.",
+     "photo": "assets/img/plats/hamburger.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "viande hachée",
+      "oignons",
+      "cornichon",
+      "cheddar"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "bresilienne",
+     "nom": "Brésilienne",
+     "description": "Sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.",
+     "photo": "assets/img/plats/bresilienne.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "viande hachée",
+      "merguez",
+      "poivrons",
+      "olives"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "sulfites"
+     ]
+    },
+    {
+     "id": "oriental",
+     "nom": "Oriental",
+     "description": "Base tomate, mozzarella, merguez, champignons, œuf.",
+     "photo": "assets/img/plats/oriental.svg",
+     "badges": [],
+     "ingredients": [
+      "Base tomate",
+      "mozzarella",
+      "merguez",
+      "champignons",
+      "œuf"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "salmon-pizza",
+     "nom": "Salmon Pizza",
+     "description": "Sauce tomate, mozzarella, saumon.",
+     "photo": "assets/img/plats/salmon-pizza.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "saumon"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "poissons"
+     ]
+    },
+    {
+     "id": "hot-pepper",
+     "nom": "Hot Pepper",
+     "description": "Sauce tomate, mozzarella, jambon de dinde, poulet mariné, jalapeños.",
+     "photo": "assets/img/plats/hot-pepper.svg",
+     "badges": [
+      {
+       "type": "hot",
+       "texte": "Piquante"
+      }
+     ],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "jambon de dinde",
+      "poulet mariné",
+      "jalapeños"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "creme",
+   "nom": "Base crème fraîche",
+   "type": "pizza",
+   "tailles": [
+    {
+     "id": "medium",
+     "nom": "Medium",
+     "prix": 790
+    },
+    {
+     "id": "large",
+     "nom": "Large",
+     "prix": 1090
+    }
+   ],
+   "plats": [
+    {
+     "id": "chevre-miel",
+     "nom": "Chèvre Miel",
+     "description": "Crème fraîche, mozzarella, fromage de chèvre, jambon, miel.",
+     "photo": "assets/img/plats/chevre-miel.svg",
+     "badges": [
+      {
+       "type": "star",
+       "texte": "Best-seller"
+      }
+     ],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "fromage de chèvre",
+      "jambon",
+      "miel"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "campagnarde",
+     "nom": "Campagnarde",
+     "description": "Crème fraîche, mozzarella, jambon, pomme de terre, champignons, boursin.",
+     "photo": "assets/img/plats/campagnarde.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "jambon",
+      "pomme de terre",
+      "champignons",
+      "boursin"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "la-farmer",
+     "nom": "La Farmer",
+     "description": "Crème fraîche, mozzarella, jambon, tenders, boursin, pommes de terre, oignons rouges.",
+     "photo": "assets/img/plats/la-farmer.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "jambon",
+      "tenders",
+      "boursin",
+      "pommes de terre",
+      "oignons rouges"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "chicken",
+     "nom": "Chicken",
+     "description": "Crème fraîche, mozzarella, pomme de terre, poulet fumé.",
+     "photo": "assets/img/plats/chicken.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "pomme de terre",
+      "poulet fumé"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "kebab",
+     "nom": "Kebab",
+     "description": "Crème fraîche, mozzarella, oignons rouges, tomates cerise, kebab, cheddar.",
+     "photo": "assets/img/plats/kebab.svg",
+     "badges": [
+      {
+       "type": "star",
+       "texte": "Best-seller"
+      }
+     ],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "oignons rouges",
+      "tomates cerise",
+      "kebab",
+      "cheddar"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "tartiflette",
+     "nom": "Tartiflette",
+     "description": "Crème fraîche, mozzarella, lardons de veau, reblochon, pomme de terre, oignons.",
+     "photo": "assets/img/plats/tartiflette.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "lardons de veau",
+      "reblochon",
+      "pomme de terre",
+      "oignons"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "burger",
+     "nom": "Burger",
+     "description": "Crème fraîche, mozzarella, viande hachée, oignons rouges, pickles, cheddar, ketchup.",
+     "photo": "assets/img/plats/burger.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "viande hachée",
+      "oignons rouges",
+      "pickles",
+      "cheddar",
+      "ketchup"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "western",
+     "nom": "Western",
+     "description": "Crème fraîche, mozzarella, poulet épicé, poivrons, champignons.",
+     "photo": "assets/img/plats/western.svg",
+     "badges": [
+      {
+       "type": "hot",
+       "texte": "Relevée"
+      }
+     ],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "poulet épicé",
+      "poivrons",
+      "champignons"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "paysanne",
+     "nom": "Paysanne",
+     "description": "Crème fraîche, mozzarella, jambon, oignons rouges, pomme de terre.",
+     "photo": "assets/img/plats/paysanne.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "jambon",
+      "oignons rouges",
+      "pomme de terre"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "chicago",
+     "nom": "Chicago",
+     "description": "Crème fraîche, mozzarella, jambon, viande hachée, cheddar, œuf.",
+     "photo": "assets/img/plats/chicago.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "jambon",
+      "viande hachée",
+      "cheddar",
+      "œuf"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "francaise",
+     "nom": "Française",
+     "description": "Crème fraîche, mozzarella, jambon de dinde, lardons de volaille, champignons, olives.",
+     "photo": "assets/img/plats/francaise.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "jambon de dinde",
+      "lardons de volaille",
+      "champignons",
+      "olives"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait",
+      "sulfites"
+     ]
+    },
+    {
+     "id": "norvegienne",
+     "nom": "Norvégienne",
+     "description": "Crème fraîche, mozzarella, saumon.",
+     "photo": "assets/img/plats/norvegienne.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "saumon"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "poissons"
+     ]
+    },
+    {
+     "id": "tasty-kabab",
+     "nom": "Tasty Kabab",
+     "description": "Crème fraîche, mozzarella, viande kebab, oignons, poivrons.",
+     "photo": "assets/img/plats/tasty-kabab.svg",
+     "badges": [],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "viande kebab",
+      "oignons",
+      "poivrons"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "originale",
+   "nom": "Pizzas sauce originale",
+   "type": "pizza",
+   "tailles": [
+    {
+     "id": "medium",
+     "nom": "Medium",
+     "prix": 799
+    },
+    {
+     "id": "large",
+     "nom": "Large",
+     "prix": 1190
+    }
+   ],
+   "plats": [
+    {
+     "id": "bollywood",
+     "nom": "Bollywood",
+     "description": "Sauce curry, crème fraîche, mozzarella, poulet mariné, oignons, poivrons.",
+     "photo": "assets/img/plats/bollywood.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce curry",
+      "crème fraîche",
+      "mozzarella",
+      "poulet mariné",
+      "oignons",
+      "poivrons"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "buffalo-bbq",
+     "nom": "Buffalo BBQ",
+     "description": "Sauce barbecue, sauce tomate, mozzarella, viande hachée, poivrons, oignons.",
+     "photo": "assets/img/plats/buffalo-bbq.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce barbecue",
+      "sauce tomate",
+      "mozzarella",
+      "viande hachée",
+      "poivrons",
+      "oignons"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "moutarde"
+     ]
+    },
+    {
+     "id": "algerienne",
+     "nom": "Algérienne",
+     "description": "Sauce algérienne, sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives.",
+     "photo": "assets/img/plats/algerienne.svg",
+     "badges": [
+      {
+       "type": "hot",
+       "texte": "Relevée"
+      }
+     ],
+     "ingredients": [
+      "Sauce algérienne",
+      "sauce tomate",
+      "mozzarella",
+      "viande hachée",
+      "merguez",
+      "poivrons",
+      "olives"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "moutarde",
+      "sulfites"
+     ]
+    },
+    {
+     "id": "la-boursin",
+     "nom": "La Boursin",
+     "description": "Boursin, crème fraîche, mozzarella, poulet mariné, champignons.",
+     "photo": "assets/img/plats/la-boursin.svg",
+     "badges": [],
+     "ingredients": [
+      "Boursin",
+      "crème fraîche",
+      "mozzarella",
+      "poulet mariné",
+      "champignons"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "pimento",
+     "nom": "Pimento",
+     "description": "Sauce chili thaï, mozzarella, poulet mariné, chorizo, jalapeños, olives.",
+     "photo": "assets/img/plats/pimento.svg",
+     "badges": [
+      {
+       "type": "hot",
+       "texte": "Piquante"
+      }
+     ],
+     "ingredients": [
+      "Sauce chili thaï",
+      "mozzarella",
+      "poulet mariné",
+      "chorizo",
+      "jalapeños",
+      "olives"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "sulfites"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "signature",
+   "nom": "Pizzas signature",
+   "type": "pizza",
+   "tailles": [
+    {
+     "id": "medium",
+     "nom": "Medium",
+     "prix": 990
+    },
+    {
+     "id": "large",
+     "nom": "Large",
+     "prix": 1290
+    }
+   ],
+   "plats": [
+    {
+     "id": "loriginale",
+     "nom": "L’Originale",
+     "description": "Crème fraîche, mozzarella, cordon bleu, tenders, boursin, poivrons.",
+     "photo": "assets/img/plats/loriginale.svg",
+     "badges": [
+      {
+       "type": "star",
+       "texte": "Signature"
+      }
+     ],
+     "ingredients": [
+      "Crème fraîche",
+      "mozzarella",
+      "cordon bleu",
+      "tenders",
+      "boursin",
+      "poivrons"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "carnivore",
+     "nom": "Carnivore",
+     "description": "Sauce tomate, cordon bleu, tenders, bacon de bœuf, viande hachée, cheddar.",
+     "photo": "assets/img/plats/carnivore.svg",
+     "badges": [
+      {
+       "type": "star",
+       "texte": "Signature"
+      }
+     ],
+     "ingredients": [
+      "Sauce tomate",
+      "cordon bleu",
+      "tenders",
+      "bacon de bœuf",
+      "viande hachée",
+      "cheddar"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "la-burrata",
+     "nom": "La Burrata",
+     "description": "Sauce tomate, mozzarella, tomates cerises, roquette, basilic, boule de burrata (100 g), crème de vinaigre balsamique.",
+     "photo": "assets/img/plats/la-burrata.svg",
+     "badges": [
+      {
+       "type": "star",
+       "texte": "Signature"
+      }
+     ],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "tomates cerises",
+      "roquette",
+      "basilic",
+      "boule de burrata (100 g)",
+      "crème de vinaigre balsamique"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "sulfites"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tradition",
+   "nom": "Pizzas traditionnelles",
+   "type": "pizza",
+   "tailles": [
+    {
+     "id": "medium",
+     "nom": "Medium",
+     "prix": 690
+    },
+    {
+     "id": "large",
+     "nom": "Large",
+     "prix": 990
+    }
+   ],
+   "plats": [
+    {
+     "id": "pecheur",
+     "nom": "Pêcheur",
+     "description": "Sauce tomate, mozzarella, thon, œuf, olives.",
+     "photo": "assets/img/plats/pecheur.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "thon",
+      "œuf",
+      "olives"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "oeufs",
+      "poissons",
+      "sulfites"
+     ]
+    },
+    {
+     "id": "calzone",
+     "nom": "Calzone",
+     "description": "Sauce tomate, mozzarella, thon ou viande hachée ou jambon.",
+     "photo": "assets/img/plats/calzone.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "thon ou viande hachée ou jambon"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "poissons"
+     ]
+    },
+    {
+     "id": "loriginal-pepperoni",
+     "nom": "L’Original Pepperoni",
+     "description": "Sauce tomate, mozzarella, pepperoni.",
+     "photo": "assets/img/plats/loriginal-pepperoni.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "pepperoni"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "hawaienne",
+     "nom": "Hawaïenne",
+     "description": "Sauce tomate, mozzarella, jambon de dinde, ananas.",
+     "photo": "assets/img/plats/hawaienne.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "jambon de dinde",
+      "ananas"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "4-saisons",
+     "nom": "4 Saisons",
+     "description": "Base tomate, jambon, champignons, artichauts, olives.",
+     "photo": "assets/img/plats/4-saisons.svg",
+     "badges": [],
+     "ingredients": [
+      "Base tomate",
+      "jambon",
+      "champignons",
+      "artichauts",
+      "olives"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "sulfites"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "veggie",
+   "nom": "Les végétariennes",
+   "type": "pizza",
+   "tailles": [
+    {
+     "id": "medium",
+     "nom": "Medium",
+     "prix": 690
+    },
+    {
+     "id": "large",
+     "nom": "Large",
+     "prix": 990
+    }
+   ],
+   "plats": [
+    {
+     "id": "margherita",
+     "nom": "Margherita",
+     "description": "Base tomate, mozzarella, origan.",
+     "photo": "assets/img/plats/margherita.svg",
+     "badges": [
+      {
+       "type": "veg",
+       "texte": "Végé"
+      }
+     ],
+     "ingredients": [
+      "Base tomate",
+      "mozzarella",
+      "origan"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "vegetarienne",
+     "nom": "Végétarienne",
+     "description": "Base tomate, mozzarella, poivrons, tomates fraîches, origan, olives.",
+     "photo": "assets/img/plats/vegetarienne.svg",
+     "badges": [
+      {
+       "type": "veg",
+       "texte": "Végé"
+      }
+     ],
+     "ingredients": [
+      "Base tomate",
+      "mozzarella",
+      "poivrons",
+      "tomates fraîches",
+      "origan",
+      "olives"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait",
+      "sulfites"
+     ]
+    },
+    {
+     "id": "veggie-spicy",
+     "nom": "Veggie Spicy",
+     "description": "Base tomate, mozzarella, poivrons, pomme de terre, maïs, jalapeños.",
+     "photo": "assets/img/plats/veggie-spicy.svg",
+     "badges": [
+      {
+       "type": "veg",
+       "texte": "Végé"
+      },
+      {
+       "type": "hot",
+       "texte": "Piquante"
+      }
+     ],
+     "ingredients": [
+      "Base tomate",
+      "mozzarella",
+      "poivrons",
+      "pomme de terre",
+      "maïs",
+      "jalapeños"
+     ],
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "reine",
+     "nom": "Reine",
+     "description": "Sauce tomate, mozzarella, jambon de dinde, champignons.",
+     "photo": "assets/img/plats/reine.svg",
+     "badges": [],
+     "ingredients": [
+      "Sauce tomate",
+      "mozzarella",
+      "jambon de dinde",
+      "champignons"
+     ],
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "snacks",
+   "nom": "Finger food",
+   "type": "unite",
+   "tailles": [],
+   "plats": [
+    {
+     "id": "mozzarella-sticks",
+     "nom": "Mozzarella Sticks",
+     "description": "6 pièces, servies avec sauce.",
+     "photo": "assets/img/plats/mozzarella-sticks.svg",
+     "badges": [],
+     "ingredients": [
+      "6 pièces",
+      "servies avec sauce"
+     ],
+     "prix": 490,
+     "allergenes": [
+      "gluten",
+      "lait"
+     ]
+    },
+    {
+     "id": "wings",
+     "nom": "Wings",
+     "description": "6 ailes de poulet croustillantes.",
+     "photo": "assets/img/plats/wings.svg",
+     "badges": [],
+     "ingredients": [
+      "6 ailes de poulet croustillantes"
+     ],
+     "prix": 590,
+     "allergenes": [
+      "gluten"
+     ]
+    },
+    {
+     "id": "nuggets",
+     "nom": "Nuggets",
+     "description": "6 pièces, servies avec sauce.",
+     "photo": "assets/img/plats/nuggets.svg",
+     "badges": [],
+     "ingredients": [
+      "6 pièces",
+      "servies avec sauce"
+     ],
+     "prix": 490,
+     "allergenes": [
+      "gluten"
+     ]
+    },
+    {
+     "id": "maxi-tenders",
+     "nom": "Maxi Tenders",
+     "description": "6 tenders de poulet panés.",
+     "photo": "assets/img/plats/maxi-tenders.svg",
+     "badges": [],
+     "ingredients": [
+      "6 tenders de poulet panés"
+     ],
+     "prix": 590,
+     "allergenes": [
+      "gluten"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "boissons",
+   "nom": "Les boissons",
+   "type": "unite",
+   "tailles": [],
+   "plats": [
+    {
+     "id": "coca-cola",
+     "nom": "Coca-Cola",
+     "description": "Canette 33 cl.",
+     "photo": "assets/img/plats/coca-cola.svg",
+     "badges": [],
+     "ingredients": [
+      "Canette 33 cl"
+     ],
+     "prix": 200,
+     "allergenes": []
+    },
+    {
+     "id": "coca-cola-cherry",
+     "nom": "Coca-Cola Cherry",
+     "description": "Canette 33 cl.",
+     "photo": "assets/img/plats/coca-cola-cherry.svg",
+     "badges": [],
+     "ingredients": [
+      "Canette 33 cl"
+     ],
+     "prix": 200,
+     "allergenes": []
+    },
+    {
+     "id": "pepsi",
+     "nom": "Pepsi",
+     "description": "Canette 33 cl.",
+     "photo": "assets/img/plats/pepsi.svg",
+     "badges": [],
+     "ingredients": [
+      "Canette 33 cl"
+     ],
+     "prix": 200,
+     "allergenes": []
+    },
+    {
+     "id": "fanta-orange",
+     "nom": "Fanta Orange",
+     "description": "Canette 33 cl.",
+     "photo": "assets/img/plats/fanta-orange.svg",
+     "badges": [],
+     "ingredients": [
+      "Canette 33 cl"
+     ],
+     "prix": 200,
+     "allergenes": []
+    },
+    {
+     "id": "sprite",
+     "nom": "Sprite",
+     "description": "Canette 33 cl.",
+     "photo": "assets/img/plats/sprite.svg",
+     "badges": [],
+     "ingredients": [
+      "Canette 33 cl"
+     ],
+     "prix": 200,
+     "allergenes": []
+    },
+    {
+     "id": "orangina",
+     "nom": "Orangina",
+     "description": "Canette 33 cl.",
+     "photo": "assets/img/plats/orangina.svg",
+     "badges": [],
+     "ingredients": [
+      "Canette 33 cl"
+     ],
+     "prix": 200,
+     "allergenes": []
+    },
+    {
+     "id": "lipton-ice-tea",
+     "nom": "Lipton Ice Tea",
+     "description": "Canette 33 cl.",
+     "photo": "assets/img/plats/lipton-ice-tea.svg",
+     "badges": [],
+     "ingredients": [
+      "Canette 33 cl"
+     ],
+     "prix": 200,
+     "allergenes": []
+    },
+    {
+     "id": "tropico",
+     "nom": "Tropico",
+     "description": "Canette 33 cl.",
+     "photo": "assets/img/plats/tropico.svg",
+     "badges": [],
+     "ingredients": [
+      "Canette 33 cl"
+     ],
+     "prix": 200,
+     "allergenes": []
+    },
+    {
+     "id": "bouteille-d-eau",
+     "nom": "Bouteille d’eau",
+     "description": "Eau plate, 50 cl.",
+     "photo": "assets/img/plats/bouteille-d-eau.svg",
+     "badges": [],
+     "ingredients": [
+      "Eau plate",
+      "50 cl"
+     ],
+     "prix": 100,
+     "allergenes": []
+    }
+   ]
+  },
+  {
+   "id": "desserts",
+   "nom": "Les desserts",
+   "type": "unite",
+   "tailles": [],
+   "plats": [
+    {
+     "id": "gateau-amandes-daim",
+     "nom": "Gâteau amandes & Daim",
+     "description": "Le petit gâteau qui fait basculer la fin de repas.",
+     "photo": "assets/img/plats/gateau-amandes-daim.svg",
+     "badges": [],
+     "ingredients": [
+      "Le petit gâteau qui fait basculer la fin de repas"
+     ],
+     "prix": 350,
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "tiramisu",
+     "nom": "Tiramisu",
+     "description": "Mascarpone, café, cacao.",
+     "photo": "assets/img/plats/tiramisu.svg",
+     "badges": [],
+     "ingredients": [
+      "Mascarpone",
+      "café",
+      "cacao"
+     ],
+     "prix": 350,
+     "allergenes": [
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "brownie",
+     "nom": "Brownie",
+     "description": "Chocolat fondant, cœur moelleux.",
+     "photo": "assets/img/plats/brownie.svg",
+     "badges": [],
+     "ingredients": [
+      "Chocolat fondant",
+      "cœur moelleux"
+     ],
+     "prix": 350,
+     "allergenes": [
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    }
+   ]
+  }
+ ]
+}

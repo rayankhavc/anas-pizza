@@ -354,12 +354,27 @@
 
       var sImg = $('#fiche-img', sheet);
       if (img) {
-        // les vignettes optimisées existent en 256 et 720 : la fiche prend la grande
-        sImg.src = img.getAttribute('src').replace('-256.webp', '-720.webp');
+        // La vignette de la carte est déjà décodée par le navigateur : on
+        // l'affiche telle quelle, donc jamais la photo du plat précédent le
+        // temps que la grande arrive. La version 720 la remplace une fois
+        // chargée — et seulement si la fiche montre toujours le même plat.
+        var small = img.getAttribute('src');
+        var big = small.replace('-256.webp', '-720.webp');
         sImg.alt = '';
         sImg.hidden = false;
+        sImg.src = small;
+        sImg.dataset.attendu = big;
+        if (big !== small) {
+          var grande = new Image();
+          grande.onload = function () {
+            if (sImg.dataset.attendu === big) sImg.src = big;
+          };
+          grande.src = big;
+        }
       } else {
         sImg.hidden = true;
+        sImg.removeAttribute('src');
+        delete sImg.dataset.attendu;
       }
 
       $('#fiche-nom', sheet).textContent = name ? name.textContent : '';

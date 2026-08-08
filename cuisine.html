@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#131F2E">
+<meta name="color-scheme" content="dark">
+<title>Écran cuisine — Anas Pizza Original</title>
+<!-- Écran interne : jamais indexé, jamais partagé. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script src="assets/js/cuisine.js" defer></script>
+</head>
+
+<body class="page-cuisine">
+
+<header class="kit__bar">
+  <span class="brand">
+    <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="32" height="32">
+    <span class="brand__txt"><span class="brand__a">Anas <i>Pizza</i></span></span>
+  </span>
+  <span class="kit__etat" id="etat">Connexion…</span>
+  <button class="kit__son" type="button" id="son" aria-pressed="true" title="Sonnerie à chaque nouvelle commande">
+    🔔 <span>Son</span>
+  </button>
+</header>
+
+<main class="kit">
+  <!-- accès -->
+  <form class="kit__acces" id="acces">
+    <h1>Écran cuisine</h1>
+    <p>Entrez le code du restaurant.</p>
+    <p class="champ">
+      <label for="code">Code</label>
+      <input id="code" type="password" inputmode="numeric" autocomplete="off" required>
+    </p>
+    <p class="cmd__erreur" id="err-acces" role="alert" hidden></p>
+    <button class="btn btn--block" type="submit">Ouvrir</button>
+  </form>
+
+  <div id="tableau" hidden>
+    <p class="kit__vide" id="vide" hidden>Aucune commande pour l’instant. L’écran se met à jour tout seul.</p>
+    <div class="kit__grille" id="commandes"></div>
+  </div>
+</main>
+
+</body>
+</html>

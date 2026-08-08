@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1C2B3E">
+<meta name="color-scheme" content="dark light">
+
+<title>Commander en ligne — Anas Pizza Original, Nantes</title>
+<meta name="description" content="Commandez vos pizzas en ligne chez Anas Pizza Original, 10 allée Duguay Trouin à Nantes. Livraison sur Nantes et alentours, ou à emporter. Paiement sécurisé.">
+<link rel="canonical" href="https://www.anaspizza-nantes.fr/commander">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Anas Pizza Original">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Commander en ligne — Anas Pizza Original">
+<meta property="og:description" content="Vos pizzas livrées à Nantes, ou à emporter. Paiement sécurisé en ligne.">
+<meta property="og:url" content="https://www.anaspizza-nantes.fr/commander">
+<meta property="og:image" content="https://www.anaspizza-nantes.fr/assets/img/og-image.jpg">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/emblem.svg">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/commande.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.anaspizza-nantes.fr/" },
+    { "@type": "ListItem", "position": 2, "name": "Commander", "item": "https://www.anaspizza-nantes.fr/commander" }
+  ]
+}
+</script>
+</head>
+
+<body class="page-commande">
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html" aria-label="Anas Pizza Original — accueil">
+      <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="38" height="38">
+      <span class="brand__txt">
+        <span class="brand__a">Anas <i>Pizza</i></span>
+        <span class="brand__b"><span>Original</span></span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="index.html#carte">La carte</a>
+      <a href="index.html#maison">La maison</a>
+      <a href="index.html#infos">Infos &amp; horaires</a>
+    </nav>
+
+    <span class="header__spacer"></span>
+
+    <a class="header__tel" href="tel:+33259100198">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+      <span>02 59 10 01 98</span>
+    </a>
+
+    <button class="burger" type="button" data-drawer-open aria-expanded="false" aria-controls="drawer" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+    <div class="drawer__top">
+      <span class="brand">
+        <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="34" height="34">
+        <span class="brand__txt"><span class="brand__a">Anas <i>Pizza</i></span></span>
+      </span>
+      <button class="drawer__close" type="button" data-drawer-close aria-label="Fermer le menu">✕</button>
+    </div>
+    <a class="drawer__link" style="--i:0" href="index.html">Accueil <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" style="--i:1" href="index.html#carte">La carte <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" style="--i:2" href="index.html#infos">Infos &amp; horaires <span aria-hidden="true">→</span></a>
+    <a class="drawer__link" style="--i:3" href="cgv.html">Conditions de vente <span aria-hidden="true">→</span></a>
+    <div class="drawer__foot">
+      <a class="btn btn--block" href="tel:+33259100198">Appeler le restaurant</a>
+    </div>
+  </div>
+</div>
+
+<main id="contenu">
+  <section class="section t-cream cmd">
+    <div class="container">
+
+      <!-- fil des étapes ------------------------------------------------- -->
+      <ol class="steps" id="steps" aria-label="Étapes de la commande">
+        <li class="steps__i is-on" data-step="1"><span>1</span> Formule</li>
+        <li class="steps__i" data-step="2"><span>2</span> Votre commande</li>
+        <li class="steps__i" data-step="3"><span>3</span> Coordonnées</li>
+        <li class="steps__i" data-step="4"><span>4</span> Paiement</li>
+      </ol>
+
+      <!-- ÉTAPE 1 — formule ---------------------------------------------- -->
+      <section class="cmd__panel is-on" data-panel="1" aria-labelledby="t1">
+        <h1 class="h-l" id="t1">Commander</h1>
+        <p class="lead">Livré chez vous ou prêt à emporter. Réglé en ligne, préparé à réception.</p>
+
+        <div class="modes">
+          <button class="mode" type="button" data-mode="livraison">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M14 9h4l4 4v4a1 1 0 0 1-1 1h-1"/><circle cx="7.5" cy="18" r="2.5"/><circle cx="17.5" cy="18" r="2.5"/></svg>
+            <b>Livraison</b>
+            <span data-zone-resume>Nantes et communes limitrophes</span>
+          </button>
+          <button class="mode" type="button" data-mode="emporter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h12l1 5H5l1-5Z"/><path d="M5 7h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7Z"/><path d="M9 11a3 3 0 0 0 6 0"/></svg>
+            <b>À emporter</b>
+            <span>10 allée Duguay Trouin, Nantes</span>
+          </button>
+        </div>
+
+        <p class="cmd__note">
+          Ouvert 7j/7 de 11h30 à 2h du matin. Une question&nbsp;?
+          <a href="tel:+33259100198">02 59 10 01 98</a>.
+        </p>
+      </section>
+
+      <!-- ÉTAPE 2 — la carte --------------------------------------------- -->
+      <section class="cmd__panel" data-panel="2" aria-labelledby="t2" hidden>
+        <button class="cmd__back" type="button" data-goto="1">← Changer de formule</button>
+        <h2 class="h-m" id="t2">Composez votre commande</h2>
+
+        <nav class="cmd__tabs" id="tabs" aria-label="Rubriques de la carte"></nav>
+        <div id="produits" class="cmd__cats"></div>
+      </section>
+
+      <!-- ÉTAPE 3 — coordonnées ------------------------------------------ -->
+      <section class="cmd__panel" data-panel="3" aria-labelledby="t3" hidden>
+        <button class="cmd__back" type="button" data-goto="2">← Retour à la carte</button>
+        <h2 class="h-m" id="t3">Vos coordonnées</h2>
+
+        <form class="form" id="coordonnees" novalidate>
+          <p class="champ">
+            <label for="f-nom">Nom et prénom</label>
+            <input id="f-nom" name="nom" type="text" autocomplete="name" required maxlength="80">
+          </p>
+          <p class="champ">
+            <label for="f-tel">Téléphone</label>
+            <input id="f-tel" name="telephone" type="tel" inputmode="tel" autocomplete="tel" required
+                   placeholder="06 12 34 56 78">
+            <small>Le livreur vous appelle à l’arrivée.</small>
+          </p>
+
+          <div data-si="livraison">
+            <p class="champ">
+              <label for="f-rue">Adresse</label>
+              <input id="f-rue" name="rue" type="text" autocomplete="street-address" maxlength="120"
+                     placeholder="12 rue de Strasbourg">
+            </p>
+            <div class="champ-duo">
+              <p class="champ">
+                <label for="f-cp">Code postal</label>
+                <input id="f-cp" name="codePostal" type="text" inputmode="numeric" autocomplete="postal-code"
+                       maxlength="5" pattern="\d{5}" placeholder="44000">
+              </p>
+              <p class="champ">
+                <label for="f-comp">Étage, code, interphone <span>(facultatif)</span></label>
+                <input id="f-comp" name="complement" type="text" maxlength="120">
+              </p>
+            </div>
+          </div>
+
+          <p class="champ">
+            <label for="f-com">Un mot pour la cuisine <span>(facultatif)</span></label>
+            <textarea id="f-com" name="commentaire" rows="2" maxlength="300"
+                      placeholder="Allergie, cuisson, sonnette cassée…"></textarea>
+          </p>
+
+          <p class="cmd__erreur" id="err-form" role="alert" hidden></p>
+          <button class="btn btn--block" type="submit">Voir le récapitulatif</button>
+        </form>
+      </section>
+
+      <!-- ÉTAPE 4 — récapitulatif ---------------------------------------- -->
+      <section class="cmd__panel" data-panel="4" aria-labelledby="t4" hidden>
+        <button class="cmd__back" type="button" data-goto="3">← Modifier mes coordonnées</button>
+        <h2 class="h-m" id="t4">Récapitulatif</h2>
+
+        <div class="recap" id="recap"></div>
+
+        <div class="recap__client" id="recap-client"></div>
+
+        <p class="cmd__legal">
+          En validant, vous acceptez les
+          <a href="cgv.html" target="_blank" rel="noopener">conditions générales de vente</a>.
+          Le paiement est encaissé immédiatement&nbsp;; la préparation démarre dès la confirmation.
+          Une commande alimentaire préparée à votre demande n’ouvre pas droit à rétractation
+          (article&nbsp;L.221-28 du Code de la consommation).
+        </p>
+
+        <p class="cmd__erreur" id="err-paiement" role="alert" hidden></p>
+
+        <!-- Libellé imposé par l'article L.221-14 du Code de la consommation -->
+        <button class="btn btn--block btn--pay" type="button" id="payer">
+          Commander avec obligation de paiement
+        </button>
+
+        <p class="cmd__note cmd__note--pay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Paiement par carte sur la page sécurisée de Stripe. Nous ne voyons ni ne conservons
+          votre numéro de carte.
+        </p>
+      </section>
+
+    </div>
+  </section>
+</main>
+
+<!-- panier flottant ---------------------------------------------------- -->
+<div class="cart" id="cart" hidden>
+  <div class="container cart__inner">
+    <button class="cart__see" type="button" id="cart-see" aria-expanded="false" aria-controls="cart-list">
+      <span class="cart__n" id="cart-n">0</span>
+      <span class="cart__t">Voir le panier</span>
+      <span class="cart__p" id="cart-total">0,00 €</span>
+    </button>
+    <button class="btn btn--sm cart__go" type="button" id="cart-go">Continuer</button>
+  </div>
+  <div class="cart__list" id="cart-list" hidden></div>
+</div>
+
+<!-- fiche produit ------------------------------------------------------ -->
+<dialog class="sheet" id="produit" aria-labelledby="p-nom">
+  <button class="sheet__close" type="button" data-produit-close aria-label="Fermer">✕</button>
+  <img class="sheet__img" id="p-img" src="" alt="" width="400" height="400">
+  <form class="sheet__body" id="p-form" method="dialog">
+    <p class="sheet__badges" id="p-badges"></p>
+    <h2 class="h-m" id="p-nom"></h2>
+    <p class="item__desc" id="p-desc"></p>
+
+    <div id="p-tailles"></div>
+    <div id="p-supps"></div>
+
+    <div class="qte">
+      <span>Quantité</span>
+      <span class="qte__ctrl">
+        <button class="qte__b" type="button" data-qte="-1" aria-label="Retirer un">−</button>
+        <output id="p-qte" aria-live="polite">1</output>
+        <button class="qte__b" type="button" data-qte="1" aria-label="Ajouter un">+</button>
+      </span>
+    </div>
+
+    <button class="btn btn--block" type="submit" id="p-add">Ajouter — <b id="p-prix">0,00 €</b></button>
+  </form>
+</dialog>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom">
+      <p>© <span data-year>2026</span> Anas Pizza Original — 10 allée Duguay Trouin, 44000 Nantes.</p>
+      <nav aria-label="Liens légaux">
+        <a href="cgv.html">Conditions de vente</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="politique-de-confidentialite.html">Confidentialité</a>
+        <a href="mentions-legales.html#credits">Crédits photos</a>
+      </nav>
+    </div>
+    <p class="credit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="m8 18-6-6 6-6"/><path d="m16 6 6 6-6 6"/></svg>
+      Site conçu et réalisé par
+      <a href="https://raythan.fr" target="_blank" rel="noopener">Raythan Web Design</a>
+      <span aria-hidden="true">·</span>
+      <a href="mailto:raythanwebdesign@gmail.com">raythanwebdesign@gmail.com</a>
+    </p>
+  </div>
+</footer>
+</body>
+</html>

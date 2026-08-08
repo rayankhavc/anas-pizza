@@ -751,3 +751,243 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .sheet{width:min(94vw,760px);display:grid;grid-template-columns:260px 1fr}
   .sheet__img{height:100%;aspect-ratio:auto}
 }
+
+/* --------------------------------------------------------------------------
+   21. Commande en ligne
+   -------------------------------------------------------------------------- */
+.page-commande{display:flex;flex-direction:column;min-height:100dvh}
+.page-commande main{flex:1}
+/* la barre de panier flotte au-dessus du contenu : on lui laisse la place */
+.page-commande .footer{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+.page-commande .actionbar{display:none!important}
+
+.cmd__panel[hidden]{display:none}
+.cmd__panel .lead{margin-bottom:1.6rem}
+.cmd__note{font-size:.88rem;color:var(--fg-2);margin-top:1.2rem}
+.cmd__note--pay{display:flex;align-items:center;gap:.5rem;justify-content:center;text-align:left}
+.cmd__note--pay svg{width:18px;height:18px;flex:none}
+.cmd__erreur{
+  margin:1rem 0;padding:.85rem 1rem;border-left:4px solid var(--red);
+  background:#FDECEC;color:#8C1219;font-size:.9rem;font-weight:600;
+}
+.cmd__erreur[hidden]{display:none}
+.cmd__legal{font-size:.82rem;color:var(--fg-2);margin:1.4rem 0 1rem;line-height:1.55}
+.cmd__back{
+  display:inline-flex;align-items:center;min-height:44px;margin-bottom:.4rem;
+  font:700 .78rem/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);
+}
+.cmd__back:hover{color:var(--orange-800)}
+
+/* fil des étapes */
+.steps{
+  display:flex;gap:.3rem;overflow-x:auto;scrollbar-width:none;
+  margin-bottom:clamp(1.4rem,4vw,2.2rem);padding-bottom:.3rem;
+}
+.steps::-webkit-scrollbar{display:none}
+.steps__i{
+  flex:none;display:flex;align-items:center;gap:.45rem;padding:.45rem .7rem;
+  border:1.5px solid var(--rule);border-radius:var(--r);
+  font:700 .72rem/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);
+}
+.steps__i span{
+  width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  background:var(--rule);color:var(--fg-2);font-size:.68rem;
+}
+.steps__i.is-on{border-color:var(--navy-800);color:var(--fg)}
+.steps__i.is-on span{background:var(--navy-800);color:var(--cream)}
+.steps__i.is-done{border-color:var(--orange);color:var(--orange-800)}
+.steps__i.is-done span{background:var(--orange);color:#fff}
+
+/* étape 1 — formule */
+.modes{display:grid;gap:.8rem;margin-top:1.4rem}
+.mode{
+  display:grid;gap:.25rem;padding:1.2rem 1.3rem;text-align:left;
+  border:1.5px solid var(--rule);border-radius:var(--r);background:var(--surface);
+  transition:border-color .18s,background-color .18s;
+}
+.mode:hover{border-color:var(--orange);background:var(--cream-2)}
+.mode svg{width:26px;height:26px;color:var(--orange-800);margin-bottom:.3rem}
+.mode b{font:400 1.35rem/1 var(--f-display);text-transform:uppercase;color:var(--fg)}
+.mode span{font-size:.88rem;color:var(--fg-2)}
+@media (min-width:620px){.modes{grid-template-columns:1fr 1fr}}
+
+/* étape 2 — rubriques */
+.cmd__tabs{margin-bottom:1.4rem}
+.cmd__cat[hidden]{display:none}
+.cmd__cats .item__more{cursor:pointer}
+
+/* fiche produit : options */
+.opts{display:grid;gap:.5rem}
+.opts--wrap{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem}
+.opt{position:relative;display:block}
+.opt input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.opt span{
+  display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+  min-height:48px;padding:.5rem .9rem;border:1.5px solid var(--rule);border-radius:var(--r);
+  background:var(--surface);font-weight:600;transition:border-color .16s,background-color .16s;
+}
+.opt span b{font:700 1rem/1 var(--f-cond)}
+.opt input:checked + span{border-color:var(--navy-800);background:var(--navy-800);color:var(--cream)}
+.opt input:focus-visible + span{outline:3px solid var(--orange);outline-offset:2px}
+.opt--sm span{min-height:44px;padding:.45rem .8rem;font-size:.88rem;font-weight:600}
+.supp__t{
+  font:700 .78rem/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--fg-2);margin:.9rem 0 .45rem;
+}
+.supp__t b{color:var(--orange-800)}
+.sheet__opt{font-weight:400;text-transform:none;letter-spacing:0;opacity:.8}
+
+.qte{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1.4rem 0 1rem}
+.qte > span{font:700 .72rem/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2)}
+.qte__ctrl{display:flex;align-items:center;border:1.5px solid var(--rule);border-radius:var(--r)}
+.qte__b{width:48px;height:48px;display:grid;place-items:center;font-size:1.3rem;color:var(--fg)}
+.qte__b:hover{background:var(--cream-2)}
+.qte output{min-width:2.4rem;text-align:center;font:700 1.1rem/1 var(--f-cond)}
+
+/* étape 3 — formulaire */
+.form{display:grid;gap:1rem;max-width:38rem}
+.champ{display:grid;gap:.3rem}
+.champ label{font:700 .72rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-2)}
+.champ label span{text-transform:none;letter-spacing:0;font-weight:400;opacity:.8}
+.champ input,.champ textarea{
+  width:100%;min-height:50px;padding:.7rem .9rem;font:400 1rem/1.4 var(--f-body);color:var(--fg);
+  background:var(--surface);border:1.5px solid var(--rule);border-radius:var(--r);
+  transition:border-color .16s;
+}
+.champ textarea{min-height:auto;resize:vertical}
+.champ input:focus,.champ textarea:focus{outline:none;border-color:var(--orange)}
+.champ small{font-size:.82rem;color:var(--fg-2)}
+.champ-duo{display:grid;gap:1rem}
+@media (min-width:520px){.champ-duo{grid-template-columns:1fr 1.4fr}}
+
+/* étape 4 — récapitulatif */
+.recap{border:1px solid var(--rule);border-radius:var(--r);background:var(--surface);padding:.4rem 1rem}
+.recap__l{display:flex;justify-content:space-between;gap:1rem;padding:.6rem 0;border-bottom:1px solid var(--rule-2)}
+.recap__l b{font:700 1rem/1.3 var(--f-cond);white-space:nowrap}
+.recap__l--s{color:var(--fg-2)}
+.recap__l--t{border-bottom:0;padding-top:.8rem}
+.recap__l--t span{font:700 .8rem/1.6 var(--f-cond);letter-spacing:.08em;text-transform:uppercase}
+.recap__l--t b{font-size:1.35rem;color:var(--orange-800)}
+.recap__client{margin-top:1.4rem}
+.recap__client p{color:#42536B;font-size:.94rem}
+.recap__com{margin-top:.5rem;font-style:italic}
+.btn--pay{margin-top:.4rem}
+
+/* panier flottant */
+.cart{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:var(--navy-900);border-top:1px solid rgba(246,241,231,.16);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.cart[hidden]{display:none}
+.cart__inner{display:flex;align-items:center;gap:.7rem;padding-block:.6rem}
+.cart__see{display:flex;align-items:center;gap:.6rem;flex:1;min-height:48px;color:var(--cream);text-align:left}
+.cart__n{
+  width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;
+  background:var(--orange);color:#fff;font:700 .85rem/1 var(--f-cond);
+}
+.cart__t{font:700 .78rem/1 var(--f-cond);letter-spacing:.08em;text-transform:uppercase}
+.cart__p{margin-left:auto;font:700 1.15rem/1 var(--f-cond)}
+.cart__go{flex:none}
+.cart__go[disabled]{opacity:.45;pointer-events:none}
+.cart__list{max-height:46vh;overflow-y:auto;border-top:1px solid rgba(246,241,231,.16);padding:.6rem clamp(1rem,4vw,2rem)}
+.cart__list[hidden]{display:none}
+.cart__line{display:grid;grid-template-columns:auto 1fr auto auto;gap:.6rem;align-items:center;padding:.45rem 0;color:var(--cream)}
+.cart__q{font:700 .9rem/1 var(--f-cond);color:var(--gold)}
+.cart__n2{font-size:.9rem}
+.cart__pp{font:700 .95rem/1 var(--f-cond);white-space:nowrap}
+.cart__x{width:34px;height:34px;display:grid;place-items:center;color:#8FA0BA;border-radius:var(--r)}
+.cart__x:hover{color:#fff;background:rgba(246,241,231,.12)}
+.cart__sum{display:flex;justify-content:space-between;padding:.4rem 0;color:#8FA0BA;font-size:.86rem}
+.cart__sum b{color:var(--cream)}
+.cart__avert{
+  padding:.6rem clamp(1rem,4vw,2rem);background:var(--red);color:#fff;
+  font-size:.85rem;font-weight:600;text-align:center;
+}
+.cart__avert[hidden]{display:none}
+
+/* tableau des allergènes (CGV) */
+.allerg{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.9rem}
+.allerg th,.allerg td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule-2);vertical-align:top}
+.allerg thead th{
+  background:var(--navy-800);color:var(--cream);
+  font:700 .7rem/1.2 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;
+  position:sticky;top:calc(var(--hdr) - 1px);z-index:1;
+}
+.allerg tbody th{font-weight:700;color:var(--fg);width:42%}
+.allerg td{color:#42536B}
+.allerg__cat th{
+  background:var(--cream-2);color:var(--orange-800);
+  font:700 .7rem/1.2 var(--f-cond);letter-spacing:.1em;text-transform:uppercase;width:auto;
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* --------------------------------------------------------------------------
+   22. Écran cuisine (interne)
+   -------------------------------------------------------------------------- */
+.page-cuisine{background:var(--navy-900);color:var(--cream);min-height:100dvh}
+.kit__bar{
+  position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:1rem;
+  padding:.7rem clamp(1rem,3vw,1.6rem);background:var(--navy-800);
+  border-bottom:1px solid rgba(246,241,231,.16);
+}
+.kit__etat{margin-left:auto;font:700 .78rem/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;color:#8FA0BA}
+.kit__etat.est-ok{color:#6FD08C}
+.kit__etat.est-ko{color:#FF8A8A}
+.kit__son{
+  display:flex;align-items:center;gap:.35rem;min-height:40px;padding:.3rem .7rem;
+  border:1.5px solid rgba(246,241,231,.24);border-radius:var(--r);color:var(--cream);
+  font:700 .74rem/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;
+}
+.kit__son[aria-pressed=false]{opacity:.5}
+
+.kit{padding:clamp(1rem,3vw,1.6rem)}
+.kit__acces{max-width:22rem;margin:12vh auto;display:grid;gap:.9rem}
+.kit__acces h1{font:400 2rem/1 var(--f-display);text-transform:uppercase}
+.kit__acces p{color:#8FA0BA}
+.kit__acces .champ label{color:#8FA0BA}
+.kit__acces .champ input{background:var(--navy-800);border-color:rgba(246,241,231,.24);color:var(--cream)}
+.kit__vide{text-align:center;color:#8FA0BA;padding:16vh 1rem}
+
+.kit__grille{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.kit__c{
+  display:flex;flex-direction:column;gap:.6rem;padding:.9rem 1rem 1rem;
+  background:var(--navy-800);border:1px solid rgba(246,241,231,.16);border-left:5px solid var(--orange);
+  border-radius:var(--r);
+}
+.kit__c.est-faite{opacity:.42;border-left-color:#6FD08C}
+.kit__c-h{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.kit__mode{
+  padding:.22rem .55rem;border-radius:var(--r);
+  font:700 .66rem/1.4 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;
+}
+.kit__mode--livraison{background:var(--orange);color:#fff}
+.kit__mode--emporter{background:var(--gold);color:var(--navy-900)}
+.kit__h{font:700 1.15rem/1 var(--f-cond)}
+.kit__id{margin-left:auto;font:600 .74rem/1 var(--f-body);letter-spacing:.1em;color:#8FA0BA}
+.kit__art{display:grid;gap:.3rem;font-size:1.02rem;line-height:1.35}
+.kit__art b{color:var(--gold);font:700 1.05rem/1 var(--f-cond);margin-right:.2rem}
+.kit__com{padding:.5rem .7rem;background:var(--red);color:#fff;border-radius:var(--r);font-size:.9rem;font-weight:600}
+.kit__c-f{padding-top:.6rem;border-top:1px solid rgba(246,241,231,.16);display:grid;gap:.15rem}
+.kit__cli{font-size:.92rem}
+.kit__cli a{color:var(--gold);text-decoration:underline}
+.kit__adr{font-size:.9rem;color:#B9C6D8}
+.kit__tot{font:700 1.2rem/1 var(--f-cond);color:var(--gold);margin-top:.3rem}
+.kit__ok{
+  min-height:48px;border:1.5px solid rgba(246,241,231,.28);border-radius:var(--r);
+  color:var(--cream);font:700 .78rem/1 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;
+}
+.kit__ok:hover{background:rgba(246,241,231,.12)}
+.est-faite .kit__ok{border-color:#6FD08C;color:#6FD08C}
+
+/* page de confirmation de commande */
+.merci{max-width:40rem;margin-inline:auto;text-align:center}
+.merci__ok{width:72px;height:72px;color:var(--orange);margin-bottom:1.2rem}
+.merci .lead{margin-bottom:2rem}
+.merci__pts{display:grid;gap:.7rem;text-align:left;padding:1.2rem 1.3rem;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r)}
+.merci__pts p{color:#42536B}
+.merci__pts b{color:var(--fg)}
+.merci .cmd__note{margin-top:1.4rem}
+.merci .btn-row{justify-content:center}
+.ordercard--site{border-color:var(--orange);background:var(--cream-2)}
+.ordercard--site .ordercard__badge{background:var(--orange);color:#fff}

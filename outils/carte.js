@@ -1,0 +1,231 @@
+/* ==========================================================================
+   Génère assets/data/carte.json à partir d'index.html.
+   --------------------------------------------------------------------------
+   La carte n'est écrite qu'à un seul endroit : index.html. Ce script en tire
+   un catalogue lisible par machine, utilisé à la fois par la page de commande
+   (affichage) et par la fonction serveur (calcul du prix). Une pizza modifiée
+   dans index.html se répercute partout après « node outils/carte.js ».
+
+   Les prix sont en centimes, jamais en euros flottants : 7,90 € vaut 790.
+   Un centime perdu dans un arrondi, c'est un paiement Stripe qui ne tombe
+   pas juste.
+   ========================================================================== */
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const RACINE = path.join(__dirname, '..');
+const SORTIE = path.join(RACINE, 'assets/data/carte.json');
+
+// ── conditions de livraison ────────────────────────────────────────────────
+// Communes desservies, code postal exigé à la commande. À compléter avec le
+// restaurant : toute commune absente d'ici est refusée par le serveur.
+const LIVRAISON = {
+  minimum: 1000,          // 10,00 € de commande minimum
+  frais: 100,             // 1,00 € de frais de livraison
+  delai: '30 à 45 min',
+  communes: [
+    { cp: '44000', nom: 'Nantes' },
+    { cp: '44100', nom: 'Nantes' },
+    { cp: '44200', nom: 'Nantes' },
+    { cp: '44300', nom: 'Nantes' },
+    { cp: '44800', nom: 'Saint-Herblain' },
+    { cp: '44230', nom: 'Saint-Sébastien-sur-Loire' },
+    { cp: '44400', nom: 'Rezé' },
+    { cp: '44700', nom: 'Orvault' },
+    { cp: '44300', nom: 'Nantes Doulon' }
+  ]
+};
+
+const sansBalises = (s) => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+// \u00ab L\u00e9gumes & \u0153uf \u00bb \u2192 \u00ab legumes-oeuf \u00bb. NFD ne d\u00e9compose pas les ligatures :
+// \u0153 et \u00e6 sont traduits \u00e0 la main, sinon l'identifiant perd une lettre.
+const slug = (s) => s.replace(/\u0153/g, 'oe').replace(/\u0152/g, 'OE')
+  .replace(/\u00e6/g, 'ae').replace(/\u00c6/g, 'AE')
+  .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const decode = (s) => s
+  .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<')
+  .replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+
+// « 7,90 € » → 790
+function centimes(txt) {
+  const m = decode(txt).replace(/\s/g, '').match(/(\d+)[,.](\d{2})/);
+  if (m) return parseInt(m[1], 10) * 100 + parseInt(m[2], 10);
+  const e = decode(txt).match(/(\d+)/);
+  if (!e) throw new Error('prix illisible : ' + txt);
+  return parseInt(e[1], 10) * 100;
+}
+
+// ── allergènes ─────────────────────────────────────────────────────────────
+// Les 14 allergènes à déclaration obligatoire (règlement UE 1169/2011),
+// rattachés aux ingrédients tels qu'ils sont écrits sur la carte. La pâte
+// apporte le gluten à toutes les pizzas ; le reste vient de la garniture.
+//
+// Cette table est une aide à la lecture, jamais une garantie : la cuisine est
+// unique, les traces sont possibles partout, et c'est écrit sur la page.
+const ALLERGENES = {
+  gluten: ['pâte', 'pain', 'cordon bleu', 'tenders', 'nuggets', 'sticks', 'brownie',
+           'tiramisu', 'gâteau', 'tarte', 'kebab', 'pizza', 'calzone',
+           'croustillant', 'panée', 'pané', 'beignet'],
+  lait: ['mozzarella', 'chèvre', 'parmesan', 'cheddar', 'boursin', 'reblochon', 'crème',
+         'fromage', 'burrata', 'beurre', 'tiramisu', 'brownie', 'gâteau', 'raclette'],
+  oeufs: ['œuf', 'oeuf', 'mayonnaise', 'tiramisu', 'gâteau', 'brownie', 'cordon bleu'],
+  poissons: ['saumon', 'thon', 'anchois'],
+  'fruits à coque': ['amande', 'noix', 'noisette', 'daim', 'pignon'],
+  soja: ['sauce soja', 'soja'],
+  moutarde: ['moutarde', 'sauce algérienne', 'sauce barbecue'],
+  sesame: ['sésame'],
+  celeri: ['céleri'],
+  sulfites: ['vinaigre', 'olives', 'câpres']
+};
+
+function allergenes(ingredients, type, nom) {
+  // le nom compte autant que la description : « Tiramisu » et « Brownie »
+  // n'ont pas de liste d'ingrédients, mais disent déjà ce qu'ils contiennent
+  const txt = ' ' + (nom || '').toLowerCase() + ' , ' + ingredients.join(' , ').toLowerCase() + ' ';
+  const out = new Set();
+  if (type === 'pizza') out.add('gluten');   // la pâte
+  for (const [nom, mots] of Object.entries(ALLERGENES)) {
+    if (mots.some((m) => txt.includes(m))) out.add(nom);
+  }
+  return Array.from(out).sort();
+}
+
+function plats(corps) {
+  const out = [];
+  const re = /<article class="item">([\s\S]*?)<\/article>/g;
+  let a;
+  while ((a = re.exec(corps))) {
+    const bloc = a[1];
+    const img = (bloc.match(/class="item__img" src="([^"]+)"/) || [])[1] || '';
+    const nom = (bloc.match(/class="item__name">([\s\S]*?)<\/span>/) || [])[1];
+    const desc = (bloc.match(/class="item__desc">([\s\S]*?)<\/p>/) || [])[1] || '';
+    const prix = (bloc.match(/class="item__price">([\s\S]*?)<\/span>/) || [])[1];
+    if (!nom) continue;
+    const badges = [];
+    let b;
+    const reb = /class="badge badge--([a-z]+)">([\s\S]*?)<\/span>/g;
+    while ((b = reb.exec(bloc))) badges.push({ type: b[1], texte: decode(sansBalises(b[2])) });
+
+    const nomClair = decode(sansBalises(nom));
+    const plat = {
+      // l'identifiant vient du nom du visuel ; les produits sans visuel
+      // (les suppléments) le tirent de leur nom
+      // « plats/tikka.svg » comme « plats/opt/tikka-256.webp » donnent « tikka » :
+      // le catalogue est généré après la construction, quand les visuels ont
+      // déjà été remplacés par les photos optimisées.
+      id: path.basename(img).replace(/\.[a-z0-9]+$/i, '').replace(/-(?:256|720)$/, '') || slug(nomClair),
+      nom: nomClair,
+      description: decode(sansBalises(desc)),
+      photo: img || null,
+      badges
+    };
+    // les ingrédients servent aux allergènes et à la fiche détaillée
+    plat.ingredients = plat.description.replace(/\.$/, '')
+      .split(/,(?![^(]*\))/).map((s) => s.trim()).filter(Boolean);
+    if (prix) plat.prix = centimes(prix);
+    if (!plat.id) throw new Error('plat sans identifiant : ' + plat.nom);
+    out.push(plat);
+  }
+  return out;
+}
+
+function main() {
+  const html = fs.readFileSync(path.join(RACINE, 'index.html'), 'utf8');
+  const carte = html.match(/id="carte"([\s\S]*?)<p class="menu-foot"/);
+  if (!carte) throw new Error('section carte introuvable dans index.html');
+
+  const categories = [];
+  const re = /<div class="menu-cat" data-cat="([a-z-]+)">([\s\S]*?)(?=<div class="menu-cat" data-cat=|$)/g;
+  let c;
+  while ((c = re.exec(carte[1]))) {
+    const id = c[1];
+    const corps = c[2];
+    const titre = decode(sansBalises((corps.match(/menu-cat__title">([\s\S]*?)<\/h3>/) || [])[1] || id));
+
+    // tailles de la rubrique (Medium / Large) — absentes pour les rubriques
+    // vendues à l'unité
+    const tailles = [];
+    let t;
+    const ret = /price-tag"><span>([^<]*)<\/span><b>([^<]*)<\/b>/g;
+    while ((t = ret.exec(corps))) {
+      tailles.push({
+        id: decode(sansBalises(t[1])).toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        nom: decode(sansBalises(t[1])),
+        prix: centimes(t[2])
+      });
+    }
+
+    const liste = plats(corps);
+    const aPrixUnitaire = liste.every((p) => typeof p.prix === 'number');
+
+    categories.push({
+      id,
+      nom: titre,
+      // « pizza » = prix porté par la rubrique et choix d'une taille ;
+      // « unite » = chaque produit a son propre prix.
+      type: aPrixUnitaire ? 'unite' : 'pizza',
+      tailles: aPrixUnitaire ? [] : tailles,
+      plats: liste
+    });
+  }
+
+  for (const cat of categories) {
+    for (const p of cat.plats) p.allergenes = allergenes(p.ingredients, cat.type, p.nom);
+  }
+
+  const supp = categories.find((x) => x.id === 'supplements');
+  const carteFinale = {
+    genere: new Date().toISOString().slice(0, 10),
+    source: 'index.html',
+    livraison: LIVRAISON,
+    // Un supplément se choisit en deux temps : le groupe fixe le prix
+    // (fromage 0,50 €, viande 1,00 €…), la liste donne l'ingrédient exact.
+    supplements: supp ? supp.plats.map((p) => ({
+      id: p.id,
+      nom: p.nom,
+      prix: p.prix,
+      choix: p.ingredients.map((i) => ({ id: slug(i), nom: i.charAt(0).toUpperCase() + i.slice(1) }))
+    })) : [],
+    categories: categories.filter((x) => x.id !== 'supplements')
+  };
+
+  // ── garde-fous : mieux vaut échouer ici qu'encaisser un mauvais montant ──
+  const vus = new Set();
+  for (const cat of carteFinale.categories) {
+    if (cat.type === 'pizza' && cat.tailles.length === 0) {
+      throw new Error('rubrique « ' + cat.id + ' » sans taille ni prix unitaire');
+    }
+    for (const p of cat.plats) {
+      if (vus.has(p.id)) throw new Error('identifiant en double : ' + p.id);
+      vus.add(p.id);
+      if (cat.type === 'unite' && !(p.prix > 0)) throw new Error('prix manquant : ' + p.id);
+    }
+  }
+  if (!carteFinale.supplements.length) throw new Error('aucun supplément trouvé');
+  for (const s of carteFinale.supplements) {
+    if (!(s.prix > 0) || !s.choix.length) throw new Error('supplément incomplet : ' + s.id);
+  }
+
+  fs.mkdirSync(path.dirname(SORTIE), { recursive: true });
+  fs.writeFileSync(SORTIE, JSON.stringify(carteFinale, null, 1) + '\n');
+
+  const n = carteFinale.categories.reduce((s, c) => s + c.plats.length, 0);
+  console.log('[carte] ' + n + ' produits, ' + carteFinale.categories.length +
+    ' rubriques, ' + carteFinale.supplements.length + ' suppléments → ' +
+    path.relative(RACINE, SORTIE));
+  return carteFinale;
+}
+
+if (require.main === module) {
+  try {
+    main();
+  } catch (e) {
+    console.error('[carte] ' + e.message);
+    process.exit(1);
+  }
+}
+
+module.exports = { main, centimes, allergenes, ALLERGENES };
