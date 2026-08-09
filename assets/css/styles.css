@@ -799,6 +799,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .page-commande main{flex:1}
 /* la barre de panier flotte au-dessus du contenu : on lui laisse la place */
 .page-commande .footer{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+/* la barre du panier flotte au-dessus : on réserve sa hauteur pour que le
+   dernier plat de la liste reste atteignable */
+.page-commande .cmd__cats{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
 .page-commande .actionbar{display:none!important}
 
 .cmd__panel .lead{margin-bottom:1.6rem}
@@ -835,6 +838,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .steps__i.is-on span{background:var(--navy-800);color:var(--cream)}
 .steps__i.is-done{border-color:var(--orange);color:var(--orange-800)}
 .steps__i.is-done span{background:var(--orange);color:#fff}
+/* Sur un téléphone, quatre étiquettes ne tiennent pas : la rangée défilait
+   et les étapes 3 et 4 disparaissaient hors de l'écran. On ne garde alors
+   que le libellé de l'étape en cours ; les autres se réduisent à leur
+   numéro, et les quatre tiennent d'un coup d'œil. */
+@media (max-width:559px){
+  .steps{gap:.35rem;justify-content:flex-start}
+  .steps__i{padding:.4rem .5rem;font-size:.68rem}
+  .steps__i:not(.is-on){font-size:0;gap:0;padding:.4rem}
+  .steps__i:not(.is-on) span{font-size:.68rem}
+}
 
 /* étape 1 — formule */
 .modes{display:grid;gap:.8rem;margin-top:1.4rem}
@@ -928,7 +941,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .cart__t{font:700 .78rem/1 var(--f-cond);letter-spacing:.08em;text-transform:uppercase}
 .cart__p{margin-left:auto;font:700 1.15rem/1 var(--f-cond)}
 .cart__go{flex:none}
-.cart__go[disabled]{opacity:.45;pointer-events:none}
+/* Un bouton bloqué doit rester lisible : à 45 % d'opacité sur fond marine,
+   le libellé disparaissait et l'on ne savait plus quoi lire. */
+.cart__go[disabled]{background:transparent;border-color:rgba(246,241,231,.4);color:#B9C6D8;pointer-events:none}
 .cart__list{max-height:46vh;overflow-y:auto;border-top:1px solid rgba(246,241,231,.16);padding:.6rem clamp(1rem,4vw,2rem)}
 .cart__line{display:grid;grid-template-columns:auto 1fr auto auto;gap:.6rem;align-items:center;padding:.45rem 0;color:var(--cream)}
 .cart__q{font:700 .9rem/1 var(--f-cond);color:var(--gold)}
@@ -939,8 +954,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .cart__sum{display:flex;justify-content:space-between;padding:.4rem 0;color:#8FA0BA;font-size:.86rem}
 .cart__sum b{color:var(--cream)}
 .cart__avert{
-  padding:.6rem clamp(1rem,4vw,2rem);background:var(--red);color:#fff;
-  font-size:.85rem;font-weight:600;text-align:center;
+  padding:.55rem clamp(1rem,4vw,2rem);background:var(--red);color:#fff;
+  font-size:.85rem;font-weight:600;text-align:center;line-height:1.35;
 }
 
 /* tableau des allergènes (CGV) */
