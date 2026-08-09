@@ -7,8 +7,7 @@
    dans index.html se répercute partout après « node outils/carte.js ».
 
    Les prix sont en centimes, jamais en euros flottants : 7,90 € vaut 790.
-   Un centime perdu dans un arrondi, c'est un paiement Stripe qui ne tombe
-   pas juste.
+   Un centime perdu dans un arrondi, c'est un paiement qui ne tombe pas juste.
    ========================================================================== */
 'use strict';
 
@@ -37,6 +36,25 @@ const LIVRAISON = {
     { cp: '44300', nom: 'Nantes Doulon' }
   ]
 };
+
+// ── offre du mardi ─────────────────────────────────────────────────────────
+// Le restaurant annonce « toutes nos pizzas à 5,90 € le mardi ». La remise
+// porte sur la taille medium : appliquée aux larges, elle passerait sous le
+// prix de revient. Pour l'étendre à toutes les tailles, mettre taille: null —
+// et penser à corriger le texte de la section « Offre du mardi ».
+//
+// Le service court jusqu'à 2h du matin : une commande passée le mercredi à
+// 1h relève encore du mardi. C'est « finService » qui le dit.
+const OFFRES = [
+  {
+    id: 'mardi',
+    nom: 'Offre du mardi',
+    jour: 2,              // 0 = dimanche, 2 = mardi
+    finService: 2,        // heure de fermeture, le lendemain
+    taille: 'medium',     // null = toutes les tailles
+    prix: 590
+  }
+];
 
 const sansBalises = (s) => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 // \u00ab L\u00e9gumes & \u0153uf \u00bb \u2192 \u00ab legumes-oeuf \u00bb. NFD ne d\u00e9compose pas les ligatures :
@@ -202,6 +220,7 @@ function main() {
     genere: new Date().toISOString().slice(0, 10),
     source: 'index.html',
     livraison: LIVRAISON,
+    offres: OFFRES,
     // Un supplément se choisit en deux temps : le groupe fixe le prix
     // (fromage 0,50 €, viande 1,00 €…), la liste donne l'ingrédient exact.
     supplements: supp ? supp.plats.map((p) => ({
@@ -226,6 +245,17 @@ function main() {
     }
   }
   if (!carteFinale.supplements.length) throw new Error('aucun supplément trouvé');
+  for (const o of carteFinale.offres) {
+    if (!(o.prix > 0)) throw new Error('offre sans prix : ' + o.id);
+    // une « remise » plus chère que le tarif courant serait un piège
+    const concernees = carteFinale.categories
+      .filter((c) => c.type === 'pizza')
+      .flatMap((c) => c.tailles.filter((t) => !o.taille || t.id === o.taille));
+    if (!concernees.length) throw new Error('offre « ' + o.id + ' » ne vise aucune taille');
+    if (concernees.every((t) => t.prix <= o.prix)) {
+      throw new Error('offre « ' + o.id + ' » plus chère que la carte');
+    }
+  }
   for (const s of carteFinale.supplements) {
     if (!(s.prix > 0) || !s.choix.length) throw new Error('supplément incomplet : ' + s.id);
   }
@@ -249,4 +279,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { main, centimes, allergenes, ALLERGENES };
+module.exports = { main, centimes, allergenes, ALLERGENES, OFFRES };
