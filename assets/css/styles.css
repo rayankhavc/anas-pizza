@@ -747,8 +747,35 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background:var(--navy-800);color:var(--cream);font-size:1rem;
 }
 .sheet__close:hover{background:var(--orange)}
-.sheet__img{width:100%;height:auto;aspect-ratio:5/4;object-fit:cover;background:var(--cream-2);display:block;flex:none}
-.sheet__body{padding:clamp(1.2rem,4vw,1.7rem);overflow-y:auto;overscroll-behavior:contain;min-height:0;flex:1}
+/* La photo est plafonnée en hauteur : sur un téléphone, un rapport 5/4 pris
+   sur toute la largeur mangeait la moitié de l'écran et repoussait le nom du
+   plat sous la ligne de flottaison. Le recadrage se charge du reste. */
+.sheet__img{width:100%;height:auto;aspect-ratio:5/4;max-height:30svh;object-fit:cover;background:var(--cream-2);display:block;flex:none}
+/* Deux garde-fous contre l'écrasement du corps de la fiche.
+
+   Sur l'iPhone du client, la fiche s'ouvrait réduite à sa photo : sous
+   l'image, une bande de trois lignes de haut où l'on devinait le début des
+   badges, et rien d'autre. Ni le nom, ni les tailles, ni le bouton. Mesuré
+   sur sa capture : photo 282 px, corps 24 px.
+
+   La fiche n'a pas de hauteur imposée, seulement un plafond. Pour deviner
+   sa hauteur, le moteur part de la base de ses enfants : avec « flex:1 »,
+   donc une base de 0, le corps ne pèse rien dans ce calcul. Les Safari
+   récents rattrapent en mesurant le contenu réel — Chromium aussi, ce qui
+   explique que rien n'ait été vu d'ici — les plus anciens laissent le corps
+   à zéro.
+
+   1. flex-basis « auto » : le corps pèse ce qu'il contient. C'est la règle
+      juste, et elle suffit partout où le calcul est correct.
+   2. min-height : une hauteur plancher, qu'aucun calcul de flexbox ne peut
+      contourner. Même si un moteur estime le corps à zéro, il ne peut pas
+      descendre en dessous. C'est le filet.
+
+   Le corps garde le droit de rétrécir sous son contenu — 11rem est très
+   au-dessous — donc il continue de défiler, et c'est toujours lui, et non
+   la fiche entière, qui bouge. Sur un écran très bas la photo disparaît
+   (voir plus bas) : le plancher reste alors largement tenable. */
+.sheet__body{padding:clamp(1.2rem,4vw,1.7rem);overflow-y:auto;overscroll-behavior:contain;min-height:11rem;flex:1 1 auto}
 .sheet__badges{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.5rem}
 .sheet__badges:empty{display:none}
 .sheet h2{margin-bottom:.5rem}
@@ -780,7 +807,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (min-width:560px){
   .sheet{width:min(94vw,760px);grid-template-columns:260px 1fr;grid-template-rows:minmax(0,1fr)}
   .sheet[open]{display:grid}
-  .sheet__img{height:100%;aspect-ratio:auto;align-self:stretch}
+  /* max-height retiré : en colonne latérale la photo doit tenir toute la
+     hauteur de la fiche, le plafond du téléphone la couperait net. */
+  .sheet__img{height:100%;aspect-ratio:auto;max-height:none;align-self:stretch}
+  /* Le plancher du corps ne sert qu'au cas où le calcul de hauteur écrase le
+     texte, ce qui ne peut pas arriver ici : la grille lui donne sa rangée. */
+  .sheet__body{min-height:0}
 }
 /* Fenêtre basse — un portable posé sur un bureau : la photo mange la place
    dont le texte a besoin. On la réduit, puis on la retire. */
