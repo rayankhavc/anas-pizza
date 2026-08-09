@@ -412,6 +412,10 @@
       var btn = e.target.closest('.item__more');
       if (!btn) return;
       fill(btn.closest('.item'));
+      // une fiche ouverte doit commencer par son titre, pas là où
+      // s'était arrêté le plat précédent
+      var corps = sheet.querySelector('.sheet__body');
+      if (corps) corps.scrollTop = 0;
       if (typeof sheet.showModal === 'function') sheet.showModal();
       else sheet.setAttribute('open', '');
     });

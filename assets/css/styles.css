@@ -725,11 +725,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 .sheet{
   width:min(94vw,520px);max-height:88svh;padding:0;border:0;
-  border-radius:var(--r-l);overflow:auto;overscroll-behavior:contain;
+  border-radius:var(--r-l);
+  /* C'est le corps qui défile, pas la fiche entière : sinon la croix de
+     fermeture — positionnée en absolu — s'en va avec le contenu, et sur
+     grand écran la colonne photo laisse un rectangle vide derrière elle.
+     Le display ne vaut que pour [open] : une déclaration d'auteur écrase
+     le « display:none » que le navigateur applique à un <dialog> fermé,
+     et la fiche resterait affichée par-dessus la page. */
+  flex-direction:column;overflow:hidden;
   background:var(--cream);color:var(--navy-800);
   --fg:var(--navy-800);--fg-2:#5C6C83;--rule:rgba(28,43,62,.17);--rule-2:rgba(28,43,62,.1);
   --surface:#FFFDF8;--surface-2:var(--cream-2);
 }
+.sheet[open]{display:flex}
 .sheet::backdrop{background:rgba(15,26,44,.72)}
 .sheet[open]{animation:sheetIn .28s var(--ease)}
 @keyframes sheetIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -739,8 +747,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background:var(--navy-800);color:var(--cream);font-size:1rem;
 }
 .sheet__close:hover{background:var(--orange)}
-.sheet__img{width:100%;height:auto;aspect-ratio:5/4;object-fit:cover;background:var(--cream-2);display:block}
-.sheet__body{padding:clamp(1.2rem,4vw,1.7rem)}
+.sheet__img{width:100%;height:auto;aspect-ratio:5/4;object-fit:cover;background:var(--cream-2);display:block;flex:none}
+.sheet__body{padding:clamp(1.2rem,4vw,1.7rem);overflow-y:auto;overscroll-behavior:contain;min-height:0;flex:1}
 .sheet__badges{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.5rem}
 .sheet__badges:empty{display:none}
 .sheet h2{margin-bottom:.5rem}
@@ -760,9 +768,28 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background:var(--cream-2);font-size:.86rem;color:#42536B;
 }
 .sheet .btn-row{margin-top:1.3rem}
+/* Le bouton qui valide reste sous la main, même au milieu d'une longue liste
+   de suppléments. Le halo reprend le fond de la fiche : sans lui, le bouton
+   a l'air posé au hasard par-dessus les ingrédients. Et la liste garde de
+   quoi défiler sous lui, pour que le dernier supplément reste atteignable. */
+#p-form{display:flex;flex-direction:column;padding-bottom:.4rem}
+#p-form #p-add{
+  position:sticky;bottom:0;z-index:1;margin-top:1.3rem;
+  box-shadow:0 0 0 .55rem var(--cream);
+}
 @media (min-width:560px){
-  .sheet{width:min(94vw,760px);display:grid;grid-template-columns:260px 1fr}
-  .sheet__img{height:100%;aspect-ratio:auto}
+  .sheet{width:min(94vw,760px);grid-template-columns:260px 1fr;grid-template-rows:minmax(0,1fr)}
+  .sheet[open]{display:grid}
+  .sheet__img{height:100%;aspect-ratio:auto;align-self:stretch}
+}
+/* Fenêtre basse — un portable posé sur un bureau : la photo mange la place
+   dont le texte a besoin. On la réduit, puis on la retire. */
+@media (min-width:560px) and (max-height:620px){
+  .sheet{grid-template-columns:190px 1fr}
+}
+@media (max-height:520px){
+  .sheet[open]{display:flex}
+  .sheet__img{display:none}
 }
 
 /* --------------------------------------------------------------------------

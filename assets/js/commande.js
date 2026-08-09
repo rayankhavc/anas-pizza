@@ -226,6 +226,10 @@
 
     $('#p-qte').textContent = '1';
     majPrixFiche();
+    // une fiche ouverte doit commencer par son titre, pas là où
+    // s'était arrêté le plat précédent
+    var corps = fiche.querySelector('.sheet__body');
+    if (corps) corps.scrollTop = 0;
     if (typeof fiche.showModal === 'function') fiche.showModal();
     else fiche.setAttribute('open', '');
   }
