@@ -1045,3 +1045,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .merci__ref{margin:-1rem 0 1.6rem;font-size:.92rem;color:var(--fg-2)}
 .merci__ref b{font:700 1.1rem/1 var(--f-cond);color:var(--fg);letter-spacing:.06em}
+
+/* offre du jour */
+.offre-jour{
+  margin-bottom:1.2rem;padding:.75rem 1rem;border-radius:var(--r);
+  background:var(--red);color:#fff;font-size:.92rem;
+}
+.offre-jour b{font:700 .78rem/1.4 var(--f-cond);letter-spacing:.08em;text-transform:uppercase}
+.price-tag s{opacity:.6;font-size:.8em;margin-right:.15rem}
+.price-tag--promo{background:var(--red)}
+.opt b s{opacity:.55;font-weight:400;margin-right:.25rem}
+.recap__l--promo{color:var(--red)}
+.recap__l--promo b{color:var(--red)}
+.cart__sum--promo span,.cart__sum--promo b{color:var(--gold)}

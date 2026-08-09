@@ -19,7 +19,8 @@
   var carte = null;
   var etat = { mode: null, lignes: [], client: {} };
 
-  var euros = function (c) { return (c / 100).toFixed(2).replace('.', ',') + ' €'; };
+  // espace insécable : « 5,90 € » ne doit jamais se couper en fin de ligne
+  var euros = function (c) { return (c / 100).toFixed(2).replace('.', ',') + '\u00A0€'; };
 
   /* --- persistance ------------------------------------------------------ */
   function charger() {
@@ -43,18 +44,72 @@
     return null;
   }
 
+  /* --- offre du jour ---------------------------------------------------- *
+   * Même règle que le serveur (api/_panier.js) : le prix affiché doit être
+   * celui qui sera débité. Le jour est celui de Paris, et le service courant
+   * jusqu'à 2h, une commande du mercredi à 1h relève encore du mardi.       */
+  function jourDeService(finService) {
+    var jour, heure;
+    try {
+      var p = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Paris', weekday: 'short', hour: '2-digit', hour12: false
+      }).formatToParts(new Date());
+      var m = {};
+      p.forEach(function (x) { m[x.type] = x.value; });
+      jour = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[m.weekday];
+      heure = parseInt(m.hour, 10) % 24;
+    } catch (e) {
+      var d = new Date();
+      jour = d.getDay();
+      heure = d.getHours();
+    }
+    return heure < (finService || 0) ? (jour + 6) % 7 : jour;
+  }
+
+  function offreDuMoment() {
+    var offres = (carte && carte.offres) || [];
+    for (var i = 0; i < offres.length; i++) {
+      if (jourDeService(offres[i].finService) === offres[i].jour) return offres[i];
+    }
+    return null;
+  }
+
+  // Prix d'une taille, remise du jour comprise.
+  function prixTaille(cat, taille) {
+    if (!taille) return 0;
+    var o = offreDuMoment();
+    if (cat.type === 'pizza' && o && (!o.taille || o.taille === taille.id) && o.prix < taille.prix) {
+      return o.prix;
+    }
+    return taille.prix;
+  }
+
   // Même calcul que le serveur — pour l'affichage seulement.
   function prixLigne(l) {
     var f = platParId(l.plat);
     if (!f) return 0;
     var u = f.cat.type === 'pizza'
-      ? (f.cat.tailles.filter(function (t) { return t.id === l.taille; })[0] || {}).prix || 0
+      ? prixTaille(f.cat, f.cat.tailles.filter(function (t) { return t.id === l.taille; })[0])
       : f.plat.prix;
     (l.supplements || []).forEach(function (s) {
       var g = carte.supplements.filter(function (x) { return x.id === s.groupe; })[0];
       if (g) u += g.prix;
     });
     return u * l.quantite;
+  }
+
+  // Ce que la remise fait gagner sur l'ensemble du panier.
+  function economie() {
+    var o = offreDuMoment();
+    if (!o) return 0;
+    return etat.lignes.reduce(function (s, l) {
+      var f = platParId(l.plat);
+      if (!f || f.cat.type !== 'pizza') return s;
+      var t = f.cat.tailles.filter(function (x) { return x.id === l.taille; })[0];
+      if (!t) return s;
+      var p = prixTaille(f.cat, t);
+      return s + (t.prix - p) * l.quantite;
+    }, 0);
   }
 
   function sousTotal() {
@@ -134,7 +189,11 @@
 
       var prix = cat.type === 'pizza'
         ? cat.tailles.map(function (t) {
-            return '<span class="price-tag"><span>' + t.nom + '</span><b>' + euros(t.prix) + '</b></span>';
+            var p = prixTaille(cat, t);
+            return '<span class="price-tag' + (p < t.prix ? ' price-tag--promo' : '') + '"><span>' +
+              t.nom + '</span>' +
+              (p < t.prix ? '<s>' + euros(t.prix) + '</s>' : '') +
+              '<b>' + euros(p) + '</b></span>';
           }).join('')
         : '';
       bloc.innerHTML = '<div class="menu-cat__head"><h3 class="menu-cat__title">' + cat.nom +
@@ -160,6 +219,18 @@
       bloc.appendChild(liste);
       zone.appendChild(bloc);
     });
+
+    var o = offreDuMoment();
+    var ban = $('#offre-jour');
+    if (ban) {
+      ban.hidden = !o;
+      if (o) {
+        ban.innerHTML = '<b>' + o.nom + '</b> — toutes les pizzas ' +
+          (o.taille ? 'en ' + (carte.categories.filter(function (c) { return c.type === 'pizza'; })[0]
+            .tailles.filter(function (t) { return t.id === o.taille; })[0] || {}).nom + ' ' : '') +
+          'à ' + euros(o.prix) + ', appliqué automatiquement.';
+      }
+    }
 
     tabs.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-cible]');
@@ -202,8 +273,10 @@
     if (f.cat.type === 'pizza') {
       zt.innerHTML = '<h3 class="sheet__label">Taille</h3><div class="opts">' +
         f.cat.tailles.map(function (t, i) {
+          var p = prixTaille(f.cat, t);
           return '<label class="opt"><input type="radio" name="taille" value="' + t.id + '"' +
-            (i === 0 ? ' checked' : '') + '><span>' + t.nom + '<b>' + euros(t.prix) + '</b></span></label>';
+            (i === 0 ? ' checked' : '') + '><span>' + t.nom +
+            '<b>' + (p < t.prix ? '<s>' + euros(t.prix) + '</s> ' : '') + euros(p) + '</b></span></label>';
         }).join('') + '</div>';
     } else {
       zt.innerHTML = '';
@@ -295,6 +368,8 @@
         '<button class="cart__x" type="button" data-oter="' + i + '" aria-label="Retirer ' + libelle(l) + '">✕</button></div>';
     }).join('') +
       '<div class="cart__sum"><span>Sous-total</span><b>' + euros(sousTotal()) + '</b></div>' +
+      (economie() ? '<div class="cart__sum cart__sum--promo"><span>' + offreDuMoment().nom +
+        '</span><b>' + euros(economie()) + ' économisés</b></div>' : '') +
       (frais() ? '<div class="cart__sum"><span>Livraison</span><b>' + euros(frais()) + '</b></div>' : '');
 
     // le minimum de commande doit se voir avant l'étape suivante, pas après
@@ -350,6 +425,10 @@
         euros(prixLigne(l)) + '</b></div>';
     }).join('') +
       '<div class="recap__l recap__l--s"><span>Sous-total</span><b>' + euros(sousTotal()) + '</b></div>' +
+      // Les prix ci-dessus sont déjà remisés : afficher « − 6,00 € » ferait
+      // croire à une déduction supplémentaire. On annonce ce qui est gagné.
+      (economie() ? '<div class="recap__l recap__l--promo"><span>' + offreDuMoment().nom +
+        ' déjà appliquée</span><b>' + euros(economie()) + ' économisés</b></div>' : '') +
       (frais() ? '<div class="recap__l recap__l--s"><span>Frais de livraison</span><b>' + euros(frais()) + '</b></div>' : '') +
       '<div class="recap__l recap__l--t"><span>Total à payer</span><b>' + euros(total()) + '</b></div>';
 

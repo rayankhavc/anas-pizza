@@ -10,7 +10,8 @@
    d'une boutique en ligne, et la plus coûteuse.
 
    Les montants sont des entiers en centimes du début à la fin : aucun
-   flottant ne touche un prix.
+   flottant ne touche un prix. Ce fichier ignore qui encaisse — SumUp,
+   Stripe ou personne : il calcule, api/_paiement.js encaisse.
    ========================================================================== */
 'use strict';
 
@@ -41,6 +42,39 @@ function trouverPlat(id) {
   return null;
 }
 
+/**
+ * Jour de service à Paris, en tenant compte de la nuit.
+ * Le restaurant sert de 11h30 à 2h du matin : une commande passée le mercredi
+ * à 1h appartient encore au service du mardi, donc à l'offre du mardi.
+ * @returns {number} 0 = dimanche … 6 = samedi
+ */
+function jourDeService(quand, finService) {
+  const d = quand || new Date();
+  let jour, heure;
+  try {
+    const p = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Paris', weekday: 'short', hour: '2-digit', hour12: false
+    }).formatToParts(d);
+    const m = {};
+    p.forEach((x) => { m[x.type] = x.value; });
+    jour = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[m.weekday];
+    heure = parseInt(m.hour, 10) % 24;
+  } catch (e) {
+    jour = d.getDay();
+    heure = d.getHours();
+  }
+  return heure < (finService || 0) ? (jour + 6) % 7 : jour;
+}
+
+/** L'offre applicable à cet instant, ou null. */
+function offreDuMoment(quand) {
+  const offres = carte().offres || [];
+  for (const o of offres) {
+    if (jourDeService(quand, o.finService) === o.jour) return o;
+  }
+  return null;
+}
+
 function entier(v, nom) {
   const n = Number(v);
   if (!Number.isInteger(n)) throw new Refus(nom + ' invalide');
@@ -53,7 +87,7 @@ function entier(v, nom) {
  * @param {String} mode   'livraison' | 'emporter'
  * @returns {{lignes:Array, sousTotal:number, frais:number, total:number}}
  */
-function calculer(lignes, mode) {
+function calculer(lignes, mode, quand) {
   if (!Array.isArray(lignes) || lignes.length === 0) {
     throw new Refus('Le panier est vide.', 'panier');
   }
@@ -66,6 +100,7 @@ function calculer(lignes, mode) {
 
   const detail = [];
   let sousTotal = 0;
+  const offre = offreDuMoment(quand);
 
   for (const l of lignes) {
     const found = trouverPlat(String(l.plat || ''));
@@ -80,10 +115,18 @@ function calculer(lignes, mode) {
     // prix de base : celui de la taille choisie, ou le prix unitaire
     let unitaire;
     let taille = null;
+    let remise = null;
     if (categorie.type === 'pizza') {
       taille = categorie.tailles.find((t) => t.id === String(l.taille || ''));
       if (!taille) throw new Refus('Choisissez une taille pour ' + plat.nom + '.', 'panier');
       unitaire = taille.prix;
+      // Offre du jour : elle ne s'applique qu'à la taille visée, et seulement
+      // si elle abaisse réellement le prix. Elle porte sur la pizza seule,
+      // jamais sur les suppléments, qui restent facturés au tarif normal.
+      if (offre && (!offre.taille || offre.taille === taille.id) && offre.prix < unitaire) {
+        remise = { nom: offre.nom, avant: unitaire, apres: offre.prix };
+        unitaire = offre.prix;
+      }
     } else {
       unitaire = plat.prix;
       if (l.taille) throw new Refus(plat.nom + ' n’a pas de taille.', 'panier');
@@ -120,6 +163,7 @@ function calculer(lignes, mode) {
       categorie: categorie.id,
       taille: taille ? taille.id : null,
       tailleNom: taille ? taille.nom : null,
+      remise,
       supplements: detailSupps,
       quantite,
       unitaire,
@@ -135,7 +179,12 @@ function calculer(lignes, mode) {
   }
 
   const frais = mode === 'livraison' ? liv.frais : 0;
-  return { lignes: detail, sousTotal, frais, total: sousTotal + frais };
+  const economie = detail.reduce(
+    (s, l) => s + (l.remise ? (l.remise.avant - l.remise.apres) * l.quantite : 0), 0);
+  return {
+    lignes: detail, sousTotal, frais, total: sousTotal + frais,
+    offre: economie ? { nom: offre.nom, economie } : null
+  };
 }
 
 /** Vérifie l'adresse de livraison. Retourne la commune reconnue. */
@@ -172,9 +221,9 @@ function verifierAdresse(a) {
   };
 }
 
-const euros = (c) => (c / 100).toFixed(2).replace('.', ',') + ' €';
+const euros = (c) => (c / 100).toFixed(2).replace('.', ',') + '\u00A0€';
 
-/** Libellé lisible d'une ligne, pour Stripe, la cuisine et le client. */
+/** Libellé lisible d'une ligne, pour le paiement, la cuisine et le client. */
 function libelle(l) {
   let s = l.nom;
   if (l.tailleNom) s += ' — ' + l.tailleNom;
@@ -182,4 +231,5 @@ function libelle(l) {
   return s;
 }
 
-module.exports = { calculer, verifierAdresse, carte, euros, libelle, Refus };
+module.exports = { calculer, verifierAdresse, carte, euros, libelle, Refus,
+  offreDuMoment, jourDeService };

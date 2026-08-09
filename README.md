@@ -193,6 +193,29 @@ LIVRAISON | 2× Tikka — Large + Merguez ; 1× Coca-Cola | Dupont 0612345678 | 
 Une commande courante tient en 130 caractères, le format est tronqué à 380 par
 sécurité, et `npm test` vérifie qu'un ticket écrit est relu à l'identique.
 
+### Offre du mardi
+
+Déclarée dans la constante `OFFRES` en haut d'`outils/carte.js`, appliquée par
+le serveur au moment du calcul — jamais par le navigateur.
+
+```js
+{ id: 'mardi', jour: 2, finService: 2, taille: 'medium', prix: 590 }
+```
+
+- `jour` : 0 = dimanche, 2 = mardi.
+- `finService: 2` : le service court jusqu'à 2h du matin, donc une commande
+  passée **le mercredi à 1h relève encore du mardi**.
+- `taille: 'medium'` : la remise ne touche que la taille annoncée. Mettre
+  `null` l'étend à toutes les tailles — **et il faut alors corriger le texte
+  de la section « Offre du mardi »** sur l'accueil, sinon la page promet une
+  chose et la caisse en facture une autre.
+- Les suppléments ne sont jamais remisés, les boissons et desserts non plus.
+- Le minimum de livraison se juge sur le prix **réellement payé** : trois
+  pizzas à 5,90 € ne suffisent pas à atteindre 10 €.
+
+Le bandeau rouge en tête de la carte, les prix barrés et la ligne
+« X € économisés » du récapitulatif apparaissent tout seuls le jour dit.
+
 ### Zone de livraison, minimum, frais
 
 Tout est dans la constante `LIVRAISON` en haut d'`outils/carte.js`&nbsp;:

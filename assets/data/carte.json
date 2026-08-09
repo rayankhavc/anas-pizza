@@ -44,6 +44,16 @@
    }
   ]
  },
+ "offres": [
+  {
+   "id": "mardi",
+   "nom": "Offre du mardi",
+   "jour": 2,
+   "finService": 2,
+   "taille": "medium",
+   "prix": 590
+  }
+ ],
  "supplements": [
   {
    "id": "supplement-fromage",

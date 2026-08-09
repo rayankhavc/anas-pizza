@@ -85,6 +85,46 @@ ok(c.categories.every((x) => x.type !== 'pizza' || x.tailles.length === 2),
    'chaque rubrique de pizzas a deux tailles');
 ok(c.supplements.every((s) => s.prix > 0 && s.choix.length > 0), 'suppléments complets');
 
+console.log('\n── offre du mardi ─────────────────────');
+const { offreDuMoment, jourDeService } = require('../api/_panier');
+const MARDI_MIDI   = new Date('2026-08-11T12:00:00+02:00');
+const MERCREDI_1H  = new Date('2026-08-12T01:00:00+02:00');
+const MERCREDI_MIDI= new Date('2026-08-12T12:00:00+02:00');
+const LUNDI_23H    = new Date('2026-08-10T23:00:00+02:00');
+
+ok((offreDuMoment(MARDI_MIDI) || {}).id === 'mardi', 'active le mardi à midi');
+ok((offreDuMoment(MERCREDI_1H) || {}).id === 'mardi',
+   'encore active le mercredi à 1h — le service du mardi court jusqu’à 2h');
+ok(offreDuMoment(MERCREDI_MIDI) === null, 'terminée le mercredi à midi');
+ok(offreDuMoment(LUNDI_23H) === null, 'pas encore le lundi soir');
+
+r = calculer([{ plat: 'tikka', taille: 'medium', quantite: 2 }], 'emporter', MARDI_MIDI);
+ok(r.total === 1180, 'medium × 2 le mardi : 5,90 € pièce', euros(r.total));
+ok(r.offre && r.offre.economie === 400, 'économie annoncée', r.offre ? euros(r.offre.economie) : '—');
+
+r = calculer([{ plat: 'tikka', taille: 'large', quantite: 1 }], 'emporter', MARDI_MIDI);
+ok(r.total === 1090, 'la large garde son prix le mardi', euros(r.total));
+
+r = calculer([{ plat: 'tikka', taille: 'medium', quantite: 1 }], 'emporter', MERCREDI_MIDI);
+ok(r.total === 790, 'plein tarif le mercredi', euros(r.total));
+
+// une rubrique déjà à 6,90 € : la remise doit encore s'appliquer
+r = calculer([{ plat: 'margherita', taille: 'medium', quantite: 1 }], 'emporter', MARDI_MIDI);
+ok(r.total === 590, 'les pizzas traditionnelles aussi', euros(r.total));
+
+// les suppléments restent au tarif normal
+r = calculer([{ plat: 'tikka', taille: 'medium', quantite: 1,
+                supplements: [{ groupe: 'supplement-viande', choix: 'merguez' }] }], 'emporter', MARDI_MIDI);
+ok(r.total === 690, 'le supplément n’est pas remisé', euros(r.total));
+
+// les boissons ne sont pas concernées
+r = calculer([{ plat: 'coca-cola', quantite: 1 }], 'emporter', MARDI_MIDI);
+ok(r.total === 200 && !r.offre, 'une boisson n’entre pas dans l’offre', euros(r.total));
+
+// le minimum de livraison se juge sur le prix réellement payé
+refuse(() => calculer([{ plat: 'tikka', taille: 'medium', quantite: 1 }], 'livraison', MARDI_MIDI),
+       'à 5,90 €, on reste sous le minimum de livraison');
+
 console.log('\n── ticket transporté par le prestataire ──');
 const { ticket, lireTicket, reference } = require('../api/_paiement');
 const cmd = calculer([
