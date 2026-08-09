@@ -169,7 +169,8 @@
   function dessinerCarte() {
     var tabs = $('#tabs');
     var zone = $('#produits');
-    tabs.className = 'filters';
+    // on garde cmd__tabs : c'est elle qui pose la marge sous la rangée
+    tabs.className = 'cmd__tabs filters';
     tabs.innerHTML = '';
     zone.innerHTML = '';
 
@@ -236,7 +237,25 @@
       var b = e.target.closest('button[data-cible]');
       if (!b) return;
       $$('button', tabs).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-      $$('.cmd__cat', zone).forEach(function (x) { x.hidden = x.id !== 'cat-' + b.dataset.cible; });
+      $$('.cmd__cat', zone).forEach(function (x) {
+        x.hidden = x.id !== 'cat-' + b.dataset.cible;
+        if (!x.hidden) reveiller(x);
+      });
+    });
+  }
+
+  /* Safari ne déclenche pas le chargement des images « lazy » créées dans un
+     conteneur masqué : quand la rubrique s'affiche, les photos restent vides.
+     On les repasse en chargement immédiat au moment où elles deviennent
+     visibles. */
+  function reveiller(bloc) {
+    $$('img[loading="lazy"]', bloc).forEach(function (img) {
+      img.loading = 'eager';
+      if (!img.complete || !img.naturalWidth) {
+        var s = img.getAttribute('src');
+        img.removeAttribute('src');
+        img.setAttribute('src', s);
+      }
     });
   }
 
@@ -379,7 +398,10 @@
       av = document.createElement('p');
       av.id = 'cart-avert';
       av.className = 'cart__avert';
-      liste.parentNode.insertBefore(av, liste);
+      // en tête de la barre, donc au-dessus du bouton : placé après, il
+      // tombait sous le bas de l'écran et « Continuer » restait grisé sans
+      // que rien n'explique pourquoi
+      barre.insertBefore(av, barre.firstChild);
     }
     av.hidden = manque <= 0;
     av.textContent = manque > 0
