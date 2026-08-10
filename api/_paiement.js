@@ -20,7 +20,10 @@
 
 const { euros, libelle } = require('./_panier');
 
-const SUMUP = 'https://api.sumup.com/v0.1';
+// L'adresse est surchargeable pour que outils/test-sumup.js puisse faire
+// tourner la chaîne entière contre un faux SumUp. En production la variable
+// n'existe pas et c'est la vraie adresse qui sert.
+const SUMUP = process.env.SUMUP_API_BASE || 'https://api.sumup.com/v0.1';
 
 /** Quel prestataire est configuré ? */
 function prestataire() {

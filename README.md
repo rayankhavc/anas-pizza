@@ -171,6 +171,21 @@ de code, seulement un changement de variables.
 | `SUMUP_MERCHANT_CODE` | code marchand SumUp | — |
 | `STRIPE_SECRET_KEY` | solution de repli si le compte bascule sur Stripe | — |
 | `CUISINE_CODE` | code d'accès de l'écran cuisine | `/cuisine` répond « non configuré » |
+| `SUMUP_API_BASE` | adresse de l'API SumUp — **tests seulement** | la vraie adresse SumUp |
+
+### Mise en service, le jour où la clé arrive
+
+1. Vercel → le projet → **Settings → Environment Variables** ;
+2. ajouter `SUMUP_API_KEY`, `SUMUP_MERCHANT_CODE` et `CUISINE_CODE`, sur les
+   trois environnements ;
+3. **Redéployer** — Vercel ne relit pas les variables sans nouveau
+   déploiement, et c'est l'oubli classique ;
+4. commander une pizza à emporter et payer pour de vrai. Le montant part sur
+   le compte du restaurant&nbsp;: rembourser depuis SumUp après coup ;
+5. ouvrir `/cuisine`, saisir le code, vérifier que la commande s'affiche.
+
+Si l'étape 4 échoue, le client voit un message qui le renvoie au téléphone et
+le détail part dans les journaux Vercel — jamais une page blanche.
 
 Sans aucune de ces clés, la page de commande fonctionne de bout en bout et le
 bouton de paiement renvoie vers le téléphone. Rien ne casse&nbsp;: le site
