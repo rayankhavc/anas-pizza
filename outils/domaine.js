@@ -44,6 +44,7 @@ function main() {
 
   let touchees = 0;
   let remplacements = 0;
+  let normalisees = 0;
 
   for (const nom of cibles) {
     const abs = path.join(RACINE, nom);
@@ -59,6 +60,19 @@ function main() {
       }
     }
 
+    // Vercel sert les pages sans extension et redirige /page.html en 308.
+    // Une canonique qui désigne l'adresse redirigée fait suivre une
+    // redirection à chaque passage du robot, pour rien. On normalise ici
+    // plutôt que dans les fichiers : une correction faite à la main se perd
+    // au premier coup de git checkout — c'est arrivé.
+    const propre = apres.replace(
+      new RegExp('(' + SITE.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') +
+        '/[a-z0-9-]+)\\.html', 'g'), '$1');
+    if (propre !== apres) {
+      normalisees += apres.split('.html').length - propre.split('.html').length;
+      apres = propre;
+    }
+
     if (apres !== avant) {
       fs.writeFileSync(abs, apres);
       touchees++;
@@ -66,7 +80,8 @@ function main() {
   }
 
   console.log('[domaine] ' + SITE + ' — ' + remplacements +
-    ' adresse(s) réécrite(s) dans ' + touchees + ' fichier(s).');
+    ' adresse(s) réécrite(s), ' + normalisees +
+    ' sans extension, dans ' + touchees + ' fichier(s).');
 }
 
 try {
