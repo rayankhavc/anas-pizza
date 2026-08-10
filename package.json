@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node build.js && node outils/carte.js && node outils/cgv.js && node outils/versions.js",
     "carte": "node outils/carte.js && node outils/cgv.js",
-    "test": "node outils/test-panier.js"
+    "test": "node outils/test-panier.js && node outils/test-sumup.js"
   },
   "devDependencies": {
     "sharp": "^0.35.0"
