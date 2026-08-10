@@ -89,13 +89,53 @@ async function sumupCheckout(total, client, mode, base) {
     body: JSON.stringify(corps)
   });
 
-  const d = await r.json().catch(() => ({}));
-  if (!r.ok) {
-    throw new Error('SumUp ' + r.status + ' : ' + (d.message || d.error_message || 'réponse illisible'));
-  }
+  const brut = await r.text();
+  let d = {};
+  try { d = JSON.parse(brut); } catch (e) { /* corps non JSON : gardé tel quel */ }
+
+  if (!r.ok) throw new Error(motif(r.status, d, brut));
+
   const url = d.hosted_checkout_url;
-  if (!url) throw new Error('SumUp n’a pas renvoyé de page de paiement.');
+  if (!url) throw new Error('SumUp n’a pas renvoyé de page de paiement. ' + apercu(brut));
   return { url, reference: ref, id: d.id };
+}
+
+/** Les 300 premiers caractères de la réponse, sur une ligne. */
+function apercu(brut) {
+  const t = String(brut || '').replace(/\s+/g, ' ').trim();
+  return t ? 'Réponse : ' + t.slice(0, 300) : 'Réponse vide.';
+}
+
+/**
+ * Pourquoi SumUp a refusé, en clair dans les journaux.
+ *
+ * Un « 401 : réponse illisible » ne dit rien : clé fausse, compte pas encore
+ * activé, code marchand qui n'appartient pas à la clé — trois causes, trois
+ * remèdes, et aucun moyen de trancher. SumUp met son motif tantôt dans
+ * `message`, tantôt dans `error_message`, tantôt dans `error_code`, parfois
+ * dans un corps qui n'est même pas du JSON. On les regarde tous, et à
+ * défaut on recopie la réponse brute : mieux vaut un journal verbeux qu'une
+ * panne muette un vendredi soir.
+ */
+function motif(code, d, brut) {
+  const dit = d.message || d.error_message || d.error_code || d.detail ||
+    (Array.isArray(d.errors) && d.errors[0] && (d.errors[0].message || d.errors[0].code));
+
+  let piste = '';
+  if (code === 401) {
+    piste = ' — clé refusée : soit elle est fausse ou révoquée, soit le compte ' +
+      'SumUp n’est pas encore activé pour l’encaissement en ligne.';
+  } else if (code === 403) {
+    piste = ' — clé acceptée mais droits insuffisants, ou code marchand (' +
+      (process.env.SUMUP_MERCHANT_CODE || '?') + ') étranger à cette clé.';
+  } else if (code === 404) {
+    piste = ' — code marchand introuvable : vérifier SUMUP_MERCHANT_CODE.';
+  } else if (code === 409) {
+    piste = ' — référence de commande déjà utilisée.';
+  }
+
+  return 'SumUp ' + code + (dit ? ' : ' + dit : '') + piste +
+    (dit ? '' : ' ' + apercu(brut));
 }
 
 /** Les paiements aboutis depuis un instant donné (écran cuisine). */
@@ -103,7 +143,12 @@ async function sumupCommandes(depuis) {
   const r = await fetch(SUMUP + '/checkouts', {
     headers: { Authorization: 'Bearer ' + process.env.SUMUP_API_KEY }
   });
-  if (!r.ok) throw new Error('SumUp ' + r.status);
+  if (!r.ok) {
+    const brut = await r.text().catch(() => '');
+    let d = {};
+    try { d = JSON.parse(brut); } catch (e) { /* corps non JSON */ }
+    throw new Error(motif(r.status, d, brut));
+  }
   const liste = await r.json();
 
   return (Array.isArray(liste) ? liste : [])
