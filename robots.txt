@@ -1,12 +1,57 @@
-# Anas Pizza Original — Nantes
-# ⚠️ Remplacer le domaine ci-dessous par le domaine définitif.
+# Anas Pizza Original — 10 allée Duguay Trouin, 44000 Nantes
+# L'adresse ci-dessous est réécrite à la construction par outils/domaine.js.
 
 User-agent: *
 Allow: /
 
-# écrans internes et retours de paiement
+# Écrans internes et retours de paiement : rien à indexer, et des données
+# de clients à ne pas exposer.
 Disallow: /cuisine
 Disallow: /commande-confirmee
 Disallow: /api/
 
-Sitemap: https://www.anaspizza-nantes.fr/sitemap.xml
+# ---------------------------------------------------------------------------
+# Moteurs de réponse
+# ---------------------------------------------------------------------------
+# Un restaurant se cherche de plus en plus en posant une question — « une
+# pizzeria ouverte tard près de Graslin » — plutôt qu'en tapant des mots-clés.
+# Ces robots-là alimentent les réponses de ChatGPT, Perplexity, Copilot et les
+# aperçus IA de Google. La règle générale ci-dessus les autorise déjà ; on le
+# dit explicitement pour que personne ne les bloque par erreur en croyant
+# bien faire, et parce qu'un accès nommément accordé est un accès qui ne se
+# discute pas.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Résumé lisible par une machine, pour les moteurs de réponse
+# https://anas-pizza.vercel.app/llms.txt
+
+Sitemap: https://anas-pizza.vercel.app/sitemap.xml

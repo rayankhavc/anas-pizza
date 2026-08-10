@@ -1,0 +1,156 @@
+# Anas Pizza Original
+
+> Pizzeria artisanale à Nantes centre. Plus de 40 pizzas cuites à la commande, sur place, à emporter ou en livraison. Commande et paiement en ligne sur https://anas-pizza.vercel.app.
+
+## L'essentiel
+
+- **Adresse** : 10 allée Duguay Trouin, 44000 Nantes, France
+- **Téléphone** : 02 59 10 01 98
+- **E-mail** : anas.pizza.original@gmail.com
+- **Horaires** : 7 jours sur 7, de 11h30 à 2h du matin. Service continu, midi et soir.
+- **Commander en ligne** : https://anas-pizza.vercel.app/commander
+- **Modes** : sur place, à emporter, livraison
+- **Paiement** : carte bancaire en ligne, ou sur place
+
+## Livraison
+
+- **Minimum de commande** : 10,00 €
+- **Frais de livraison** : 1,00 €
+- **Délai estimé** : 30 à 45 min
+- **Communes desservies** :
+  - Nantes (44000)
+  - Nantes (44100)
+  - Nantes (44200)
+  - Nantes (44300)
+  - Saint-Herblain (44800)
+  - Saint-Sébastien-sur-Loire (44230)
+  - Rezé (44400)
+  - Orvault (44700)
+  - Nantes Doulon (44300)
+
+Hors de ces communes, la commande à emporter reste possible.
+
+## Offres
+
+- **Offre du mardi** : le mardi, toute pizza medium à 5,90 €. Appliquée automatiquement au panier.
+
+## La carte
+
+### Base sauce tomate
+
+Tarifs : Medium 7,90 € · Large 10,90 €
+
+- **4 Fromages** : Base tomate, mozzarella, chèvre, parmesan. [Végé] Allergènes : gluten, lait.
+- **Sicilienne** : Base tomate, mozzarella, câpres, anchois, olives. Allergènes : gluten, lait, poissons, sulfites.
+- **Cannibale** : Sauce tomate, mozzarella, poulet mariné, viande hachée. Allergènes : gluten, lait.
+- **Tikka** : Sauce tomate, mozzarella, poulet mariné, pommes de terre, poivrons. [Best-seller] Allergènes : gluten, lait.
+- **Mexicaine** : Base tomate, mozzarella, merguez, pepperoni, poivrons, olives. [Relevée] Allergènes : gluten, lait.
+- **Campione** : Sauce tomate, mozzarella, viande hachée, champignons, œuf. Allergènes : gluten, lait, oeufs.
+- **Regina** : Base tomate, mozzarella, chorizo, champignons, olives. Allergènes : gluten, lait.
+- **Hamburger** : Sauce tomate, mozzarella, viande hachée, oignons, cornichon, cheddar. Allergènes : gluten, lait.
+- **Brésilienne** : Sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives. Allergènes : gluten, lait.
+- **Oriental** : Base tomate, mozzarella, merguez, champignons, œuf. Allergènes : gluten, lait, oeufs.
+- **Salmon Pizza** : Sauce tomate, mozzarella, saumon. Allergènes : gluten, lait, poissons.
+- **Hot Pepper** : Sauce tomate, mozzarella, jambon de dinde, poulet mariné, jalapeños. [Piquante] Allergènes : gluten, lait.
+
+### Base crème fraîche
+
+Tarifs : Medium 7,90 € · Large 10,90 €
+
+- **Chèvre Miel** : Crème fraîche, mozzarella, fromage de chèvre, jambon, miel. [Best-seller] Allergènes : gluten, lait.
+- **Campagnarde** : Crème fraîche, mozzarella, jambon, pomme de terre, champignons, boursin. Allergènes : gluten, lait.
+- **La Farmer** : Crème fraîche, mozzarella, jambon, tenders, boursin, pommes de terre, oignons rouges. Allergènes : gluten, lait.
+- **Chicken** : Crème fraîche, mozzarella, pomme de terre, poulet fumé. Allergènes : gluten, lait.
+- **Kebab** : Crème fraîche, mozzarella, oignons rouges, tomates cerise, kebab, cheddar. [Best-seller] Allergènes : gluten, lait.
+- **Tartiflette** : Crème fraîche, mozzarella, lardons de veau, reblochon, pomme de terre, oignons. Allergènes : gluten, lait.
+- **Burger** : Crème fraîche, mozzarella, viande hachée, oignons rouges, pickles, cheddar, ketchup. Allergènes : gluten, lait.
+- **Western** : Crème fraîche, mozzarella, poulet épicé, poivrons, champignons. [Relevée] Allergènes : gluten, lait.
+- **Paysanne** : Crème fraîche, mozzarella, jambon, oignons rouges, pomme de terre. Allergènes : gluten, lait.
+- **Chicago** : Crème fraîche, mozzarella, jambon, viande hachée, cheddar, œuf. Allergènes : gluten, lait, oeufs.
+- **Française** : Crème fraîche, mozzarella, jambon de dinde, lardons de volaille, champignons, olives. Allergènes : gluten, lait.
+- **Norvégienne** : Crème fraîche, mozzarella, saumon. Allergènes : gluten, lait, poissons.
+- **Tasty Kabab** : Crème fraîche, mozzarella, viande kebab, oignons, poivrons. Allergènes : gluten, lait.
+
+### Pizzas sauce originale
+
+Tarifs : Medium 7,99 € · Large 11,90 €
+
+- **Bollywood** : Sauce curry, crème fraîche, mozzarella, poulet mariné, oignons, poivrons. Allergènes : gluten, lait.
+- **Buffalo BBQ** : Sauce barbecue, sauce tomate, mozzarella, viande hachée, poivrons, oignons. Allergènes : gluten, lait, moutarde.
+- **Algérienne** : Sauce algérienne, sauce tomate, mozzarella, viande hachée, merguez, poivrons, olives. [Relevée] Allergènes : gluten, lait, moutarde.
+- **La Boursin** : Boursin, crème fraîche, mozzarella, poulet mariné, champignons. Allergènes : gluten, lait.
+- **Pimento** : Sauce chili thaï, mozzarella, poulet mariné, chorizo, jalapeños, olives. [Piquante] Allergènes : gluten, lait.
+
+### Pizzas signature
+
+Tarifs : Medium 9,90 € · Large 12,90 €
+
+- **L’Originale** : Crème fraîche, mozzarella, cordon bleu, tenders, boursin, poivrons. [Signature] Allergènes : gluten, lait, oeufs.
+- **Carnivore** : Sauce tomate, cordon bleu, tenders, bacon de bœuf, viande hachée, cheddar. [Signature] Allergènes : gluten, lait, oeufs.
+- **La Burrata** : Sauce tomate, mozzarella, tomates cerises, roquette, basilic, boule de burrata (100 g), crème de vinaigre balsamique. [Signature] Allergènes : gluten, lait, sulfites.
+
+### Pizzas traditionnelles
+
+Tarifs : Medium 6,90 € · Large 9,90 €
+
+- **Pêcheur** : Sauce tomate, mozzarella, thon, œuf, olives. Allergènes : gluten, lait, oeufs, poissons.
+- **Calzone** : Sauce tomate, mozzarella, thon ou viande hachée ou jambon. Allergènes : gluten, lait, poissons.
+- **L’Original Pepperoni** : Sauce tomate, mozzarella, pepperoni. Allergènes : gluten, lait.
+- **Hawaïenne** : Sauce tomate, mozzarella, jambon de dinde, ananas. Allergènes : gluten, lait.
+- **4 Saisons** : Base tomate, jambon, champignons, artichauts, olives. Allergènes : gluten.
+
+### Les végétariennes
+
+Tarifs : Medium 6,90 € · Large 9,90 €
+
+- **Margherita** : Base tomate, mozzarella, origan. [Végé] Allergènes : gluten, lait.
+- **Végétarienne** : Base tomate, mozzarella, poivrons, tomates fraîches, origan, olives. [Végé] Allergènes : gluten, lait.
+- **Veggie Spicy** : Base tomate, mozzarella, poivrons, pomme de terre, maïs, jalapeños. [Végé, Piquante] Allergènes : gluten, lait.
+- **Reine** : Sauce tomate, mozzarella, jambon de dinde, champignons. Allergènes : gluten, lait.
+
+### Finger food
+
+- **Mozzarella Sticks** — 4,90 € : 6 pièces, servies avec sauce. Allergènes : gluten, lait.
+- **Wings** — 5,90 € : 6 ailes de poulet croustillantes. Allergènes : gluten.
+- **Nuggets** — 4,90 € : 6 pièces, servies avec sauce. Allergènes : gluten.
+- **Maxi Tenders** — 5,90 € : 6 tenders de poulet panés. Allergènes : gluten.
+
+### Les boissons
+
+- **Coca-Cola** — 2,00 € : Canette 33 cl.
+- **Coca-Cola Cherry** — 2,00 € : Canette 33 cl.
+- **Pepsi** — 2,00 € : Canette 33 cl.
+- **Fanta Orange** — 2,00 € : Canette 33 cl.
+- **Sprite** — 2,00 € : Canette 33 cl.
+- **Orangina** — 2,00 € : Canette 33 cl.
+- **Lipton Ice Tea** — 2,00 € : Canette 33 cl.
+- **Tropico** — 2,00 € : Canette 33 cl.
+- **Bouteille d’eau** — 1,00 € : Eau plate, 50 cl.
+
+### Les desserts
+
+- **Gâteau amandes & Daim** — 3,50 € : Le petit gâteau qui fait basculer la fin de repas. Allergènes : fruits à coque, gluten, lait, oeufs.
+- **Tiramisu** — 3,50 € : Mascarpone, café, cacao. Allergènes : gluten, lait, oeufs.
+- **Brownie** — 3,50 € : Chocolat fondant, cœur moelleux. Allergènes : gluten, lait, oeufs.
+
+### Suppléments
+
+- **Supplément fromage** (0,50 € l'unité) : Mozzarella, Chèvre, Cheddar, Parmesan, Boursin, Reblochon
+- **Supplément viande** (1,00 € l'unité) : Viande hachée, Merguez, Poulet, Kebab, Chorizo, Pepperoni, Jambon, Lardons, Tenders
+- **Légumes & œuf** (0,50 € l'unité) : Champignons, Poivrons, Oignons, Olives, Maïs, Jalapeños, Pomme de terre, Œuf
+
+## Allergènes
+
+Les quatorze allergènes réglementaires sont déclarés plat par plat sur https://anas-pizza.vercel.app/cgv. Les préparations sont faites dans une cuisine où sont manipulés gluten, lait, œufs, poissons, fruits à coque et soja : aucune absence de trace ne peut être garantie. En cas d'allergie, appeler le 02 59 10 01 98 avant de commander.
+
+## Pages
+
+- [Accueil et carte complète](https://anas-pizza.vercel.app/)
+- [Commander en ligne](https://anas-pizza.vercel.app/commander)
+- [Conditions générales de vente et allergènes](https://anas-pizza.vercel.app/cgv)
+- [Mentions légales](https://anas-pizza.vercel.app/mentions-legales)
+- [Politique de confidentialité](https://anas-pizza.vercel.app/politique-de-confidentialite)
+
+---
+
+Fichier généré le 2026-08-10 depuis la carte du restaurant. Les prix font foi sur le site.
