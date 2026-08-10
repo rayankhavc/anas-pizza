@@ -173,6 +173,24 @@ de code, seulement un changement de variables.
 | `CUISINE_CODE` | code d'accès de l'écran cuisine | `/cuisine` répond « non configuré » |
 | `SUMUP_API_BASE` | adresse de l'API SumUp — **tests seulement** | la vraie adresse SumUp |
 
+### En attente : le jour où le nom de domaine est acheté
+
+Décision du client&nbsp;: **tout ce qui suit attend l'achat du domaine.** Rien
+n'est à faire avant, et rien n'est cassé en attendant.
+
+1. **Basculer l'adresse.** Poser `SITE_URL=https://www.le-domaine.fr` dans
+   Vercel, ou changer la ligne dans `outils/domaine.js`, puis redéployer. Les
+   canoniques, Open Graph, plan du site, `robots.txt` et `llms.txt` suivent
+   tout seuls. À ne faire **qu'une fois le domaine joignable**&nbsp;: une
+   canonique vers un domaine qui ne répond pas empêche l'indexation, c'est
+   le défaut qui a été corrigé ici.
+2. **Search Console.** Poser `GSC_TOKEN`, redéployer, valider la propriété,
+   soumettre `sitemap.xml`. Aucun cookie, aucune conséquence légale.
+3. **Analytics**, si le client le veut vraiment. Poser `GA4_ID` — mais pas
+   seul&nbsp;: il faut aussi un bandeau de consentement et réécrire la
+   politique de confidentialité, qui affirme aujourd'hui qu'aucun traceur
+   n'est utilisé. Sans ça, le site devient non conforme.
+
 ### Mise en service, le jour où la clé arrive
 
 1. Vercel → le projet → **Settings → Environment Variables** ;
