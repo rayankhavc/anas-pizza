@@ -889,6 +889,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   transition:border-color .18s,background-color .18s;
 }
 .mode:hover{border-color:var(--orange);background:var(--cream-2)}
+/* Hors créneau : visiblement éteint, mais toujours lisible — le client doit
+   pouvoir lire l'horaire de livraison, c'est justement l'information utile. */
+.mode--ferme{opacity:.55;cursor:not-allowed;background:var(--cream-2)}
+.mode--ferme:hover{border-color:var(--rule);background:var(--cream-2)}
+.mode--ferme span{color:var(--red);font-weight:600}
 .mode svg{width:26px;height:26px;color:var(--orange-800);margin-bottom:.3rem}
 .mode b{font:400 1.35rem/1 var(--f-display);text-transform:uppercase;color:var(--fg)}
 .mode span{font-size:.88rem;color:var(--fg-2)}

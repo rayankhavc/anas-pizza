@@ -6,6 +6,19 @@
 
 const { calculer, verifierAdresse, carte, euros, libelle } = require('../api/_panier');
 
+// Les conditions de livraison changent au gré du restaurant : minimum, frais,
+// délai. On les lit dans la carte au lieu de les figer ici, sinon chaque
+// décision du client fait échouer des contrôles qui pourtant marchent.
+const MINIMUM = carte().livraison.minimum;
+const FRAIS = carte().livraison.frais;
+
+// La livraison ferme à minuit. Les contrôles de tarif ne parlent pas
+// d'horaires : on ouvre le créneau en grand pour eux, sinon la suite
+// échouerait selon l'heure à laquelle on la lance. Le créneau lui-même est
+// éprouvé plus bas, avec des heures fixes.
+const CRENEAU_REEL = carte().livraison.service;
+carte().livraison.service = { debut: '00:00', fin: '23:59' };
+
 let ko = 0;
 function ok(condition, titre, detail) {
   if (!condition) ko++;
@@ -41,10 +54,11 @@ r = calculer([{ plat: 'coca-cola', quantite: 3 }], 'emporter');
 ok(r.total === 600, 'Coca-Cola × 3', euros(r.total));
 
 // frais de livraison ajoutés une seule fois, au-dessus du minimum
-r = calculer([{ plat: 'tikka', taille: 'large', quantite: 1 },
+r = calculer([{ plat: 'tikka', taille: 'large', quantite: 2 },
               { plat: 'coca-cola', quantite: 1 }], 'livraison');
-ok(r.sousTotal === 1290 && r.frais === 100 && r.total === 1390,
-   'livraison : sous-total + 1,00 € de frais', euros(r.total));
+ok(r.sousTotal === 2380 && r.sousTotal >= MINIMUM && r.frais === FRAIS &&
+   r.total === r.sousTotal + FRAIS,
+   'livraison : sous-total + ' + euros(FRAIS) + ' de frais, une seule fois', euros(r.total));
 
 // à emporter, aucun frais et aucun minimum
 r = calculer([{ plat: 'coca-cola', quantite: 1 }], 'emporter');
@@ -121,9 +135,35 @@ ok(r.total === 690, 'le supplément n’est pas remisé', euros(r.total));
 r = calculer([{ plat: 'coca-cola', quantite: 1 }], 'emporter', MARDI_MIDI);
 ok(r.total === 200 && !r.offre, 'une boisson n’entre pas dans l’offre', euros(r.total));
 
-// le minimum de livraison se juge sur le prix réellement payé
+// le minimum de livraison se juge sur le prix réellement payé, pas sur le
+// prix affiché : une pizza remisée ne doit pas ouvrir la livraison
 refuse(() => calculer([{ plat: 'tikka', taille: 'medium', quantite: 1 }], 'livraison', MARDI_MIDI),
-       'à 5,90 €, on reste sous le minimum de livraison');
+       'une pizza remisée seule reste sous le minimum de livraison');
+
+console.log('\n── créneau de livraison ──');
+carte().livraison.service = CRENEAU_REEL;
+const { livraisonOuverte } = require('../api/_panier');
+
+// Heures d'été à Paris : UTC+2. 20h00 locales = 18:00Z, 00h30 = 22:30Z la veille.
+const aParis = (jour, h, m) => new Date(Date.UTC(2026, 7, jour, h - 2, m || 0));
+
+ok(livraisonOuverte(aParis(12, 20, 0)) === true, 'on livre à 20h');
+ok(livraisonOuverte(aParis(12, 12, 0)) === true, 'on livre à midi');
+ok(livraisonOuverte(aParis(12, 23, 59)) === true, 'on livre à 23h59');
+ok(livraisonOuverte(aParis(12, 0, 30)) === false, 'on ne livre plus à 0h30');
+ok(livraisonOuverte(aParis(12, 3, 0)) === false, 'on ne livre pas à 3h du matin');
+ok(livraisonOuverte(aParis(12, 11, 0)) === false, 'on ne livre pas à 11h, avant l’ouverture');
+ok(livraisonOuverte(aParis(12, 11, 30)) === true, 'on livre dès 11h30 pile');
+
+// et le refus passe bien par le calcul du panier
+refuse(() => calculer([{ plat: 'tikka', taille: 'large', quantite: 2 }], 'livraison', aParis(12, 1, 0)),
+       'à 1h du matin, la livraison est refusée');
+r = calculer([{ plat: 'tikka', taille: 'large', quantite: 2 }], 'emporter', aParis(12, 1, 0));
+ok(r.total === 2180, 'à 1h du matin, le retrait reste possible', euros(r.total));
+
+// le créneau réel a fait son office : on rouvre pour la suite, qui parle de
+// tickets et non d'horaires
+carte().livraison.service = { debut: '00:00', fin: '23:59' };
 
 console.log('\n── ticket transporté par le prestataire ──');
 const { ticket, lireTicket, reference } = require('../api/_paiement');

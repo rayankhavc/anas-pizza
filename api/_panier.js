@@ -66,6 +66,46 @@ function jourDeService(quand, finService) {
   return heure < (finService || 0) ? (jour + 6) % 7 : jour;
 }
 
+/** Minutes écoulées depuis minuit à Paris. */
+function minutesParis(quand) {
+  const d = quand || new Date();
+  try {
+    const p = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', hour12: false
+    }).formatToParts(d);
+    const m = {};
+    p.forEach((x) => { m[x.type] = x.value; });
+    return (parseInt(m.hour, 10) % 24) * 60 + parseInt(m.minute, 10);
+  } catch (e) {
+    return d.getHours() * 60 + d.getMinutes();
+  }
+}
+
+function enMinutes(hhmm) {
+  const [h, m] = String(hhmm || '').split(':').map(Number);
+  return (h || 0) * 60 + (m || 0);
+}
+
+/**
+ * La livraison est-elle ouverte à cet instant ?
+ *
+ * Le restaurant sert jusqu'à 2h du matin mais ne livre que jusqu'à minuit :
+ * les deux horaires ne se confondent pas. Une fenêtre qui franchit minuit
+ * (11h30 → 2h, si le restaurant changeait d'avis) est gérée aussi, d'où le
+ * second test sur la journée suivante.
+ */
+function livraisonOuverte(quand) {
+  const s = (carte().livraison || {}).service;
+  if (!s || !s.debut || !s.fin) return true;   // pas de créneau défini : toujours ouvert
+
+  const debut = enMinutes(s.debut);
+  let fin = enMinutes(s.fin);
+  if (fin <= debut) fin += 24 * 60;            // « 00:00 » veut dire minuit du lendemain
+
+  const m = minutesParis(quand);
+  return (m >= debut && m < fin) || (m + 24 * 60 >= debut && m + 24 * 60 < fin);
+}
+
 /** L'offre applicable à cet instant, ou null. */
 function offreDuMoment(quand) {
   const offres = carte().offres || [];
@@ -96,6 +136,12 @@ function calculer(lignes, mode, quand) {
   }
   if (mode !== 'livraison' && mode !== 'emporter') {
     throw new Refus('Mode de retrait inconnu.', 'mode');
+  }
+  if (mode === 'livraison' && !livraisonOuverte(quand)) {
+    const s = carte().livraison.service;
+    throw new Refus(
+      'La livraison s’arrête à ' + s.fin.replace(':', 'h').replace('00h00', 'minuit') +
+      '. La commande à emporter reste possible.', 'mode');
   }
 
   const detail = [];
@@ -232,4 +278,4 @@ function libelle(l) {
 }
 
 module.exports = { calculer, verifierAdresse, carte, euros, libelle, Refus,
-  offreDuMoment, jourDeService };
+  offreDuMoment, jourDeService, livraisonOuverte };

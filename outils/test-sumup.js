@@ -160,6 +160,11 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
   }
   const SUPP_FROMAGE = carte().supplements.find((g) => g.id === 'supplement-fromage').prix;
   const FRAIS = carte().livraison.frais;
+
+  // La livraison ferme à minuit. Ce test-ci vérifie la chaîne SumUp, pas les
+  // horaires : on ouvre le créneau en grand, sinon il échouerait la nuit.
+  // Le créneau a ses propres contrôles dans test-panier.js.
+  carte().livraison.service = { debut: '00:00', fin: '23:59' };
   if (offre) console.log('  (offre « ' + offre.nom +' » active aujourd’hui, montants ajustés)');
 
   titre('prestataire choisi');

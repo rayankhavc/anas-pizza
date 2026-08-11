@@ -7,16 +7,17 @@
 - **Adresse** : 10 allée Duguay Trouin, 44000 Nantes, France
 - **Téléphone** : 02 59 10 01 98
 - **E-mail** : anas.pizza.original@gmail.com
-- **Horaires** : 7 jours sur 7, de 11h30 à 2h du matin. Service continu, midi et soir.
+- **Horaires du restaurant** : 7 jours sur 7, de 11h30 à 2h du matin. Service continu, midi et soir.
+- **Horaires de livraison** : de 11h30 à minuit. Passé cette heure, seule la commande à emporter reste possible.
 - **Commander en ligne** : https://anas-pizza.vercel.app/commander
 - **Modes** : sur place, à emporter, livraison
 - **Paiement** : carte bancaire en ligne, ou sur place
 
 ## Livraison
 
-- **Minimum de commande** : 10,00 €
-- **Frais de livraison** : 1,00 €
-- **Délai estimé** : 30 à 45 min
+- **Minimum de commande** : 13,80 €
+- **Frais de livraison** : 2,99 €
+- **Délai estimé** : 30 min
 - **Communes desservies** :
   - Nantes (44000)
   - Nantes (44100)
@@ -26,7 +27,6 @@
   - Saint-Sébastien-sur-Loire (44230)
   - Rezé (44400)
   - Orvault (44700)
-  - Nantes Doulon (44300)
 
 Hors de ces communes, la commande à emporter reste possible.
 
@@ -153,4 +153,4 @@ Les quatorze allergènes réglementaires sont déclarés plat par plat sur https
 
 ---
 
-Fichier généré le 2026-08-10 depuis la carte du restaurant. Les prix font foi sur le site.
+Fichier généré le 2026-08-11 depuis la carte du restaurant. Les prix font foi sur le site.

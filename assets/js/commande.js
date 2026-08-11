@@ -74,6 +74,46 @@
     return null;
   }
 
+  /* --- créneau de livraison --------------------------------------------- *
+   * Le restaurant sert jusqu'à 2h du matin mais ne livre que jusqu'à minuit.
+   * Le serveur refuse déjà une livraison hors créneau — c'est lui qui fait
+   * foi. Ici on évite seulement au client de composer un panier entier avant
+   * de se le voir refuser à la fin. Même calcul, en heure de Paris.        */
+  function minutesParis() {
+    try {
+      var p = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', hour12: false
+      }).formatToParts(new Date());
+      var m = {};
+      p.forEach(function (x) { m[x.type] = x.value; });
+      return (parseInt(m.hour, 10) % 24) * 60 + parseInt(m.minute, 10);
+    } catch (e) {
+      var d = new Date();
+      return d.getHours() * 60 + d.getMinutes();
+    }
+  }
+
+  function enMinutes(hhmm) {
+    var p = String(hhmm || '').split(':');
+    return (parseInt(p[0], 10) || 0) * 60 + (parseInt(p[1], 10) || 0);
+  }
+
+  function livraisonOuverte() {
+    var s = carte && carte.livraison && carte.livraison.service;
+    if (!s || !s.debut || !s.fin) return true;
+    var debut = enMinutes(s.debut);
+    var fin = enMinutes(s.fin);
+    if (fin <= debut) fin += 1440;
+    var m = minutesParis();
+    return (m >= debut && m < fin) || (m + 1440 >= debut && m + 1440 < fin);
+  }
+
+  /** « 00:00 » se dit « minuit », pas « 00h00 ». */
+  function heureLisible(hhmm) {
+    if (hhmm === '00:00' || hhmm === '24:00') return 'minuit';
+    return String(hhmm).replace(':', 'h').replace(/h00$/, 'h');
+  }
+
   // Prix d'une taille, remise du jour comprise.
   function prixTaille(cat, taille) {
     if (!taille) return 0;
@@ -501,15 +541,50 @@
     });
   }
 
+  /**
+   * Hors créneau, le bouton « Livraison » est désactivé sur place et dit
+   * pourquoi. Le laisser cliquable ferait composer un panier entier pour
+   * finir sur un refus à l'étape du paiement — le pire moment.
+   */
+  function majCreneau() {
+    var s = carte && carte.livraison && carte.livraison.service;
+    var b = $('.mode[data-mode="livraison"]');
+    if (!b || !s) return;
+
+    var ouverte = livraisonOuverte();
+    b.disabled = !ouverte;
+    b.classList.toggle('mode--ferme', !ouverte);
+
+    var zone = $('[data-zone-resume]', b);
+    if (zone) {
+      if (!ouverte) {
+        if (!zone.dataset.origine) zone.dataset.origine = zone.textContent;
+        zone.textContent = 'Livraison de ' + heureLisible(s.debut) + ' à ' +
+          heureLisible(s.fin) + ' — fermée pour le moment';
+      } else if (zone.dataset.origine) {
+        zone.textContent = zone.dataset.origine;
+      }
+    }
+
+    // un panier commencé en livraison avant minuit ne doit pas se retrouver
+    // coincé : on repasse en retrait plutôt que de bloquer la commande
+    if (!ouverte && etat.mode === 'livraison') {
+      etat.mode = 'emporter';
+      sauver();
+    }
+  }
+
   /* --- démarrage -------------------------------------------------------- */
   function brancher() {
     $$('.mode').forEach(function (b) {
       b.addEventListener('click', function () {
+        if (b.disabled) return;
         etat.mode = b.dataset.mode;
         sauver();
         aller(2);
       });
     });
+
 
     $$('[data-goto]').forEach(function (b) {
       b.addEventListener('click', function () { aller(Number(b.dataset.goto)); });
@@ -569,6 +644,12 @@
         (villes.length > 3 ? ' et ' + (villes.length - 3) + ' communes' : '') +
         ' · dès ' + euros(carte.livraison.minimum);
     }
+
+    // après le résumé de zone, jamais avant : c'est lui qui pose le texte
+    // normal, et majCreneau le remplace seulement quand la livraison est
+    // fermée. L'inverse laissait le résumé écraser l'avertissement.
+    majCreneau();
+    setInterval(majCreneau, 60000);   // le créneau se ferme page ouverte
   }
 
   function demarrer() {
