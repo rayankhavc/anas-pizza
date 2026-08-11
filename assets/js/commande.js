@@ -473,6 +473,12 @@
     if (!/^0[1-9]\d{8}$/.test((c.telephone || '').replace(/[\s.\-()]/g, ''))) {
       return { m: 'Numéro de téléphone invalide (10 chiffres).', f: 'telephone' };
     }
+    // L'e-mail est facultatif, mais s'il est renseigné il doit être plausible :
+    // une confirmation envoyée dans le vide n'est une preuve pour personne.
+    var mail = (c.email || '').trim();
+    if (mail && !/^[^\s@]+@[^\s@.]+\.[^\s@]{2,}$/.test(mail)) {
+      return { m: 'Cette adresse e-mail semble incomplète.', f: 'email' };
+    }
     if (etat.mode === 'livraison') {
       if (!c.rue || c.rue.trim().length < 5) return { m: 'Indiquez votre adresse.', f: 'rue' };
       var ok = carte.livraison.communes.some(function (x) { return x.cp === (c.codePostal || '').trim(); });
@@ -644,7 +650,7 @@
       e.preventDefault();
       var f = e.target;
       var c = {};
-      ['nom', 'telephone', 'rue', 'codePostal', 'complement', 'commentaire'].forEach(function (k) {
+      ['nom', 'telephone', 'email', 'rue', 'codePostal', 'complement', 'commentaire'].forEach(function (k) {
         if (f.elements[k]) c[k] = f.elements[k].value.trim();
       });
       var pb = verifierLocalement(c);
