@@ -87,9 +87,42 @@ function faussSumUp() {
       return;
     }
 
+    // SumUp refuse d'énumérer les checkouts sans « checkout_reference ».
+    // On le reproduit, pour que le test échoue si le code y revenait.
     if (req.method === 'GET' && url.pathname === '/checkouts') {
+      if (!url.searchParams.get('checkout_reference')) {
+        anomalies.push('liste des checkouts sans checkout_reference : SumUp refuse');
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error_code: 'MISSING', message: 'Validation error',
+                                        param: 'checkout_reference' }));
+      }
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      return res.end(JSON.stringify(recus));
+      return res.end(JSON.stringify(recus.filter(
+        (c) => c.checkout_reference === url.searchParams.get('checkout_reference'))));
+    }
+
+    // L'historique des transactions, lui, s'énumère. « product_summary » y
+    // reprend le « description » du checkout : c'est notre ticket.
+    const hist = url.pathname.match(/^\/merchants\/([^/]+)\/transactions\/history$/);
+    if (req.method === 'GET' && hist) {
+      if (hist[1] !== MARCHAND) anomalies.push('code marchand faux dans l’URL : ' + hist[1]);
+      if (!url.searchParams.get('oldest_time')) anomalies.push('oldest_time absent');
+      const items = recus.filter((c) => c.status === 'PAID').map((c) => ({
+        id: c.id,
+        transaction_code: c.checkout_reference,
+        amount: c.amount,
+        currency: c.currency,
+        status: 'SUCCESSFUL',
+        timestamp: c.date,
+        product_summary: c.description,
+        type: 'PAYMENT'
+      }));
+      // une vente au comptoir, sans ticket : la cuisine doit l'ignorer
+      items.push({ id: 'tpe_1', transaction_code: 'TPE-01', amount: 12.5,
+                   currency: 'EUR', status: 'SUCCESSFUL',
+                   timestamp: new Date().toISOString(), type: 'PAYMENT' });
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({ items }));
     }
 
     res.writeHead(404, { 'Content-Type': 'application/json' });
@@ -213,6 +246,11 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
   ok('l’écran cuisine répond', r2.code === 200, 'code ' + r2.code);
   const cmd = (r2.corps.commandes || [])[0] || {};
   ok('la commande payée apparaît', !!cmd.id, JSON.stringify(r2.corps).slice(0, 160));
+  // le terminal du comptoir encaisse aussi sur ce compte : ses ventes n'ont
+  // pas de ticket, et n'ont rien à faire sur l'écran de la cuisine
+  ok('une vente au comptoir sans ticket est ignorée',
+    !(r2.corps.commandes || []).some((c) => c.id === 'TPE-01'),
+    JSON.stringify((r2.corps.commandes || []).map((c) => c.id)));
   ok('le mode est retrouvé', cmd.mode === 'livraison', String(cmd.mode));
   ok('le nom du client est retrouvé', cmd.nom === 'Rayan Khalifa', String(cmd.nom));
   ok('le téléphone est retrouvé', cmd.telephone === '0612345678', String(cmd.telephone));
