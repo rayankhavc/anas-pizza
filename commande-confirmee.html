@@ -15,14 +15,52 @@
 <link rel="stylesheet" href="assets/css/styles.css?v=d7f005ac">
 <script src="assets/js/main.js?v=2fcc3ea7" defer></script>
 <script>
-// La référence arrive dans l'URL au retour du paiement. Elle sert à retrouver
-// la commande au téléphone : on l'affiche telle quelle, jamais interprétée.
+/* Retour de paiement.
+   Deux choses ici, et une seule est cosmétique.
+
+   1. La référence arrive dans l'URL. Elle sert à retrouver la commande au
+      téléphone : on l'affiche telle quelle, jamais interprétée.
+
+   2. On demande au serveur de prévenir le restaurant par courriel, et le
+      client s'il a laissé son adresse. C'est le filet : si l'écran de la
+      cuisine est éteint ou hors réseau, la commande arrive quand même
+      quelque part. Le serveur ne croit rien sur parole — il revérifie
+      auprès de SumUp que ce paiement a bien abouti avant d'envoyer.
+
+   L'appel n'est fait qu'une fois : un rafraîchissement de la page ne doit
+   pas renvoyer deux fois la même commande en cuisine. */
 addEventListener('DOMContentLoaded', function () {
-  var r = new URLSearchParams(location.search).get('ref') || '';
-  if (!/^[A-Z0-9-]{1,12}$/.test(r)) return;
+  var ref = new URLSearchParams(location.search).get('ref') || '';
+  if (!/^[A-Z0-9-]{1,12}$/.test(ref)) return;
+
   var p = document.getElementById('ref');
-  p.querySelector('b').textContent = r;
+  p.querySelector('b').textContent = ref;
   p.hidden = false;
+
+  var email = '';
+  try {
+    var etat = JSON.parse(sessionStorage.getItem('anas-panier-v1') || 'null');
+    email = (etat && etat.client && etat.client.email) || '';
+  } catch (e) { /* stockage refusé : on préviendra le restaurant seul */ }
+
+  var dejaFait = 'anas-confirme-' + ref;
+  try { if (sessionStorage.getItem(dejaFait)) return; } catch (e) {}
+
+  fetch('/api/confirmation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ reference: ref, email: email })
+  }).then(function (r) { return r.json(); }).then(function (d) {
+    try { sessionStorage.setItem(dejaFait, '1'); } catch (e) {}
+    if (d && d.client && email) {
+      var m = document.getElementById('recu');
+      m.textContent = 'Votre confirmation vient d’être envoyée à ' + email +
+        '. Gardez-la : elle vaut preuve de votre commande.';
+      m.hidden = false;
+    }
+    // Aucun message d'échec : la commande est payée et la cuisine l'a. Alarmer
+    // le client pour un courriel qui n'est pas parti ne l'aiderait en rien.
+  }).catch(function () {});
 });
 </script>
 </head>
@@ -55,13 +93,13 @@ addEventListener('DOMContentLoaded', function () {
           <circle cx="32" cy="32" r="28"/><path d="m19 33 9 9 17-19"/>
         </svg>
         <h1 class="h-l">C’est noté, merci&nbsp;!</h1>
-        <p class="lead">Votre paiement est confirmé et la commande est partie en cuisine.
-          Un reçu vous a été envoyé par courriel.</p>
+        <p class="lead">Votre paiement est confirmé et la commande est partie en cuisine.</p>
         <p class="merci__ref" id="ref" hidden>Référence de commande&nbsp;: <b></b></p>
+        <p class="cmd__note" id="recu" hidden></p>
 
         <div class="merci__pts">
           <p><b>1.</b> On prépare tout de suite, à la commande.</p>
-          <p><b>2.</b> Comptez <b>30 à 45 minutes</b> en livraison, un peu moins aux heures creuses.</p>
+          <p><b>2.</b> Comptez <b>environ 30 minutes</b> en livraison, un peu moins aux heures creuses.</p>
           <p><b>3.</b> Le livreur vous appelle en arrivant — gardez votre téléphone à portée.</p>
         </div>
 

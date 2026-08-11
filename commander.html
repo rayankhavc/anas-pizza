@@ -24,7 +24,7 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="assets/css/styles.css?v=d7f005ac">
 <script src="assets/js/main.js?v=2fcc3ea7" defer></script>
-<script src="assets/js/commande.js?v=a6a99674" defer></script>
+<script src="assets/js/commande.js?v=468a31bd" defer></script>
 
 <script type="application/ld+json">
 {
@@ -150,6 +150,13 @@
             <input id="f-tel" name="telephone" type="tel" inputmode="tel" autocomplete="tel" required
                    placeholder="Ex. 06 12 34 56 78">
             <small>Le livreur vous appelle à l’arrivée.</small>
+          </p>
+          <p class="champ">
+            <label for="f-email">E-mail <span class="champ__opt">facultatif</span></label>
+            <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email"
+                   maxlength="120" placeholder="Ex. prenom@exemple.fr">
+            <small>Pour recevoir la confirmation de votre commande, avec le détail
+              et la référence. Elle vous sert de preuve.</small>
           </p>
 
           <div data-si="livraison">

@@ -20,10 +20,18 @@
 
 const { euros, libelle } = require('./_panier');
 
-// L'adresse est surchargeable pour que outils/test-sumup.js puisse faire
-// tourner la chaîne entière contre un faux SumUp. En production la variable
-// n'existe pas et c'est la vraie adresse qui sert.
-const SUMUP = process.env.SUMUP_API_BASE || 'https://api.sumup.com/v0.1';
+/**
+ * L'adresse de l'API, lue à chaque appel et non au chargement du module.
+ *
+ * Elle est surchargeable pour que outils/test-sumup.js fasse tourner la
+ * chaîne entière contre un faux SumUp. Figée à l'import, elle dépendait de
+ * l'ordre des « require » : un module chargé avant que le test ait posé ses
+ * variables partait taper sur la vraie API. Le piège se refermait en
+ * silence, sur une erreur qui n'avait rien à voir.
+ */
+function baseSumUp() {
+  return process.env.SUMUP_API_BASE || 'https://api.sumup.com/v0.1';
+}
 
 /** Quel prestataire est configuré ? */
 function prestataire() {
@@ -80,7 +88,7 @@ async function sumupCheckout(total, client, mode, base) {
     redirect_url: base + '/commande-confirmee?ref=' + encodeURIComponent(ref)
   };
 
-  const r = await fetch(SUMUP + '/checkouts', {
+  const r = await fetch(baseSumUp() + '/checkouts', {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + process.env.SUMUP_API_KEY,
@@ -169,7 +177,7 @@ async function sumupCommandes(depuis) {
   params.append('statuses[]', 'SUCCESSFUL');
   params.append('types[]', 'PAYMENT');
 
-  const url = SUMUP.replace('/v0.1', '/v2.1') + '/merchants/' +
+  const url = baseSumUp().replace('/v0.1', '/v2.1') + '/merchants/' +
     encodeURIComponent(process.env.SUMUP_MERCHANT_CODE) +
     '/transactions/history?' + params.toString();
 
@@ -214,6 +222,47 @@ async function sumupCommandes(depuis) {
       montant: Math.round(Number(t.amount || 0) * 100)
     }))
     .filter((c) => c.horodatage >= depuis);
+}
+
+/**
+ * Une commande précise, retrouvée par sa référence — et seulement si elle
+ * est payée.
+ *
+ * C'est le seul usage que SumUp accepte de GET /v0.1/checkouts : avec le
+ * « checkout_reference » qu'il réclamait, l'appel fonctionne. Il sert au
+ * retour du client sur la page de confirmation, pour vérifier auprès de
+ * SumUp que le paiement a bien abouti avant d'envoyer quoi que ce soit.
+ *
+ * Cette vérification n'est pas une formalité : sans elle, n'importe qui
+ * pourrait faire envoyer des courriels en inventant des références.
+ */
+async function sumupCommandeParReference(ref) {
+  const url = baseSumUp() + '/checkouts?checkout_reference=' + encodeURIComponent(ref);
+  const r = await fetch(url, {
+    headers: { Authorization: 'Bearer ' + process.env.SUMUP_API_KEY }
+  });
+  if (!r.ok) {
+    const brut = await r.text().catch(() => '');
+    let d = {};
+    try { d = JSON.parse(brut); } catch (e) { /* corps non JSON */ }
+    throw new Error(motif(r.status, d, brut));
+  }
+  const rep = await r.json();
+  const liste = Array.isArray(rep) ? rep : [rep];
+  const c = liste.find((x) => x && x.status === 'PAID');
+  if (!c) return null;
+
+  return lireTicket({
+    id: c.checkout_reference || String(c.id || '').slice(-8),
+    horodatage: Math.floor(new Date(c.date || Date.now()).getTime() / 1000),
+    description: c.description || '',
+    montant: Math.round(Number(c.amount || 0) * 100)
+  });
+}
+
+async function commandeParReference(ref) {
+  if (prestataire() !== 'sumup') return null;
+  return sumupCommandeParReference(ref);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -318,4 +367,5 @@ async function commandesPayees(depuis) {
   return [];
 }
 
-module.exports = { prestataire, ouvrirPaiement, commandesPayees, ticket, lireTicket, reference };
+module.exports = { prestataire, ouvrirPaiement, commandesPayees, commandeParReference,
+  ticket, lireTicket, reference };

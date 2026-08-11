@@ -28,11 +28,46 @@ const CLE = 'sup_sk_TESTFACTICE';
 const MARCHAND = 'MCTEST01';
 const recus = [];        // les checkouts créés, dans l'ordre
 const anomalies = [];    // ce que le vrai SumUp aurait refusé
+const courriels = [];    // ce que le faux Brevo a reçu
+
+// L'écran cuisine n'affiche que le service en cours. Une fausse commande
+// datée de « maintenant » disparaîtrait donc de l'écran si la suite tourne
+// entre la fermeture et la réouverture — ce qui rendrait ces contrôles
+// dépendants de l'heure à laquelle on les lance. On les date dans le
+// service courant, quel qu'il soit.
+const { debutService } = require('../api/cuisine.js');
+const DANS_LE_SERVICE = () => new Date((debutService() + 60) * 1000).toISOString();
 
 function faussSumUp() {
   return http.createServer((req, res) => {
     const url = new URL(req.url, 'http://x');
 
+    // Faux Brevo : même serveur, autre chemin.
+    if (req.method === 'POST' && url.pathname === '/brevo') {
+      let brut = '';
+      req.on('data', (c) => { brut += c; });
+      req.on('end', () => {
+        if (req.headers['api-key'] !== 'cle-brevo-test') {
+          anomalies.push('clé Brevo absente ou fausse');
+          res.writeHead(401, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ message: 'unauthorized' }));
+        }
+        let b = {};
+        try { b = JSON.parse(brut); } catch (e) { /* laissé vide */ }
+        if (!b.sender || !b.sender.email) anomalies.push('expéditeur absent');
+        if (!b.to || !b.to[0] || !b.to[0].email) anomalies.push('destinataire absent');
+        if (!b.subject) anomalies.push('sujet absent');
+        if (!b.textContent || !b.htmlContent) anomalies.push('corps incomplet');
+        courriels.push({ a: b.to[0].email, sujet: b.subject,
+                         texte: b.textContent, html: b.htmlContent });
+        res.writeHead(201, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ messageId: '<test@brevo>' }));
+      });
+      return;
+    }
+
+    // Le contrôle qui suit est celui de SumUp : Brevo, lui, s'authentifie
+    // autrement, d'où sa place au-dessus.
     if (req.headers.authorization !== 'Bearer ' + CLE) {
       res.writeHead(401, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify({ message: 'Unauthorized' }));
@@ -77,7 +112,7 @@ function faussSumUp() {
           currency: b.currency,
           description: b.description,
           status: 'PENDING',
-          date: new Date().toISOString(),
+          date: DANS_LE_SERVICE(),
           hosted_checkout_url: 'https://pay.sumup.test/' + id
         };
         recus.push(enregistre);
@@ -120,10 +155,11 @@ function faussSumUp() {
       // une vente au comptoir, sans ticket : la cuisine doit l'ignorer
       items.push({ id: 'tpe_1', transaction_code: 'TPE-01', amount: 12.5,
                    currency: 'EUR', status: 'SUCCESSFUL',
-                   timestamp: new Date().toISOString(), type: 'PAYMENT' });
+                   timestamp: DANS_LE_SERVICE(), type: 'PAYMENT' });
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify({ items }));
     }
+
 
     res.writeHead(404, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ message: 'Not found' }));
@@ -174,10 +210,15 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
   process.env.SUMUP_API_KEY = CLE;
   process.env.SUMUP_MERCHANT_CODE = MARCHAND;
   process.env.CUISINE_CODE = 'code-cuisine-test';
+  process.env.BREVO_API_BASE = 'http://127.0.0.1:' + port + '/brevo';
+  process.env.BREVO_API_KEY = 'cle-brevo-test';
+  process.env.EMAIL_EXPEDITEUR = 'site@anas-pizza.test';
+  process.env.EMAIL_RESTAURANT = 'resto@anas-pizza.test';
   delete process.env.STRIPE_SECRET_KEY;
 
   const commande = require('../api/commande.js');
   const cuisine = require('../api/cuisine.js');
+  const confirmation = require('../api/confirmation.js');
   const { prestataire } = require('../api/_paiement.js');
   const { carte, offreDuMoment } = require('../api/_panier.js');
 
@@ -337,6 +378,79 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
     o.jour = jourGarde;
     carte().offres = [];   // on repose l'offre de laboratoire
   }
+
+  /* --- les courriels de confirmation ------------------------------------ */
+  titre('courriels de confirmation');
+  const refPayee = recus[0].checkout_reference;
+  courriels.length = 0;
+
+  // une référence inventée ne doit rien déclencher : sans ce garde-fou,
+  // n'importe qui ferait expédier de faux tickets au restaurant
+  const inv = await appeler(confirmation, {
+    methode: 'POST', corps: { reference: 'ZZZZ-99', email: 'pirate@exemple.fr' }
+  });
+  ok('une référence inventée n’envoie rien', inv.code === 200 && inv.corps.fait === false,
+    JSON.stringify(inv.corps));
+  ok('et aucun courriel n’est parti', courriels.length === 0, String(courriels.length));
+
+  // une référence mal formée n'atteint même pas SumUp
+  const mal = await appeler(confirmation, {
+    methode: 'POST', corps: { reference: '../../etc/passwd' }
+  });
+  ok('une référence mal formée est refusée', mal.corps.fait === false, JSON.stringify(mal.corps));
+
+  // la vraie commande, payée
+  const conf = await appeler(confirmation, {
+    methode: 'POST', corps: { reference: refPayee, email: 'client@exemple.fr' }
+  });
+  ok('la commande payée déclenche les envois', conf.corps.fait === true, JSON.stringify(conf.corps));
+  ok('deux courriels partent', courriels.length === 2, String(courriels.length));
+
+  const auResto = courriels.find((c) => c.a === 'resto@anas-pizza.test');
+  const auClient = courriels.find((c) => c.a === 'client@exemple.fr');
+
+  ok('le restaurant est prévenu', !!auResto, JSON.stringify(courriels.map((c) => c.a)));
+  ok('le sujet dit l’essentiel d’un coup d’œil',
+    auResto && /LIVRAISON/.test(auResto.sujet) && auResto.sujet.includes(refPayee),
+    auResto && auResto.sujet);
+  ok('le ticket du restaurant porte le téléphone du client',
+    auResto && auResto.texte.includes('0612345678'), auResto && auResto.texte.slice(0, 80));
+  ok('et l’adresse de livraison',
+    auResto && /Crébillon/.test(auResto.texte), auResto && auResto.texte.slice(0, 80));
+  ok('et la consigne laissée',
+    auResto && auResto.texte.includes('Sonner deux fois'), '');
+
+  ok('le client reçoit sa preuve', !!auClient, '');
+  ok('elle porte la référence', auClient && auClient.texte.includes(refPayee), '');
+  // euros() sépare le nombre du symbole par une espace insécable : on
+  // normalise des deux côtés plutôt que de comparer des espaces invisibles
+  const sansInsec = (t) => String(t).replace(/\u00A0/g, ' ');
+  ok('elle porte le montant payé',
+    auClient && sansInsec(auClient.texte).includes(sansInsec(cmd.total)),
+    auClient && cmd.total);
+  ok('elle ne porte pas le téléphone du client, inutile pour lui',
+    auClient && !auClient.texte.includes('Client :'), '');
+
+  // sans adresse cliente, le restaurant est prévenu quand même
+  courriels.length = 0;
+  const seul = await appeler(confirmation, {
+    methode: 'POST', corps: { reference: refPayee }
+  });
+  ok('sans adresse cliente, le restaurant est prévenu seul',
+    seul.corps.fait === true && courriels.length === 1 &&
+    courriels[0].a === 'resto@anas-pizza.test', String(courriels.length));
+
+  // sans clé Brevo, rien ne casse
+  courriels.length = 0;
+  const gardeBrevo = process.env.BREVO_API_KEY;
+  delete process.env.BREVO_API_KEY;
+  const sansCle = await appeler(confirmation, {
+    methode: 'POST', corps: { reference: refPayee, email: 'client@exemple.fr' }
+  });
+  ok('sans clé Brevo, la page répond quand même sans erreur',
+    sansCle.code === 200 && sansCle.corps.fait === false, JSON.stringify(sansCle.corps));
+  ok('et aucun courriel n’est parti', courriels.length === 0, String(courriels.length));
+  process.env.BREVO_API_KEY = gardeBrevo;
 
   /* --- l'écran cuisine est-il fermé à clé ? ------------------------------ */
   titre('accès à l’écran cuisine');
