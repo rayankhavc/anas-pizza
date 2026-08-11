@@ -141,9 +141,39 @@ function motif(code, d, brut) {
   return 'SumUp ' + code + (dit ? ' : ' + dit : '') + piste + ' ' + apercu(brut);
 }
 
-/** Les paiements aboutis depuis un instant donné (écran cuisine). */
+/**
+ * Les paiements aboutis depuis un instant donné (écran cuisine).
+ *
+ * On passe par l'historique des transactions, pas par la liste des
+ * checkouts. GET /v0.1/checkouts refuse en effet d'énumérer quoi que ce
+ * soit : sans « checkout_reference », il répond
+ *
+ *     {"error_code":"MISSING","param":"checkout_reference"}
+ *
+ * alors que le client officiel de SumUp donne ce paramètre pour facultatif.
+ * Il permet de consulter une commande dont on connaît déjà la référence, pas
+ * de découvrir celles qui viennent d'arriver — ce qui est exactement ce dont
+ * une cuisine a besoin.
+ *
+ * L'historique, lui, s'énumère, se filtre par date et par statut, et porte
+ * « product_summary », que SumUp reprend du « description » du checkout.
+ * C'est donc notre ticket qui revient intact, avec le client, l'adresse et
+ * les pizzas.
+ */
 async function sumupCommandes(depuis) {
-  const r = await fetch(SUMUP + '/checkouts', {
+  const params = new URLSearchParams({
+    limit: '100',
+    order: 'descending',
+    oldest_time: new Date(depuis * 1000).toISOString()
+  });
+  params.append('statuses[]', 'SUCCESSFUL');
+  params.append('types[]', 'PAYMENT');
+
+  const url = SUMUP.replace('/v0.1', '/v2.1') + '/merchants/' +
+    encodeURIComponent(process.env.SUMUP_MERCHANT_CODE) +
+    '/transactions/history?' + params.toString();
+
+  const r = await fetch(url, {
     headers: { Authorization: 'Bearer ' + process.env.SUMUP_API_KEY }
   });
   if (!r.ok) {
@@ -152,15 +182,19 @@ async function sumupCommandes(depuis) {
     try { d = JSON.parse(brut); } catch (e) { /* corps non JSON */ }
     throw new Error(motif(r.status, d, brut));
   }
-  const liste = await r.json();
+  const rep = await r.json();
+  const items = Array.isArray(rep) ? rep : (rep.items || []);
 
-  return (Array.isArray(liste) ? liste : [])
-    .filter((c) => c.status === 'PAID')
-    .map((c) => lireTicket({
-      id: c.checkout_reference || String(c.id || '').slice(-8),
-      horodatage: Math.floor(new Date(c.date || c.valid_until || Date.now()).getTime() / 1000),
-      description: c.description || '',
-      montant: Math.round(Number(c.amount || 0) * 100)
+  return items
+    .filter((t) => t.status === 'SUCCESSFUL')
+    // une transaction sans ticket ne vient pas du site : encaissement au
+    // comptoir, sur le terminal. La cuisine n'a rien à en faire.
+    .filter((t) => t.product_summary)
+    .map((t) => lireTicket({
+      id: t.transaction_code || String(t.id || '').slice(-8),
+      horodatage: Math.floor(new Date(t.timestamp || Date.now()).getTime() / 1000),
+      description: t.product_summary || '',
+      montant: Math.round(Number(t.amount || 0) * 100)
     }))
     .filter((c) => c.horodatage >= depuis);
 }
