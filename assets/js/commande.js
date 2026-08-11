@@ -98,9 +98,15 @@
     return (parseInt(p[0], 10) || 0) * 60 + (parseInt(p[1], 10) || 0);
   }
 
-  function livraisonOuverte() {
-    var s = carte && carte.livraison && carte.livraison.service;
-    if (!s || !s.debut || !s.fin) return true;
+  function creneau(mode) {
+    var c = (carte && carte.livraison && carte.livraison.creneaux) || {};
+    var s = c[mode];
+    return (s && s.debut && s.fin) ? s : null;
+  }
+
+  function modeOuvert(mode) {
+    var s = creneau(mode);
+    if (!s) return true;
     var debut = enMinutes(s.debut);
     var fin = enMinutes(s.fin);
     if (fin <= debut) fin += 1440;
@@ -547,30 +553,53 @@
    * finir sur un refus à l'étape du paiement — le pire moment.
    */
   function majCreneau() {
-    var s = carte && carte.livraison && carte.livraison.service;
-    var b = $('.mode[data-mode="livraison"]');
-    if (!b || !s) return;
+    var ouvert = {};
 
-    var ouverte = livraisonOuverte();
-    b.disabled = !ouverte;
-    b.classList.toggle('mode--ferme', !ouverte);
+    $$('.mode').forEach(function (b) {
+      var mode = b.dataset.mode;
+      var s = creneau(mode);
+      ouvert[mode] = modeOuvert(mode);
+      if (!s) return;
 
-    var zone = $('[data-zone-resume]', b);
-    if (zone) {
-      if (!ouverte) {
+      b.disabled = !ouvert[mode];
+      b.classList.toggle('mode--ferme', !ouvert[mode]);
+
+      var zone = $('span:last-of-type', b) || $('[data-zone-resume]', b);
+      if (!zone) return;
+      if (!ouvert[mode]) {
         if (!zone.dataset.origine) zone.dataset.origine = zone.textContent;
-        zone.textContent = 'Livraison de ' + heureLisible(s.debut) + ' à ' +
-          heureLisible(s.fin) + ' — fermée pour le moment';
+        zone.textContent = 'De ' + heureLisible(s.debut) + ' à ' +
+          heureLisible(s.fin) + ' — fermé pour le moment';
       } else if (zone.dataset.origine) {
         zone.textContent = zone.dataset.origine;
+        delete zone.dataset.origine;
+      }
+    });
+
+    // un panier commencé avant la fermeture ne doit pas rester coincé : on
+    // bascule vers l'autre mode s'il est encore ouvert
+    if (etat.mode && ouvert[etat.mode] === false) {
+      var autre = etat.mode === 'livraison' ? 'emporter' : 'livraison';
+      if (ouvert[autre]) {
+        etat.mode = autre;
+        sauver();
       }
     }
 
-    // un panier commencé en livraison avant minuit ne doit pas se retrouver
-    // coincé : on repasse en retrait plutôt que de bloquer la commande
-    if (!ouverte && etat.mode === 'livraison') {
-      etat.mode = 'emporter';
-      sauver();
+    // tout est fermé : on le dit une bonne fois, plutôt que deux boutons
+    // éteints sans explication
+    var rien = $('#tout-ferme');
+    var ferme = !ouvert.livraison && !ouvert.emporter;
+    if (ferme && !rien) {
+      rien = document.createElement('p');
+      rien.id = 'tout-ferme';
+      rien.className = 'cmd__erreur';
+      rien.textContent = 'Les commandes en ligne sont fermées pour le moment. ' +
+        'Nous les rouvrons à ' + heureLisible((creneau('emporter') || {}).debut || '11:30') + '.';
+      var modes = $('.modes');
+      if (modes) modes.parentNode.insertBefore(rien, modes);
+    } else if (!ferme && rien) {
+      rien.remove();
     }
   }
 

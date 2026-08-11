@@ -86,17 +86,25 @@ function enMinutes(hhmm) {
   return (h || 0) * 60 + (m || 0);
 }
 
+/** Le créneau configuré pour un mode, ou null s'il n'y en a pas. */
+function creneau(mode) {
+  const c = (carte().livraison || {}).creneaux || {};
+  const s = c[mode];
+  return (s && s.debut && s.fin) ? s : null;
+}
+
 /**
- * La livraison est-elle ouverte à cet instant ?
+ * Ce mode de retrait est-il ouvert à cet instant ?
  *
- * Le restaurant sert jusqu'à 2h du matin mais ne livre que jusqu'à minuit :
- * les deux horaires ne se confondent pas. Une fenêtre qui franchit minuit
- * (11h30 → 2h, si le restaurant changeait d'avis) est gérée aussi, d'où le
- * second test sur la journée suivante.
+ * Les deux horaires ne se confondent pas : le restaurant sert jusqu'à 2h du
+ * matin, il ne livre que jusqu'à minuit, et il cesse de prendre des commandes
+ * à emporter à 1h30 pour avoir le temps de les préparer. Une fenêtre qui
+ * franchit minuit est donc la règle ici, pas l'exception — d'où le second
+ * test, sur la journée suivante.
  */
-function livraisonOuverte(quand) {
-  const s = (carte().livraison || {}).service;
-  if (!s || !s.debut || !s.fin) return true;   // pas de créneau défini : toujours ouvert
+function modeOuvert(mode, quand) {
+  const s = creneau(mode);
+  if (!s) return true;                         // pas de créneau défini : toujours ouvert
 
   const debut = enMinutes(s.debut);
   let fin = enMinutes(s.fin);
@@ -104,6 +112,15 @@ function livraisonOuverte(quand) {
 
   const m = minutesParis(quand);
   return (m >= debut && m < fin) || (m + 24 * 60 >= debut && m + 24 * 60 < fin);
+}
+
+/** Conservé pour la lisibilité des appels côté livraison. */
+function livraisonOuverte(quand) { return modeOuvert('livraison', quand); }
+
+/** « 00:00 » se dit « minuit ». */
+function heureLisible(hhmm) {
+  if (hhmm === '00:00' || hhmm === '24:00') return 'minuit';
+  return String(hhmm).replace(':', 'h').replace(/h00$/, 'h');
 }
 
 /** L'offre applicable à cet instant, ou null. */
@@ -137,11 +154,17 @@ function calculer(lignes, mode, quand) {
   if (mode !== 'livraison' && mode !== 'emporter') {
     throw new Refus('Mode de retrait inconnu.', 'mode');
   }
-  if (mode === 'livraison' && !livraisonOuverte(quand)) {
-    const s = carte().livraison.service;
+  if (!modeOuvert(mode, quand)) {
+    const s = creneau(mode);
+    const autre = mode === 'livraison' ? 'emporter' : 'livraison';
+    const secours = modeOuvert(autre, quand)
+      ? (autre === 'emporter'
+          ? ' La commande à emporter reste possible.'
+          : ' La livraison reste possible.')
+      : ' Nous prenons les commandes à partir de ' + heureLisible(s.debut) + '.';
     throw new Refus(
-      'La livraison s’arrête à ' + s.fin.replace(':', 'h').replace('00h00', 'minuit') +
-      '. La commande à emporter reste possible.', 'mode');
+      (mode === 'livraison' ? 'La livraison s’arrête à ' : 'Les commandes à emporter s’arrêtent à ') +
+      heureLisible(s.fin) + '.' + secours, 'mode');
   }
 
   const detail = [];
@@ -278,4 +301,4 @@ function libelle(l) {
 }
 
 module.exports = { calculer, verifierAdresse, carte, euros, libelle, Refus,
-  offreDuMoment, jourDeService, livraisonOuverte };
+  offreDuMoment, jourDeService, livraisonOuverte, modeOuvert, creneau, heureLisible };

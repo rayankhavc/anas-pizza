@@ -164,7 +164,8 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
   // La livraison ferme à minuit. Ce test-ci vérifie la chaîne SumUp, pas les
   // horaires : on ouvre le créneau en grand, sinon il échouerait la nuit.
   // Le créneau a ses propres contrôles dans test-panier.js.
-  carte().livraison.service = { debut: '00:00', fin: '23:59' };
+  carte().livraison.creneaux = { livraison: { debut: '00:00', fin: '23:59' },
+                                 emporter: { debut: '00:00', fin: '23:59' } };
   if (offre) console.log('  (offre « ' + offre.nom +' » active aujourd’hui, montants ajustés)');
 
   titre('prestataire choisi');
@@ -250,9 +251,16 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
 
   /* --- l'offre du mardi jusque dans l'encaissement ----------------------- */
   titre('offre du jour appliquée à l’encaissement');
-  const offres = carte().offres || [];
-  ok('une offre est configurée dans la carte', offres.length > 0, JSON.stringify(offres));
-  if (offres.length) {
+  // Le restaurant a renoncé à l'offre du mardi : la carte n'en contient plus.
+  // On en installe une de laboratoire, pour continuer d'éprouver que la remise
+  // traverse bien tout le chemin jusqu'au montant encaissé — c'est la partie
+  // qu'on ne veut pas découvrir cassée le jour où il en redemande une.
+  ok('aucune remise configurée par défaut', (carte().offres || []).length === 0,
+    JSON.stringify(carte().offres));
+  carte().offres = [{ id: 'labo', nom: 'Remise de contrôle', jour: 2, finService: 2,
+                      taille: 'medium', prix: 590 }];
+  const offres = carte().offres;
+  {
     const o = offres[0];
     const jourGarde = o.jour;
     const { jourDeService } = require('../api/_panier.js');
@@ -289,6 +297,7 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
         rPlein.corps.total === autre.prix, 'attendu ' + autre.prix + ', reçu ' + rPlein.corps.total);
     }
     o.jour = jourGarde;
+    carte().offres = [];   // on repose l'offre de laboratoire
   }
 
   /* --- l'écran cuisine est-il fermé à clé ? ------------------------------ */

@@ -5,9 +5,15 @@
   "minimum": 1380,
   "frais": 299,
   "delai": "30 min",
-  "service": {
-   "debut": "11:30",
-   "fin": "00:00"
+  "creneaux": {
+   "livraison": {
+    "debut": "11:30",
+    "fin": "00:00"
+   },
+   "emporter": {
+    "debut": "11:30",
+    "fin": "01:30"
+   }
   },
   "communes": [
    {
@@ -44,16 +50,7 @@
    }
   ]
  },
- "offres": [
-  {
-   "id": "mardi",
-   "nom": "Offre du mardi",
-   "jour": 2,
-   "finService": 2,
-   "taille": "medium",
-   "prix": 590
-  }
- ],
+ "offres": [],
  "supplements": [
   {
    "id": "supplement-fromage",
