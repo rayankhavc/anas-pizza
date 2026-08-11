@@ -17,20 +17,49 @@
   var PERIODE = 15000;
   var CODE = 'anas-cuisine-code';
   var FAITES = 'anas-cuisine-faites';
+  var SERVICE = 'anas-cuisine-service';
 
   var code = '';
   var connues = new Set();
   var faites = new Set();
+  var service = '';
   var premierTour = true;
   var son = true;
 
   try {
     faites = new Set(JSON.parse(localStorage.getItem(FAITES) || '[]'));
     code = localStorage.getItem(CODE) || '';
+    service = localStorage.getItem(SERVICE) || '';
   } catch (e) { /* stockage refusé : on repart de zéro à chaque ouverture */ }
 
   function garderFaites() {
     try { localStorage.setItem(FAITES, JSON.stringify(Array.from(faites))); } catch (e) {}
+  }
+
+  /**
+   * Un nouveau service efface la mémoire de l'écran.
+   *
+   * Le serveur ne renvoie déjà que les commandes du service en cours : les
+   * cartes d'hier disparaissent toutes seules. Mais la liste des commandes
+   * marquées « préparée », elle, restait dans le navigateur — jour après
+   * jour, mois après mois, sans jamais être vidée. Invisible, mais elle
+   * grossit sans fin, et un écran qui tourne un an finirait par traîner des
+   * milliers d'identifiants morts.
+   *
+   * Le serveur date chaque réponse du service auquel elle appartient. Quand
+   * cette date change, on repart de zéro : mémoire vide, écran vide.
+   */
+  function nouveauService(dit) {
+    if (!dit || dit === service) return false;
+    service = dit;
+    faites = new Set();
+    connues = new Set();
+    premierTour = true;      // on ne sonne pas pour un service qui commence
+    try {
+      localStorage.setItem(SERVICE, service);
+      localStorage.removeItem(FAITES);
+    } catch (e) {}
+    return true;
   }
 
   /* --- sonnerie : trois notes générées, aucun fichier à charger ---------- */
@@ -112,6 +141,7 @@
       .then(function (x) {
         if (x.statut === 401) throw Object.assign(new Error('Code incorrect.'), { acces: true });
         if (x.statut !== 200) throw new Error(x.d.erreur || 'Erreur ' + x.statut);
+        nouveauService(x.d.service);
         afficher(x.d.commandes || []);
         etat('À jour · ' + new Date().toLocaleTimeString('fr-FR',
           { hour: '2-digit', minute: '2-digit', second: '2-digit' }), 'est-ok');
