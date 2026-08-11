@@ -134,8 +134,11 @@ function motif(code, d, brut) {
     piste = ' — référence de commande déjà utilisée.';
   }
 
-  return 'SumUp ' + code + (dit ? ' : ' + dit : '') + piste +
-    (dit ? '' : ' ' + apercu(brut));
+  // La réponse brute est jointe même quand un message a été trouvé : « 400 :
+  // Validation error » ne dit pas quel champ est en cause, alors que le
+  // corps le nomme. Un journal un peu long vaut mieux qu'un aller-retour de
+  // mise en ligne pour découvrir un nom de paramètre.
+  return 'SumUp ' + code + (dit ? ' : ' + dit : '') + piste + ' ' + apercu(brut);
 }
 
 /** Les paiements aboutis depuis un instant donné (écran cuisine). */
