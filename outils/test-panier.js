@@ -16,8 +16,10 @@ const FRAIS = carte().livraison.frais;
 // d'horaires : on ouvre le créneau en grand pour eux, sinon la suite
 // échouerait selon l'heure à laquelle on la lance. Le créneau lui-même est
 // éprouvé plus bas, avec des heures fixes.
-const CRENEAU_REEL = carte().livraison.service;
-carte().livraison.service = { debut: '00:00', fin: '23:59' };
+const CRENEAUX_REELS = carte().livraison.creneaux;
+const TOUJOURS = { livraison: { debut: '00:00', fin: '23:59' },
+                   emporter: { debut: '00:00', fin: '23:59' } };
+carte().livraison.creneaux = TOUJOURS;
 
 let ko = 0;
 function ok(condition, titre, detail) {
@@ -99,8 +101,22 @@ ok(c.categories.every((x) => x.type !== 'pizza' || x.tailles.length === 2),
    'chaque rubrique de pizzas a deux tailles');
 ok(c.supplements.every((s) => s.prix > 0 && s.choix.length > 0), 'suppléments complets');
 
-console.log('\n── offre du mardi ─────────────────────');
+console.log('\n── remises ────────────────────────────');
 const { offreDuMoment, jourDeService } = require('../api/_panier');
+
+// Le restaurant a renoncé à l'offre du mardi en ligne : la carte livrée n'en
+// contient aucune, et c'est bien ce qu'on vérifie d'abord. Le mécanisme, lui,
+// reste en place — on le remet sous tension avec une offre de laboratoire,
+// pour qu'il soit encore éprouvé le jour où le restaurant en veut une.
+ok((carte().offres || []).length === 0,
+   'aucune remise configurée : le site facture plein tarif',
+   JSON.stringify(carte().offres));
+r = calculer([{ plat: 'tikka', taille: 'medium', quantite: 1 }], 'emporter',
+             new Date('2026-08-11T12:00:00+02:00'));
+ok(r.total === 790 && !r.offre, 'un mardi midi, la pizza reste à 7,90 €', euros(r.total));
+
+carte().offres = [{ id: 'mardi', nom: 'Offre du mardi', jour: 2, finService: 2,
+                    taille: 'medium', prix: 590 }];
 const MARDI_MIDI   = new Date('2026-08-11T12:00:00+02:00');
 const MERCREDI_1H  = new Date('2026-08-12T01:00:00+02:00');
 const MERCREDI_MIDI= new Date('2026-08-12T12:00:00+02:00');
@@ -140,30 +156,37 @@ ok(r.total === 200 && !r.offre, 'une boisson n’entre pas dans l’offre', euro
 refuse(() => calculer([{ plat: 'tikka', taille: 'medium', quantite: 1 }], 'livraison', MARDI_MIDI),
        'une pizza remisée seule reste sous le minimum de livraison');
 
+carte().offres = [];   // on repose l'offre de laboratoire
+
 console.log('\n── créneau de livraison ──');
-carte().livraison.service = CRENEAU_REEL;
-const { livraisonOuverte } = require('../api/_panier');
+carte().livraison.creneaux = CRENEAUX_REELS;
+const { modeOuvert } = require('../api/_panier');
 
 // Heures d'été à Paris : UTC+2. 20h00 locales = 18:00Z, 00h30 = 22:30Z la veille.
 const aParis = (jour, h, m) => new Date(Date.UTC(2026, 7, jour, h - 2, m || 0));
 
-ok(livraisonOuverte(aParis(12, 20, 0)) === true, 'on livre à 20h');
-ok(livraisonOuverte(aParis(12, 12, 0)) === true, 'on livre à midi');
-ok(livraisonOuverte(aParis(12, 23, 59)) === true, 'on livre à 23h59');
-ok(livraisonOuverte(aParis(12, 0, 30)) === false, 'on ne livre plus à 0h30');
-ok(livraisonOuverte(aParis(12, 3, 0)) === false, 'on ne livre pas à 3h du matin');
-ok(livraisonOuverte(aParis(12, 11, 0)) === false, 'on ne livre pas à 11h, avant l’ouverture');
-ok(livraisonOuverte(aParis(12, 11, 30)) === true, 'on livre dès 11h30 pile');
+ok(modeOuvert('livraison', aParis(12, 20, 0)) === true, 'on livre à 20h');
+ok(modeOuvert('livraison', aParis(12, 23, 59)) === true, 'on livre à 23h59');
+ok(modeOuvert('livraison', aParis(12, 0, 30)) === false, 'on ne livre plus à 0h30');
+ok(modeOuvert('livraison', aParis(12, 11, 0)) === false, 'on ne livre pas à 11h, avant l’ouverture');
+ok(modeOuvert('livraison', aParis(12, 11, 30)) === true, 'on livre dès 11h30 pile');
 
-// et le refus passe bien par le calcul du panier
+ok(modeOuvert('emporter', aParis(12, 0, 30)) === true, 'on prépare encore à emporter à 0h30');
+ok(modeOuvert('emporter', aParis(12, 1, 29)) === true, 'à emporter jusqu’à 1h29');
+ok(modeOuvert('emporter', aParis(12, 1, 30)) === false, 'plus rien à emporter à 1h30 pile');
+ok(modeOuvert('emporter', aParis(12, 3, 0)) === false, 'rien à 3h du matin');
+ok(modeOuvert('emporter', aParis(12, 11, 30)) === true, 'à emporter dès 11h30');
+
+// et les refus passent bien par le calcul du panier
 refuse(() => calculer([{ plat: 'tikka', taille: 'large', quantite: 2 }], 'livraison', aParis(12, 1, 0)),
-       'à 1h du matin, la livraison est refusée');
+       'à 1h, la livraison est refusée');
 r = calculer([{ plat: 'tikka', taille: 'large', quantite: 2 }], 'emporter', aParis(12, 1, 0));
-ok(r.total === 2180, 'à 1h du matin, le retrait reste possible', euros(r.total));
+ok(r.total === 2180, 'à 1h, le retrait reste possible', euros(r.total));
+refuse(() => calculer([{ plat: 'tikka', taille: 'large', quantite: 2 }], 'emporter', aParis(12, 3, 0)),
+       'à 3h, plus rien n’est accepté');
 
-// le créneau réel a fait son office : on rouvre pour la suite, qui parle de
-// tickets et non d'horaires
-carte().livraison.service = { debut: '00:00', fin: '23:59' };
+// rouvert pour la suite, qui parle de tickets et non d'horaires
+carte().livraison.creneaux = TOUJOURS;
 
 console.log('\n── ticket transporté par le prestataire ──');
 const { ticket, lireTicket, reference } = require('../api/_paiement');

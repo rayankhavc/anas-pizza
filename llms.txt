@@ -8,7 +8,8 @@
 - **Téléphone** : 02 59 10 01 98
 - **E-mail** : anas.pizza.original@gmail.com
 - **Horaires du restaurant** : 7 jours sur 7, de 11h30 à 2h du matin. Service continu, midi et soir.
-- **Horaires de livraison** : de 11h30 à minuit. Passé cette heure, seule la commande à emporter reste possible.
+- **Horaires de livraison** : de 11h30 à minuit.
+- **Commandes à emporter** : de 11h30 à 01h30. Au-delà, le site n’accepte plus de commande.
 - **Commander en ligne** : https://anas-pizza.vercel.app/commander
 - **Modes** : sur place, à emporter, livraison
 - **Paiement** : carte bancaire en ligne, ou sur place
@@ -29,10 +30,6 @@
   - Orvault (44700)
 
 Hors de ces communes, la commande à emporter reste possible.
-
-## Offres
-
-- **Offre du mardi** : le mardi, toute pizza medium à 5,90 €. Appliquée automatiquement au panier.
 
 ## La carte
 

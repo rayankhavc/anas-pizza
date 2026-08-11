@@ -25,10 +25,15 @@ const LIVRAISON = {
   minimum: 1380,          // 13,80 € de commande minimum
   frais: 299,             // 2,99 € de frais de livraison
   delai: '30 min',
-  // Le restaurant sert jusqu'à 2h du matin, mais ne livre que jusqu'à
-  // minuit. Passé cette heure, le site refuse la livraison et bascule sur
-  // le retrait : mieux vaut un refus clair qu'une pizza qui ne part pas.
-  service: { debut: '11:30', fin: '00:00' },
+  // Un créneau par mode de retrait : le restaurant sert jusqu'à 2h, mais il
+  // ne livre que jusqu'à minuit, et il arrête de prendre des commandes à
+  // emporter à 1h30 pour avoir le temps de les préparer avant la fermeture.
+  // Hors créneau, le serveur refuse — mieux vaut un refus clair qu'une
+  // pizza payée que personne ne prépare.
+  creneaux: {
+    livraison: { debut: '11:30', fin: '00:00' },
+    emporter: { debut: '11:30', fin: '01:30' }
+  },
   communes: [
     { cp: '44000', nom: 'Nantes' },
     { cp: '44100', nom: 'Nantes' },
@@ -41,24 +46,17 @@ const LIVRAISON = {
   ]
 };
 
-// ── offre du mardi ─────────────────────────────────────────────────────────
-// Le restaurant annonce « toutes nos pizzas à 5,90 € le mardi ». La remise
-// porte sur la taille medium : appliquée aux larges, elle passerait sous le
-// prix de revient. Pour l'étendre à toutes les tailles, mettre taille: null —
-// et penser à corriger le texte de la section « Offre du mardi ».
+// ── offres ────────────────────────────────────────────────────────────────
+// Le restaurant a renoncé à l'offre du mardi en ligne : la liste est vide, et
+// le site n'affiche donc aucune remise. Le mécanisme reste en place et sous
+// contrôles — pour le rallumer un jour, il suffit de remettre une entrée :
 //
-// Le service court jusqu'à 2h du matin : une commande passée le mercredi à
-// 1h relève encore du mardi. C'est « finService » qui le dit.
-const OFFRES = [
-  {
-    id: 'mardi',
-    nom: 'Offre du mardi',
-    jour: 2,              // 0 = dimanche, 2 = mardi
-    finService: 2,        // heure de fermeture, le lendemain
-    taille: 'medium',     // null = toutes les tailles
-    prix: 590
-  }
-];
+//   { id: 'mardi', nom: 'Offre du mardi', jour: 2, finService: 2,
+//     taille: 'medium', prix: 590 }
+//
+// jour : 0 = dimanche … 6 = samedi. taille : null pour toutes les tailles.
+// finService : l'heure jusqu'à laquelle la nuit compte pour la veille.
+const OFFRES = [];
 
 const sansBalises = (s) => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 // \u00ab L\u00e9gumes & \u0153uf \u00bb \u2192 \u00ab legumes-oeuf \u00bb. NFD ne d\u00e9compose pas les ligatures :

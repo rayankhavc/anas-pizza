@@ -48,10 +48,15 @@ function main() {
   ligne('- **Téléphone** : 02 59 10 01 98');
   ligne('- **E-mail** : anas.pizza.original@gmail.com');
   ligne('- **Horaires du restaurant** : 7 jours sur 7, de 11h30 à 2h du matin. Service continu, midi et soir.');
-  if (liv0.service) {
-    ligne('- **Horaires de livraison** : de ' + liv0.service.debut.replace(':', 'h') +
-      ' à ' + (liv0.service.fin === '00:00' ? 'minuit' : liv0.service.fin.replace(':', 'h')) +
-      '. Passé cette heure, seule la commande à emporter reste possible.');
+  const heure = (h) => (h === '00:00' ? 'minuit' : h.replace(':', 'h'));
+  const cr = liv0.creneaux || {};
+  if (cr.livraison) {
+    ligne('- **Horaires de livraison** : de ' + heure(cr.livraison.debut) +
+      ' à ' + heure(cr.livraison.fin) + '.');
+  }
+  if (cr.emporter) {
+    ligne('- **Commandes à emporter** : de ' + heure(cr.emporter.debut) +
+      ' à ' + heure(cr.emporter.fin) + '. Au-delà, le site n’accepte plus de commande.');
   }
   ligne('- **Commander en ligne** : ' + SITE + '/commander');
   ligne('- **Modes** : sur place, à emporter, livraison');
