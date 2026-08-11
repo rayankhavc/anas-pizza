@@ -20,10 +20,15 @@ const SORTIE = path.join(RACINE, 'assets/data/carte.json');
 // ── conditions de livraison ────────────────────────────────────────────────
 // Communes desservies, code postal exigé à la commande. À compléter avec le
 // restaurant : toute commune absente d'ici est refusée par le serveur.
+// Conditions confirmées par le restaurant le 10 août 2026.
 const LIVRAISON = {
-  minimum: 1000,          // 10,00 € de commande minimum
-  frais: 100,             // 1,00 € de frais de livraison
-  delai: '30 à 45 min',
+  minimum: 1380,          // 13,80 € de commande minimum
+  frais: 299,             // 2,99 € de frais de livraison
+  delai: '30 min',
+  // Le restaurant sert jusqu'à 2h du matin, mais ne livre que jusqu'à
+  // minuit. Passé cette heure, le site refuse la livraison et bascule sur
+  // le retrait : mieux vaut un refus clair qu'une pizza qui ne part pas.
+  service: { debut: '11:30', fin: '00:00' },
   communes: [
     { cp: '44000', nom: 'Nantes' },
     { cp: '44100', nom: 'Nantes' },
@@ -32,8 +37,7 @@ const LIVRAISON = {
     { cp: '44800', nom: 'Saint-Herblain' },
     { cp: '44230', nom: 'Saint-Sébastien-sur-Loire' },
     { cp: '44400', nom: 'Rezé' },
-    { cp: '44700', nom: 'Orvault' },
-    { cp: '44300', nom: 'Nantes Doulon' }
+    { cp: '44700', nom: 'Orvault' }
   ]
 };
 

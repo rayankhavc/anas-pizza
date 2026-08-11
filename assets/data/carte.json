@@ -1,10 +1,14 @@
 {
- "genere": "2026-08-10",
+ "genere": "2026-08-11",
  "source": "index.html",
  "livraison": {
-  "minimum": 1000,
-  "frais": 100,
-  "delai": "30 à 45 min",
+  "minimum": 1380,
+  "frais": 299,
+  "delai": "30 min",
+  "service": {
+   "debut": "11:30",
+   "fin": "00:00"
+  },
   "communes": [
    {
     "cp": "44000",
@@ -37,10 +41,6 @@
    {
     "cp": "44700",
     "nom": "Orvault"
-   },
-   {
-    "cp": "44300",
-    "nom": "Nantes Doulon"
    }
   ]
  },

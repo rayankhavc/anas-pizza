@@ -31,6 +31,7 @@ function main() {
   const carte = JSON.parse(
     fs.readFileSync(path.join(RACINE, 'assets/data/carte.json'), 'utf8'));
 
+  const liv0 = carte.livraison || {};
   const l = [];
   const ligne = (s) => l.push(s === undefined ? '' : s);
 
@@ -46,13 +47,18 @@ function main() {
   ligne('- **Adresse** : 10 allée Duguay Trouin, 44000 Nantes, France');
   ligne('- **Téléphone** : 02 59 10 01 98');
   ligne('- **E-mail** : anas.pizza.original@gmail.com');
-  ligne('- **Horaires** : 7 jours sur 7, de 11h30 à 2h du matin. Service continu, midi et soir.');
+  ligne('- **Horaires du restaurant** : 7 jours sur 7, de 11h30 à 2h du matin. Service continu, midi et soir.');
+  if (liv0.service) {
+    ligne('- **Horaires de livraison** : de ' + liv0.service.debut.replace(':', 'h') +
+      ' à ' + (liv0.service.fin === '00:00' ? 'minuit' : liv0.service.fin.replace(':', 'h')) +
+      '. Passé cette heure, seule la commande à emporter reste possible.');
+  }
   ligne('- **Commander en ligne** : ' + SITE + '/commander');
   ligne('- **Modes** : sur place, à emporter, livraison');
   ligne('- **Paiement** : carte bancaire en ligne, ou sur place');
   ligne('');
 
-  const liv = carte.livraison || {};
+  const liv = liv0;
   ligne('## Livraison');
   ligne('');
   ligne('- **Minimum de commande** : ' + euros(liv.minimum));
