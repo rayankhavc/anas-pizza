@@ -185,11 +185,28 @@ async function sumupCommandes(depuis) {
   const rep = await r.json();
   const items = Array.isArray(rep) ? rep : (rep.items || []);
 
-  return items
-    .filter((t) => t.status === 'SUCCESSFUL')
-    // une transaction sans ticket ne vient pas du site : encaissement au
-    // comptoir, sur le terminal. La cuisine n'a rien à en faire.
-    .filter((t) => t.product_summary)
+  const payees = items.filter((t) => t.status === 'SUCCESSFUL');
+
+  // Une transaction du site porte toujours un ticket qui commence par
+  // LIVRAISON ou EMPORTER. Les autres viennent du terminal du comptoir : la
+  // cuisine n'a rien à en faire.
+  //
+  // Écarter sur la seule absence de « product_summary » serait dangereux :
+  // si SumUp cessait un jour de recopier la description du checkout, toutes
+  // les commandes du site disparaîtraient de l'écran sans un mot, et la
+  // cuisine ne saurait même pas qu'elle rate des pizzas. On reconnaît donc
+  // la forme du ticket, et on crie dans les journaux quand une transaction
+  // récente n'en a pas — au comptoir c'est normal, en rafale ça ne l'est pas.
+  const duSite = (t) => /^\s*(LIVRAISON|EMPORTER)\s*\|/.test(String(t.product_summary || ''));
+  const orphelines = payees.filter((t) => !duSite(t)).length;
+  if (orphelines) {
+    console.warn('[cuisine] ' + orphelines + ' encaissement(s) sans ticket sur ' +
+      payees.length + ' — normalement des ventes au comptoir. Si le site vient ' +
+      'd’encaisser et que rien n’apparaît, c’est ici qu’il faut regarder.');
+  }
+
+  return payees
+    .filter(duSite)
     .map((t) => lireTicket({
       id: t.transaction_code || String(t.id || '').slice(-8),
       horodatage: Math.floor(new Date(t.timestamp || Date.now()).getTime() / 1000),
