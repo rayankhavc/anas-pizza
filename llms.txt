@@ -112,6 +112,12 @@ Tarifs : Medium 6,90 € · Large 9,90 €
 - **Nuggets** — 4,90 € : 6 pièces, servies avec sauce. Allergènes : gluten.
 - **Maxi Tenders** — 5,90 € : 6 tenders de poulet panés. Allergènes : gluten.
 
+### Les desserts
+
+- **Gâteau amandes & Daim** — 3,50 € : Le petit gâteau qui fait basculer la fin de repas. Allergènes : fruits à coque, gluten, lait, oeufs.
+- **Tiramisu** — 3,50 € : Mascarpone, café, cacao. Allergènes : gluten, lait, oeufs.
+- **Brownie** — 3,50 € : Chocolat fondant, cœur moelleux. Allergènes : gluten, lait, oeufs.
+
 ### Les boissons
 
 - **Coca-Cola** — 2,00 € : Canette 33 cl.
@@ -123,12 +129,6 @@ Tarifs : Medium 6,90 € · Large 9,90 €
 - **Lipton Ice Tea** — 2,00 € : Canette 33 cl.
 - **Tropico** — 2,00 € : Canette 33 cl.
 - **Bouteille d’eau** — 1,00 € : Eau plate, 50 cl.
-
-### Les desserts
-
-- **Gâteau amandes & Daim** — 3,50 € : Le petit gâteau qui fait basculer la fin de repas. Allergènes : fruits à coque, gluten, lait, oeufs.
-- **Tiramisu** — 3,50 € : Mascarpone, café, cacao. Allergènes : gluten, lait, oeufs.
-- **Brownie** — 3,50 € : Chocolat fondant, cœur moelleux. Allergènes : gluten, lait, oeufs.
 
 ### Suppléments
 
@@ -150,4 +150,4 @@ Les quatorze allergènes réglementaires sont déclarés plat par plat sur https
 
 ---
 
-Fichier généré le 2026-08-11 depuis la carte du restaurant. Les prix font foi sur le site.
+Fichier généré le 2026-08-12 depuis la carte du restaurant. Les prix font foi sur le site.

@@ -1,5 +1,5 @@
 {
- "genere": "2026-08-11",
+ "genere": "2026-08-12",
  "source": "index.html",
  "livraison": {
   "minimum": 1380,
@@ -1206,6 +1206,66 @@
    ]
   },
   {
+   "id": "desserts",
+   "nom": "Les desserts",
+   "type": "unite",
+   "tailles": [],
+   "plats": [
+    {
+     "id": "gateau-amandes-daim",
+     "nom": "Gâteau amandes & Daim",
+     "description": "Le petit gâteau qui fait basculer la fin de repas.",
+     "photo": "assets/img/plats/opt/gateau-amandes-daim-256.webp",
+     "badges": [],
+     "ingredients": [
+      "Le petit gâteau qui fait basculer la fin de repas"
+     ],
+     "prix": 350,
+     "allergenes": [
+      "fruits à coque",
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "tiramisu",
+     "nom": "Tiramisu",
+     "description": "Mascarpone, café, cacao.",
+     "photo": "assets/img/plats/opt/tiramisu-256.webp",
+     "badges": [],
+     "ingredients": [
+      "Mascarpone",
+      "café",
+      "cacao"
+     ],
+     "prix": 350,
+     "allergenes": [
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    },
+    {
+     "id": "brownie",
+     "nom": "Brownie",
+     "description": "Chocolat fondant, cœur moelleux.",
+     "photo": "assets/img/plats/opt/brownie-256.webp",
+     "badges": [],
+     "ingredients": [
+      "Chocolat fondant",
+      "cœur moelleux"
+     ],
+     "prix": 350,
+     "allergenes": [
+      "gluten",
+      "lait",
+      "oeufs"
+     ]
+    }
+   ]
+  },
+  {
    "id": "boissons",
    "nom": "Les boissons",
    "type": "unite",
@@ -1319,66 +1379,6 @@
      ],
      "prix": 100,
      "allergenes": []
-    }
-   ]
-  },
-  {
-   "id": "desserts",
-   "nom": "Les desserts",
-   "type": "unite",
-   "tailles": [],
-   "plats": [
-    {
-     "id": "gateau-amandes-daim",
-     "nom": "Gâteau amandes & Daim",
-     "description": "Le petit gâteau qui fait basculer la fin de repas.",
-     "photo": "assets/img/plats/opt/gateau-amandes-daim-256.webp",
-     "badges": [],
-     "ingredients": [
-      "Le petit gâteau qui fait basculer la fin de repas"
-     ],
-     "prix": 350,
-     "allergenes": [
-      "fruits à coque",
-      "gluten",
-      "lait",
-      "oeufs"
-     ]
-    },
-    {
-     "id": "tiramisu",
-     "nom": "Tiramisu",
-     "description": "Mascarpone, café, cacao.",
-     "photo": "assets/img/plats/opt/tiramisu-256.webp",
-     "badges": [],
-     "ingredients": [
-      "Mascarpone",
-      "café",
-      "cacao"
-     ],
-     "prix": 350,
-     "allergenes": [
-      "gluten",
-      "lait",
-      "oeufs"
-     ]
-    },
-    {
-     "id": "brownie",
-     "nom": "Brownie",
-     "description": "Chocolat fondant, cœur moelleux.",
-     "photo": "assets/img/plats/opt/brownie-256.webp",
-     "badges": [],
-     "ingredients": [
-      "Chocolat fondant",
-      "cœur moelleux"
-     ],
-     "prix": 350,
-     "allergenes": [
-      "gluten",
-      "lait",
-      "oeufs"
-     ]
     }
    ]
   }
