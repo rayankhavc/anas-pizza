@@ -8,7 +8,7 @@
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      ⚙️  À PERSONNALISER AVANT LA MISE EN LIGNE
-     1. Remplacer https://anas-pizza.vercel.app par le vrai nom de domaine
+     1. Remplacer https://anaspizzaoriginal.fr par le vrai nom de domaine
         (canonical, og:url, JSON-LD, sitemap.xml, robots.txt).
      2. Déposer les photos dans assets/img/ : hero.jpg · devanture.jpg ·
         salle.jpg · pizza.jpg (voir assets/img/README.md).
@@ -18,7 +18,7 @@
 
 <title>Anas Pizza Original — Pizzeria à Nantes centre | À emporter &amp; livraison</title>
 <meta name="description" content="Pizzeria Anas Pizza Original, 10 allée Duguay Trouin à Nantes centre. Plus de 40 pizzas cuites à la commande : sur place, à emporter ou en livraison. Ouvert 7j/7 dès 11h30. Tél. 02 59 10 01 98.">
-<link rel="canonical" href="https://anas-pizza.vercel.app/">
+<link rel="canonical" href="https://anaspizzaoriginal.fr/">
 
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="author" content="Anas Pizza Original">
@@ -30,15 +30,15 @@
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="Anas Pizza Original — Pizzeria à Nantes centre">
 <meta property="og:description" content="Plus de 40 pizzas cuites à la commande : sur place, à emporter ou en livraison. 10 allée Duguay Trouin, 44000 Nantes. Ouvert 7j/7 dès 11h30.">
-<meta property="og:url" content="https://anas-pizza.vercel.app/">
-<meta property="og:image" content="https://anas-pizza.vercel.app/assets/img/og-image.jpg">
+<meta property="og:url" content="https://anaspizzaoriginal.fr/">
+<meta property="og:image" content="https://anaspizzaoriginal.fr/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Anas Pizza Original, pizzeria à Nantes centre">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Anas Pizza Original — Pizzeria à Nantes centre">
 <meta name="twitter:description" content="Plus de 40 pizzas cuites à la commande. Sur place, à emporter ou en livraison, 7j/7 dès 11h30.">
-<meta name="twitter:image" content="https://anas-pizza.vercel.app/assets/img/og-image.jpg">
+<meta name="twitter:image" content="https://anaspizzaoriginal.fr/assets/img/og-image.jpg">
 
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/img/emblem.svg">
@@ -47,7 +47,7 @@
 <link rel="preload" href="assets/fonts/anton-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/barlow-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/barlow-condensed-700-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/styles.css?v=b2535e38">
+<link rel="stylesheet" href="assets/css/styles.css?v=d2513556">
 <script src="assets/js/main.js?v=2fcc3ea7" defer></script>
 
 <script type="application/ld+json">
@@ -56,15 +56,16 @@
   "@graph": [
     {
       "@type": ["Restaurant", "LocalBusiness"],
-      "@id": "https://anas-pizza.vercel.app/#restaurant",
+      "@id": "https://anaspizzaoriginal.fr/#restaurant",
       "name": "Anas Pizza Original",
       "description": "Pizzeria à Nantes centre : plus de 40 pizzas cuites à la commande, sur place, à emporter ou en livraison.",
-      "url": "https://anas-pizza.vercel.app/",
-      "image": "https://anas-pizza.vercel.app/assets/img/og-image.jpg",
-      "logo": "https://anas-pizza.vercel.app/assets/img/emblem.svg",
+      "url": "https://anaspizzaoriginal.fr/",
+      "image": "https://anaspizzaoriginal.fr/assets/img/og-image.jpg",
+      "logo": "https://anaspizzaoriginal.fr/assets/img/emblem.svg",
       "telephone": "+33259100198",
       "email": "anas.pizza.original@gmail.com",
-      "servesCuisine": ["Pizza", "Italienne", "Restauration rapide"],
+      "sameAs": ["https://www.ubereats.com/fr/store/anas-pizza-original/c4e36jj6SKufKrNpApOBlQ"],
+        "servesCuisine": ["Pizza", "Italienne", "Restauration rapide"],
       "priceRange": "€",
       "currenciesAccepted": "EUR",
       "acceptsReservations": "False",
@@ -78,7 +79,13 @@
       },
       "geo": { "@type": "GeoCoordinates", "latitude": 47.2136, "longitude": -1.5573 },
       "hasMap": "https://www.google.com/maps/search/?api=1&query=Anas+Pizza+Original+10+all%C3%A9e+Duguay+Trouin+44000+Nantes",
-      "areaServed": { "@type": "City", "name": "Nantes" },
+      "areaServed": [
+          { "@type": "City", "name": "Nantes" },
+          { "@type": "City", "name": "Saint-Herblain" },
+          { "@type": "City", "name": "Saint-Sébastien-sur-Loire" },
+          { "@type": "City", "name": "Rezé" },
+          { "@type": "City", "name": "Orvault" }
+        ],
       "openingHoursSpecification": [
         { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "11:30", "closes": "02:00" }
       ],
@@ -88,7 +95,7 @@
           "name": "Commander sur le site",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://anas-pizza.vercel.app/commander",
+            "urlTemplate": "https://anaspizzaoriginal.fr/commander",
             "inLanguage": "fr-FR",
             "actionPlatform": [
               "http://schema.org/DesktopWebPlatform",
@@ -124,13 +131,13 @@
         }
       ],
       "paymentAccepted": "Espèces, Carte bancaire, Paiement en ligne",
-      "hasMenu": { "@id": "https://anas-pizza.vercel.app/#menu" }
+      "hasMenu": { "@id": "https://anaspizzaoriginal.fr/#menu" }
     },
     {
       "@type": "Menu",
-      "@id": "https://anas-pizza.vercel.app/#menu",
+      "@id": "https://anaspizzaoriginal.fr/#menu",
       "name": "La carte Anas Pizza Original",
-      "url": "https://anas-pizza.vercel.app/#carte",
+      "url": "https://anaspizzaoriginal.fr/#carte",
       "inLanguage": "fr-FR",
       "hasMenuSection": [
         { "@type": "MenuSection", "name": "Base sauce tomate", "description": "Pizzas sur base sauce tomate. Medium 7,90 € · Large 10,90 €" },
@@ -145,15 +152,15 @@
     },
     {
       "@type": "WebSite",
-      "@id": "https://anas-pizza.vercel.app/#website",
-      "url": "https://anas-pizza.vercel.app/",
+      "@id": "https://anaspizzaoriginal.fr/#website",
+      "url": "https://anaspizzaoriginal.fr/",
       "name": "Anas Pizza Original",
       "inLanguage": "fr-FR",
-      "publisher": { "@id": "https://anas-pizza.vercel.app/#restaurant" }
+      "publisher": { "@id": "https://anaspizzaoriginal.fr/#restaurant" }
     },
     {
       "@type": "FAQPage",
-      "@id": "https://anas-pizza.vercel.app/#faq",
+      "@id": "https://anaspizzaoriginal.fr/#faq",
       "mainEntity": [
         { "@type": "Question", "name": "Quels sont les horaires d’Anas Pizza Original à Nantes ?",
           "acceptedAnswer": { "@type": "Answer", "text": "Nous sommes ouverts 7 jours sur 7, de 11h30 à 2h du matin. Service en continu, midi et soir." } },
@@ -1000,11 +1007,12 @@
 
     <!-- data-credit : remplacer le href par l'URL du site de l'agence -->
     <p class="credit">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="m8 18-6-6 6-6"/><path d="m16 6 6 6-6 6"/></svg>
-      Site conçu et réalisé par
-      <a data-credit href="https://raythan.fr" target="_blank" rel="noopener">Raythan Web Design</a>
-      <span aria-hidden="true">·</span>
-      <a href="mailto:raythanwebdesign@gmail.com">raythanwebdesign@gmail.com</a>
+      <a class="credit__agence" data-credit href="https://raythan.fr" target="_blank" rel="noopener">
+        <img class="credit__logo" src="assets/img/raythan.svg" alt="" width="28" height="28">
+        <span>Site conçu et réalisé par <b>Raythan Web Design</b></span>
+      </a>
+      <span class="credit__sep" aria-hidden="true"></span>
+      <a class="credit__mail" href="mailto:raythanwebdesign@gmail.com">raythanwebdesign@gmail.com</a>
     </p>
   </div>
 </footer>

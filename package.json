@@ -3,7 +3,7 @@
   "private": true,
   "description": "Site vitrine d'Anas Pizza Original, Nantes.",
   "scripts": {
-    "build": "node build.js && node outils/carte.js && node outils/cgv.js && node outils/domaine.js && node outils/llms.js && node outils/mesure-audience.js && node outils/versions.js",
+    "build": "node build.js && node outils/carte.js && node outils/cgv.js && node outils/llms.js && node outils/mesure-audience.js && node outils/domaine.js && node outils/versions.js",
     "carte": "node outils/carte.js && node outils/cgv.js",
     "test": "node outils/test-panier.js && node outils/test-sumup.js && node outils/test-admin.js"
   },

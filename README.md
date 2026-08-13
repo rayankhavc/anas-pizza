@@ -176,23 +176,63 @@ de code, seulement un changement de variables.
 Les variables de l'espace de gestion (`ADMIN_CODE`, `GITHUB_TOKEN`…) sont
 décrites plus bas, dans « Espace de gestion ».
 
-### En attente : le jour où le nom de domaine est acheté
+### Le nom de domaine
 
-Décision du client&nbsp;: **tout ce qui suit attend l'achat du domaine.** Rien
-n'est à faire avant, et rien n'est cassé en attendant.
+`anaspizzaoriginal.fr`, acheté chez Hostinger le 13 août 2026. Il est écrit
+une seule fois, dans `outils/domaine.js`, et `SITE_URL` le remplace sans
+toucher au code. Canoniques, Open Graph, données structurées, plan du site,
+`robots.txt` et `llms.txt` en découlent.
 
-1. **Basculer l'adresse.** Poser `SITE_URL=https://www.le-domaine.fr` dans
-   Vercel, ou changer la ligne dans `outils/domaine.js`, puis redéployer. Les
-   canoniques, Open Graph, plan du site, `robots.txt` et `llms.txt` suivent
-   tout seuls. À ne faire **qu'une fois le domaine joignable**&nbsp;: une
-   canonique vers un domaine qui ne répond pas empêche l'indexation, c'est
-   le défaut qui a été corrigé ici.
-2. **Search Console.** Poser `GSC_TOKEN`, redéployer, valider la propriété,
-   soumettre `sitemap.xml`. Aucun cookie, aucune conséquence légale.
-3. **Analytics**, si le client le veut vraiment. Poser `GA4_ID` — mais pas
-   seul&nbsp;: il faut aussi un bandeau de consentement et réécrire la
-   politique de confidentialité, qui affirme aujourd'hui qu'aucun traceur
-   n'est utilisé. Sans ça, le site devient non conforme.
+**Sans « www ».** Une seule forme fait autorité, la variante `www` redirige
+vers elle côté hébergeur. Deux formes qui répondent toutes les deux, ce sont
+deux sites aux yeux d'un moteur, et un seul des deux est classé.
+
+`outils/domaine.js` passe **avant-dernier** dans `npm run build`, juste avant
+l'empreinte des versions. Tout ce qui écrit une URL doit tourner avant lui —
+`llms.txt` était généré après et gardait donc l'ancienne adresse pendant que
+les huit autres fichiers étaient à jour.
+
+#### DNS à poser chez Hostinger
+
+| Type | Nom | Valeur |
+|---|---|---|
+| `A` | `@` | `76.76.21.21` |
+| `CNAME` | `www` | `cname.vercel-dns.com` |
+
+Puis, dans Vercel → le projet → **Settings → Domains**, ajouter
+`anaspizzaoriginal.fr` **et** `www.anaspizzaoriginal.fr`, en laissant Vercel
+rediriger la seconde vers la première. Compter de quelques minutes à
+quelques heures de propagation ; le certificat HTTPS est émis tout seul
+ensuite.
+
+### Search Console et mesure d'audience
+
+| Variable | Effet | Conséquence |
+|---|---|---|
+| `GSC_TOKEN` | balise de vérification Search Console | aucune — balise inerte, zéro cookie |
+| `GA4_ID` | Google Analytics (`G-XXXXXXXXXX`) | dépose des cookies, donc bandeau |
+
+**Search Console** : poser `GSC_TOKEN`, redéployer, valider la propriété,
+soumettre `sitemap.xml`. Rien d'autre à faire.
+
+**Analytics** : poser `GA4_ID` suffit. `outils/mesure-audience.js` s'occupe
+des trois conséquences plutôt que de les laisser à faire —
+
+1. le mode consentement de Google est déclaré **« refusé »** avant même le
+   chargement de la balise, donc rien n'est déposé tant que le visiteur n'a
+   pas dit oui ;
+2. le bandeau de consentement apparaît, avec « Refuser » **exactement aussi
+   visible** qu'« Accepter » — mêmes dimensions, même poids, comme la CNIL
+   l'exige. Le refus est mémorisé comme l'acceptation : redemander à
+   quelqu'un qui a dit non, c'est le harceler jusqu'à ce qu'il cède, et
+   c'est précisément ce qui se fait sanctionner ;
+3. la section « Cookies et traceurs » de la politique de confidentialité est
+   réécrite pour décrire Analytics.
+
+Retirer `GA4_ID` défait les trois. La page légale dit donc toujours la vérité
+sur la configuration réelle, sans que personne ait à y penser.
+
+Le lien **Cookies** du pied de page rouvre le choix à tout moment.
 
 ### Mise en service, le jour où la clé arrive
 
@@ -331,9 +371,15 @@ le restaurant.
   prix par entrée, dessert et boisson, un par groupe de suppléments. Chaque
   prix modifié affiche un bouton qui le ramène à celui de la carte.
 - **La livraison** — minimum de commande et frais.
-- **Les photos** — la photo est réduite dans le navigateur avant l'envoi&nbsp;:
-  une photo de téléphone brute pèse quatre mégaoctets pour un affichage sur
-  720&nbsp;pixels.
+- **Les photos** — les quatre du restaurant (accueil, devanture, salle,
+  pizzas) et les 58 plats. La photo est réduite dans le navigateur avant
+  l'envoi&nbsp;: une photo de téléphone brute pèse quatre mégaoctets pour un
+  affichage sur 720&nbsp;pixels. Seul le JPEG est accepté, et ce n'est pas de
+  la paresse&nbsp;: l'étape de construction retient le premier fichier trouvé
+  pour un nom donné, donc un `tikka.png` déposé à côté d'un `tikka.jpg`
+  existant ne remplacerait rien — le `.jpg` gagnerait au tri et la nouvelle
+  photo serait ignorée sans un mot. Une seule extension, et le fichier est
+  toujours écrasé.
 
 ## Modifier la carte
 

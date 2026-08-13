@@ -257,19 +257,42 @@ const ACTIONS = {
  * Contrepartie assumée : la photo n'apparaît qu'après le redéploiement
  * déclenché par le commit, soit une à deux minutes. L'espace admin le dit.
  */
+/* Les quatre photos du restaurant, celles qui ne sont pas des plats. Le nom
+   du fichier fait tout le travail : build.js reconnaît ces quatre-là et les
+   convertit à la bonne largeur. */
+const SCENES = {
+  hero: 'La photo du haut de la page d’accueil',
+  devanture: 'La devanture, dans « La maison »',
+  salle: 'La salle, dans « La maison »',
+  pizza: 'Les pizzas, dans « La maison »'
+};
+
 async function changerPhoto(corps, qui) {
   const plat = String(corps.plat || '');
-  if (!platConnu(plat)) throw new Refus('Plat inconnu : ' + plat);
+  const scene = Object.prototype.hasOwnProperty.call(SCENES, plat);
+  if (!scene && !platConnu(plat)) throw new Refus('Photo inconnue : ' + plat);
 
+  /* JPEG et rien d'autre, et ce n'est pas une paresse.
+     L'étape de construction cherche « <nom>.<n'importe quelle extension> » et
+     retient le premier trouvé. Déposer tikka.png à côté d'un tikka.jpg déjà
+     là ne remplacerait donc rien : le .jpg gagnerait au tri, et la nouvelle
+     photo serait ignorée sans un mot. En n'acceptant qu'une extension, le
+     fichier est toujours écrasé, jamais doublé. Le navigateur réencode de
+     toute façon en JPEG avant l'envoi. */
   const donnee = String(corps.image || '');
-  const m = /^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$/.exec(donnee);
-  if (!m) throw new Refus('Image illisible (JPEG, PNG ou WebP attendu).');
+  const m = /^data:image\/jpeg;base64,([A-Za-z0-9+/=]+)$/.exec(donnee);
+  if (!m) throw new Refus('Image illisible (JPEG attendu).');
 
-  const octets = Buffer.from(m[2], 'base64');
+  const octets = Buffer.from(m[1], 'base64');
   if (octets.length > 3 * 1024 * 1024) throw new Refus('Photo trop lourde (3 Mo maximum).');
   if (octets.length < 1024) throw new Refus('Photo trop petite pour être valable.');
 
-  const chemin = 'assets/img/plats/' + plat + '.' + (m[1] === 'jpeg' ? 'jpg' : m[1]);
+  // Les photos du restaurant vivent à la racine d'assets/img/, les plats dans
+  // leur sous-dossier : c'est ce qui les distingue pour l'étape de
+  // construction, qui ne les redimensionne pas à la même largeur.
+  const chemin = scene
+    ? 'assets/img/' + plat + '.jpg'
+    : 'assets/img/plats/' + plat + '.jpg';
 
   // On écrase le fichier s'il existe : d'où la relecture de son sha. Sans
   // lui, GitHub refuse la mise à jour d'un fichier existant.
@@ -310,6 +333,7 @@ module.exports = async function handler(req, res) {
       publication: ecritureDisponible(),
       pilotage,
       carte: carteAdmin(pilotage),
+      scenes: Object.keys(SCENES).map((id) => ({ id, nom: SCENES[id] })),
       recette
     });
   }

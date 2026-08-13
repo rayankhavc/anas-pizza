@@ -1,6 +1,6 @@
 # Anas Pizza Original
 
-> Pizzeria artisanale à Nantes centre. Plus de 40 pizzas cuites à la commande, sur place, à emporter ou en livraison. Commande et paiement en ligne sur https://anas-pizza.vercel.app.
+> Pizzeria artisanale à Nantes centre. Plus de 40 pizzas cuites à la commande, sur place, à emporter ou en livraison. Commande et paiement en ligne sur https://anaspizzaoriginal.fr.
 
 ## L'essentiel
 
@@ -10,7 +10,7 @@
 - **Horaires du restaurant** : 7 jours sur 7, de 11h30 à 2h du matin. Service continu, midi et soir.
 - **Horaires de livraison** : de 11h30 à minuit.
 - **Commandes à emporter** : de 11h30 à 01h30. Au-delà, le site n’accepte plus de commande.
-- **Commander en ligne** : https://anas-pizza.vercel.app/commander
+- **Commander en ligne** : https://anaspizzaoriginal.fr/commander
 - **Modes** : sur place, à emporter, livraison
 - **Paiement** : carte bancaire en ligne, ou sur place
 
@@ -138,15 +138,15 @@ Tarifs : Medium 6,90 € · Large 9,90 €
 
 ## Allergènes
 
-Les quatorze allergènes réglementaires sont déclarés plat par plat sur https://anas-pizza.vercel.app/cgv. Les préparations sont faites dans une cuisine où sont manipulés gluten, lait, œufs, poissons, fruits à coque et soja : aucune absence de trace ne peut être garantie. En cas d'allergie, appeler le 02 59 10 01 98 avant de commander.
+Les quatorze allergènes réglementaires sont déclarés plat par plat sur https://anaspizzaoriginal.fr/cgv. Les préparations sont faites dans une cuisine où sont manipulés gluten, lait, œufs, poissons, fruits à coque et soja : aucune absence de trace ne peut être garantie. En cas d'allergie, appeler le 02 59 10 01 98 avant de commander.
 
 ## Pages
 
-- [Accueil et carte complète](https://anas-pizza.vercel.app/)
-- [Commander en ligne](https://anas-pizza.vercel.app/commander)
-- [Conditions générales de vente et allergènes](https://anas-pizza.vercel.app/cgv)
-- [Mentions légales](https://anas-pizza.vercel.app/mentions-legales)
-- [Politique de confidentialité](https://anas-pizza.vercel.app/politique-de-confidentialite)
+- [Accueil et carte complète](https://anaspizzaoriginal.fr/)
+- [Commander en ligne](https://anaspizzaoriginal.fr/commander)
+- [Conditions générales de vente et allergènes](https://anaspizzaoriginal.fr/cgv)
+- [Mentions légales](https://anaspizzaoriginal.fr/mentions-legales)
+- [Politique de confidentialité](https://anaspizzaoriginal.fr/politique-de-confidentialite)
 
 ---
 

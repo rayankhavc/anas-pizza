@@ -216,7 +216,14 @@
     $('#bloc-photos').hidden = false;
     if ($('#photo-plat').options.length) return;   // la liste ne bouge pas
 
-    var html = etat.carte.categories.map(function (cat) {
+    // Les photos du restaurant d'abord : ce sont celles qu'on change le plus
+    // souvent, et les seules qu'un client voit avant d'avoir faim.
+    var html = '<optgroup label="Photos du restaurant">' +
+      (etat.scenes || []).map(function (s) {
+        return '<option value="' + echapper(s.id) + '">' + echapper(s.nom) + '</option>';
+      }).join('') + '</optgroup>';
+
+    html += etat.carte.categories.map(function (cat) {
       return '<optgroup label="' + echapper(cat.nom) + '">' +
         cat.plats.map(function (p) {
           return '<option value="' + echapper(p.id) + '">' + echapper(p.nom) + '</option>';

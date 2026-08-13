@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Raythan Web Design">
+  <title>Raythan Web Design</title>
+  <!-- La couleur est écrite en dur : le fichier est chargé par <img>,
+       où currentColor ne vaut rien et retomberait sur du noir.
+       Marque de l'agence, posée dans le pied de page du site du client.
+       Un monogramme et rien d'autre : elle s'affiche à 28 px, et tout ce
+       qu'on ajouterait à cette taille ferait une tache. Elle prend la
+       couleur du texte de crédit, jamais celle de la marque du restaurant —
+       la signature d'un prestataire ne parle pas plus fort que la maison. -->
+  <rect x="1.1" y="1.1" width="29.8" height="29.8" rx="7.6"
+        fill="none" stroke="#8FA0BA" stroke-width="1.7" opacity=".5"/>
+  <path fill="#8FA0BA" d="M8.02 7.5Q8.61 7.52 9.61 7.55Q10.61 7.57 11.6 7.57Q12.73 7.57 13.79 7.55Q14.85 7.52 15.29 7.52Q17.48 7.52 18.93 8.01Q20.38 8.49 21.1 9.41Q21.82 10.33 21.82 11.62Q21.82 12.42 21.49 13.23Q21.16 14.05 20.37 14.74Q19.58 15.43 18.21 15.85Q16.85 16.26 14.78 16.26H12.52V15.79H14.54Q15.93 15.79 16.65 15.26Q17.37 14.73 17.64 13.85Q17.91 12.96 17.91 11.88Q17.91 10.02 17.25 9.0Q16.59 7.97 14.99 7.97Q14.07 7.97 13.8 8.37Q13.53 8.77 13.53 10.0V21.67Q13.53 22.52 13.66 22.95Q13.79 23.37 14.16 23.51Q14.54 23.65 15.29 23.7V24.17Q14.66 24.12 13.69 24.11Q12.73 24.1 11.74 24.1Q10.61 24.1 9.61 24.11Q8.61 24.12 8.02 24.17V23.7Q8.77 23.65 9.15 23.51Q9.52 23.37 9.65 22.95Q9.78 22.52 9.78 21.67V10.0Q9.78 9.12 9.65 8.71Q9.52 8.3 9.14 8.15Q8.75 7.99 8.02 7.97ZM12.47 15.86Q13.48 15.88 14.22 15.95Q14.96 16.02 15.53 16.08Q16.09 16.14 16.54 16.16Q18.68 16.35 19.71 17.08Q20.73 17.81 21.04 19.27L21.58 21.7Q21.79 22.64 22.03 23.02Q22.26 23.39 22.71 23.39Q23.02 23.37 23.22 23.24Q23.42 23.11 23.65 22.85L23.98 23.13Q23.35 23.86 22.62 24.18Q21.89 24.5 20.85 24.5Q19.58 24.5 18.75 23.96Q17.93 23.42 17.67 21.96L17.25 19.6Q17.08 18.61 16.85 17.87Q16.61 17.13 16.2 16.69Q15.79 16.26 15.06 16.26H12.52Z"/>
+</svg>
