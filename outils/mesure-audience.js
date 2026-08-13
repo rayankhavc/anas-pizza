@@ -39,8 +39,23 @@ const fs = require('fs');
 const path = require('path');
 
 const RACINE = path.join(__dirname, '..');
+
+/* L'identifiant de mesure est écrit ici, comme le domaine l'est dans
+   outils/domaine.js, et pour la même raison : ce n'est pas un secret. Il
+   s'affiche en clair dans la source de chaque page — n'importe quel visiteur
+   le lit en trois clics. Le ranger dans une variable d'environnement ne le
+   protégerait de rien et ajouterait une manipulation à refaire à chaque
+   déploiement, avec l'oubli qui va avec.
+
+   Le jeton Search Console, lui, reste une variable : il ne sert qu'une fois,
+   à la validation de propriété, et n'a aucune raison de vivre dans le dépôt.
+
+   GA4_ID passe devant si elle est posée — mettre GA4_ID="" éteint la mesure
+   sans toucher au code. */
 const GSC = (process.env.GSC_TOKEN || '').trim();
-const GA4 = (process.env.GA4_ID || '').trim();
+const GA4 = (process.env.GA4_ID !== undefined
+  ? process.env.GA4_ID
+  : 'G-EWTKNPKG0C').trim();
 
 const DEBUT = '<!-- mesure:debut -->';
 const FIN = '<!-- mesure:fin -->';
