@@ -13,6 +13,7 @@
 
 const { calculer, verifierAdresse, euros, libelle } = require('./_panier');
 const { ouvrirPaiement } = require('./_paiement');
+const { lire: lirePilotage } = require('./_pilotage');
 
 function json(res, code, corps) {
   res.statusCode = code;
@@ -53,10 +54,14 @@ module.exports = async function handler(req, res) {
   }
 
   // ── recalcul et vérifications ───────────────────────────────────────────
+  // Le pilotage est relu à chaque commande : une rupture déclarée il y a
+  // trente secondes doit valoir pour la commande d'il y a une seconde.
+  const pilotage = await lirePilotage();
+
   let total, client;
   const mode = corps.mode === 'livraison' ? 'livraison' : 'emporter';
   try {
-    total = calculer(corps.panier, mode);
+    total = calculer(corps.panier, mode, undefined, pilotage);
     client = mode === 'livraison'
       ? verifierAdresse(corps.client)
       : verifierAdresse({

@@ -27,8 +27,10 @@ const PLATS = 'assets/img/plats';
 const IMG = 'assets/img';
 const OPT = path.join(PLATS, 'opt');
 
-// Les trois photos du restaurant et la largeur qui leur convient.
-const SCENES = { devanture: 1400, salle: 900, pizza: 900 };
+// Les photos du restaurant et la largeur qui leur convient. « hero » est la
+// seule qui s'affiche sur le premier écran : elle est servie telle quelle,
+// sans attendre le défilement.
+const SCENES = { hero: 900, devanture: 1400, salle: 900, pizza: 900 };
 // Largeur des vignettes de plats : elles s'affichent à 64 px, 256 px couvre
 // les écrans à forte densité avec de la marge.
 const PLAT_WIDTH = 256;

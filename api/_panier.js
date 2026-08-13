@@ -19,6 +19,8 @@
 // dépendance et embarqué dans le paquet de la fonction serverless. Lu sur
 // disque à l'exécution, il serait absent en production.
 const CARTE = require('../assets/data/carte.json');
+const { prixPilote, enRupture, livraisonPilotee,
+  cleTaille, clePlat, cleSupp } = require('./_pilotage');
 
 const MAX_QTE = 20;          // par ligne
 const MAX_LIGNES = 40;       // par commande
@@ -140,11 +142,20 @@ function entier(v, nom) {
 
 /**
  * Recalcule intégralement un panier.
+ *
+ * Le pilotage est facultatif et arrive en dernier : sans lui le calcul est
+ * exactement celui d'avant, ce qui laisse les tests et les appels existants
+ * intacts. Avec lui, le gérant peut fermer la boutique, retirer un plat ou
+ * changer un prix depuis son téléphone — sans que rien de tout cela puisse
+ * venir du navigateur du client, qui n'envoie toujours que des identifiants.
+ *
  * @param {Array} lignes  [{ plat, taille?, quantite, supplements: [{groupe, choix}] }]
  * @param {String} mode   'livraison' | 'emporter'
+ * @param {Date=} quand
+ * @param {Object=} pilotage  voir api/_pilotage.js
  * @returns {{lignes:Array, sousTotal:number, frais:number, total:number}}
  */
-function calculer(lignes, mode, quand) {
+function calculer(lignes, mode, quand, pilotage) {
   if (!Array.isArray(lignes) || lignes.length === 0) {
     throw new Refus('Le panier est vide.', 'panier');
   }
@@ -153,6 +164,16 @@ function calculer(lignes, mode, quand) {
   }
   if (mode !== 'livraison' && mode !== 'emporter') {
     throw new Refus('Mode de retrait inconnu.', 'mode');
+  }
+  // Fermeture décidée par le restaurant : elle passe avant les horaires, car
+  // c'est justement pour sortir des horaires qu'elle existe (un jour férié,
+  // un four en panne, une soirée complète).
+  if (pilotage && pilotage.service && pilotage.service.ouvert === false) {
+    throw new Refus(
+      pilotage.service.motif
+        ? 'Commandes en ligne suspendues : ' + pilotage.service.motif
+        : 'Les commandes en ligne sont momentanément suspendues. ' +
+          'Appelez-nous au 02 59 10 01 98.', 'mode');
   }
   if (!modeOuvert(mode, quand)) {
     const s = creneau(mode);
@@ -176,6 +197,13 @@ function calculer(lignes, mode, quand) {
     if (!found) throw new Refus('Produit inconnu : ' + l.plat, 'panier');
     const { plat, categorie } = found;
 
+    // Rupture déclarée au comptoir. Le contrôle est ici et pas seulement à
+    // l'affichage : une page ouverte depuis une heure ignore que le saumon
+    // est parti, et il vaut mieux refuser la commande que de l'encaisser.
+    if (enRupture(pilotage, plat.id)) {
+      throw new Refus(plat.nom + ' n’est plus disponible ce soir.', 'panier');
+    }
+
     const quantite = entier(l.quantite, 'Quantité');
     if (quantite < 1 || quantite > MAX_QTE) {
       throw new Refus('Quantité invalide pour ' + plat.nom + '.', 'panier');
@@ -188,7 +216,7 @@ function calculer(lignes, mode, quand) {
     if (categorie.type === 'pizza') {
       taille = categorie.tailles.find((t) => t.id === String(l.taille || ''));
       if (!taille) throw new Refus('Choisissez une taille pour ' + plat.nom + '.', 'panier');
-      unitaire = taille.prix;
+      unitaire = prixPilote(pilotage, cleTaille(categorie.id, taille.id)) || taille.prix;
       // Offre du jour : elle ne s'applique qu'à la taille visée, et seulement
       // si elle abaisse réellement le prix. Elle porte sur la pizza seule,
       // jamais sur les suppléments, qui restent facturés au tarif normal.
@@ -197,7 +225,7 @@ function calculer(lignes, mode, quand) {
         unitaire = offre.prix;
       }
     } else {
-      unitaire = plat.prix;
+      unitaire = prixPilote(pilotage, clePlat(plat.id)) || plat.prix;
       if (l.taille) throw new Refus(plat.nom + ' n’a pas de taille.', 'panier');
     }
 
@@ -220,8 +248,9 @@ function calculer(lignes, mode, quand) {
       const cle = groupe.id + '/' + choix.id;
       if (vus.has(cle)) throw new Refus('Supplément en double : ' + choix.nom, 'panier');
       vus.add(cle);
-      unitaire += groupe.prix;
-      detailSupps.push({ groupe: groupe.id, choix: choix.id, nom: choix.nom, prix: groupe.prix });
+      const prixSupp = prixPilote(pilotage, cleSupp(groupe.id)) || groupe.prix;
+      unitaire += prixSupp;
+      detailSupps.push({ groupe: groupe.id, choix: choix.id, nom: choix.nom, prix: prixSupp });
     }
 
     const total = unitaire * quantite;
@@ -240,7 +269,7 @@ function calculer(lignes, mode, quand) {
     });
   }
 
-  const liv = carte().livraison;
+  const liv = livraisonPilotee(pilotage, carte().livraison);
   if (mode === 'livraison' && sousTotal < liv.minimum) {
     throw new Refus(
       'Minimum ' + euros(liv.minimum) + ' pour la livraison — il manque ' +

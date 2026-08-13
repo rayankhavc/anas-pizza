@@ -18,6 +18,9 @@
   var CLE = 'anas-panier-v1';
   var carte = null;
   var etat = { mode: null, lignes: [], client: {} };
+  // Message de suspension décidé au comptoir, ou chaîne vide. Il n'est pas
+  // dans « carte » parce qu'il change dans la minute, pas au déploiement.
+  var suspendu = '';
 
   // espace insécable : « 5,90 € » ne doit jamais se couper en fin de ligne
   var euros = function (c) { return (c / 100).toFixed(2).replace('.', ',') + '\u00A0€'; };
@@ -561,6 +564,25 @@
   function majCreneau() {
     var ouvert = {};
 
+    // Suspension décidée au comptoir : elle l'emporte sur l'horloge. Les deux
+    // modes se ferment ensemble, et le message vient du restaurant.
+    if (suspendu) {
+      $$('.mode').forEach(function (b) {
+        b.disabled = true;
+        b.classList.add('mode--ferme');
+      });
+      var s = $('#tout-ferme');
+      if (!s) {
+        s = document.createElement('p');
+        s.id = 'tout-ferme';
+        s.className = 'cmd__erreur';
+        var modes = $('.modes');
+        if (modes) modes.parentNode.insertBefore(s, modes);
+      }
+      if (s) s.textContent = suspendu;
+      return;
+    }
+
     $$('.mode').forEach(function (b) {
       var mode = b.dataset.mode;
       var s = creneau(mode);
@@ -687,18 +709,105 @@
     setInterval(majCreneau, 60000);   // le créneau se ferme page ouverte
   }
 
+  /**
+   * Recouvre la carte déployée par les décisions du soir.
+   *
+   * Le principe est d'écraser la carte elle-même plutôt que de consulter le
+   * pilotage à chaque affichage : les quinze endroits qui lisent un prix
+   * continuent de lire un prix, sans savoir qu'il a bougé. Un plat en rupture
+   * disparaît de la même façon — une catégorie vidée disparaît avec lui,
+   * plutôt que de laisser un titre au-dessus du vide.
+   */
+  function appliquerPilotage(c, p) {
+    if (!p) return c;
+    var prix = p.prix || {};
+    var ruptures = p.ruptures || [];
+    var pris = function (cle, defaut) {
+      var v = prix[cle];
+      return (typeof v === 'number' && v > 0 && v % 1 === 0) ? v : defaut;
+    };
+
+    c.categories = (c.categories || []).map(function (cat) {
+      (cat.tailles || []).forEach(function (t) {
+        t.prix = pris('cat:' + cat.id + ':' + t.id, t.prix);
+      });
+      cat.plats = (cat.plats || []).filter(function (pl) {
+        return ruptures.indexOf(pl.id) === -1;
+      });
+      cat.plats.forEach(function (pl) {
+        if (pl.prix) pl.prix = pris('plat:' + pl.id, pl.prix);
+      });
+      return cat;
+    }).filter(function (cat) { return cat.plats.length > 0; });
+
+    (c.supplements || []).forEach(function (g) {
+      g.prix = pris('supp:' + g.id, g.prix);
+    });
+
+    // /api/pilotage renvoie déjà des conditions de livraison complètes : le
+    // serveur a fusionné les siennes avec celles de la carte.
+    if (p.livraison && c.livraison) {
+      ['minimum', 'frais'].forEach(function (k) {
+        var v = p.livraison[k];
+        if (typeof v === 'number' && v >= 0 && v % 1 === 0) c.livraison[k] = v;
+      });
+    }
+
+    if (p.service && p.service.ouvert === false) {
+      suspendu = p.service.motif
+        ? 'Commandes en ligne suspendues : ' + p.service.motif +
+          ' Vous pouvez appeler le 02 59 10 01 98.'
+        : 'Les commandes en ligne sont momentanément suspendues. ' +
+          'Appelez-nous au 02 59 10 01 98.';
+    }
+    return c;
+  }
+
+  /**
+   * Un panier repris peut contenir un plat parti depuis. On le retire ici :
+   * le serveur le refuserait de toute façon, mais il le refuserait à l'écran
+   * du paiement, après que le client a tout ressaisi.
+   */
+  function purgerPanier() {
+    var avant = etat.lignes.length;
+    etat.lignes = etat.lignes.filter(function (l) { return !!platParId(l.plat); });
+    if (etat.lignes.length !== avant) {
+      sauver();
+      return avant - etat.lignes.length;
+    }
+    return 0;
+  }
+
   function demarrer() {
     if (!$('.page-commande')) return;
     charger();
-    fetch('assets/data/carte.json', { cache: 'no-cache' })
-      .then(function (r) {
-        if (!r.ok) throw new Error('carte indisponible');
-        return r.json();
-      })
-      .then(function (c) {
-        carte = c;
+    Promise.all([
+      fetch('assets/data/carte.json', { cache: 'no-cache' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('carte indisponible');
+          return r.json();
+        }),
+      // Le pilotage est un confort d'affichage : s'il manque, on commande
+      // quand même, et le serveur reste seul juge à l'encaissement.
+      fetch('/api/pilotage', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; })
+    ])
+      .then(function (x) {
+        carte = appliquerPilotage(x[0], x[1]);
+        var perdus = purgerPanier();
         dessinerCarte();
         brancher();
+        if (perdus) {
+          var p = document.createElement('p');
+          p.className = 'cmd__erreur';
+          p.textContent = perdus === 1
+            ? 'Un article de votre panier n’est plus disponible ce soir : il a été retiré.'
+            : perdus + ' articles de votre panier ne sont plus disponibles ce soir : ' +
+              'ils ont été retirés.';
+          var prod = $('#produits');
+          if (prod) prod.parentNode.insertBefore(p, prod);
+        }
         // un panier repris en cours de route redémarre à la carte
         aller(etat.mode && etat.lignes.length ? 2 : 1);
       })

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1C120E">
+<meta name="color-scheme" content="dark">
+<title>Gestion — Anas Pizza Original</title>
+<!-- Espace interne : jamais indexé, jamais partagé. -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css?v=6cfe577c">
+<script src="assets/js/admin.js?v=dfe5704b" defer></script>
+</head>
+
+<body class="page-admin">
+
+<header class="adm__bar">
+  <span class="brand">
+    <img class="brand__mark" src="assets/img/emblem.svg" alt="" width="32" height="32">
+    <span class="brand__txt"><span class="brand__a">Anas <i>Pizza</i></span></span>
+  </span>
+  <span class="adm__profil" id="profil" hidden></span>
+  <button class="adm__sortir" type="button" id="sortir" hidden>Fermer la session</button>
+</header>
+
+<main class="adm">
+
+  <!-- ── accès ────────────────────────────────────────────────────────── -->
+  <form class="kit__acces" id="acces">
+    <h1>Gestion du restaurant</h1>
+    <p>Entrez votre code.</p>
+    <p class="champ">
+      <label for="code">Code</label>
+      <input id="code" type="password" inputmode="numeric" autocomplete="current-password" required>
+    </p>
+    <p class="cmd__erreur" id="err-acces" role="alert" hidden></p>
+    <button class="btn btn--block" type="submit">Entrer</button>
+  </form>
+
+  <!-- ── tableau de bord ──────────────────────────────────────────────── -->
+  <div id="bord" hidden>
+
+    <p class="adm__note" id="note" role="status" hidden></p>
+
+    <!-- service -->
+    <section class="adm__bloc" aria-labelledby="t-service">
+      <h2 id="t-service">Le service</h2>
+      <div class="adm__service" id="service"></div>
+      <div class="adm__recette" id="recette"></div>
+    </section>
+
+    <!-- ruptures -->
+    <section class="adm__bloc" aria-labelledby="t-rupture">
+      <h2 id="t-rupture">Ce qui n’est plus disponible</h2>
+      <p class="adm__aide">
+        Touchez un plat pour le retirer de la carte. Il disparaît du site en
+        quelques secondes et revient d’un second appui.
+      </p>
+      <p class="adm__cherche">
+        <label class="sr-only" for="cherche-plat">Chercher un plat</label>
+        <input id="cherche-plat" type="search" placeholder="Chercher un plat…" autocomplete="off">
+      </p>
+      <div id="ruptures"></div>
+    </section>
+
+    <!-- prix -->
+    <section class="adm__bloc" id="bloc-prix" aria-labelledby="t-prix">
+      <h2 id="t-prix">Les prix</h2>
+      <p class="adm__aide" id="aide-prix"></p>
+      <div id="prix"></div>
+    </section>
+
+    <!-- livraison -->
+    <section class="adm__bloc" id="bloc-livraison" aria-labelledby="t-livraison">
+      <h2 id="t-livraison">La livraison</h2>
+      <form class="adm__livraison" id="form-livraison">
+        <p class="champ">
+          <label for="l-min">Minimum de commande</label>
+          <input id="l-min" type="text" inputmode="decimal" autocomplete="off">
+        </p>
+        <p class="champ">
+          <label for="l-frais">Frais de livraison</label>
+          <input id="l-frais" type="text" inputmode="decimal" autocomplete="off">
+        </p>
+        <button class="btn btn--sm" type="submit">Enregistrer</button>
+      </form>
+    </section>
+
+    <!-- photos -->
+    <section class="adm__bloc" id="bloc-photos" aria-labelledby="t-photos">
+      <h2 id="t-photos">Les photos des plats</h2>
+      <p class="adm__aide">
+        Choisissez un plat, puis une photo prise avec votre téléphone. Elle est
+        réduite avant l’envoi et apparaît sur le site après une à deux minutes.
+      </p>
+      <p class="champ">
+        <label for="photo-plat">Plat</label>
+        <select id="photo-plat"></select>
+      </p>
+      <p class="champ">
+        <label for="photo-fichier">Photo</label>
+        <input id="photo-fichier" type="file" accept="image/*">
+      </p>
+      <div class="adm__apercu" id="photo-apercu" hidden>
+        <img id="photo-img" alt="Aperçu de la photo choisie">
+        <button class="btn btn--sm" type="button" id="photo-envoyer">Envoyer cette photo</button>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+</body>
+</html>

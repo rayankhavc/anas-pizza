@@ -173,6 +173,9 @@ de code, seulement un changement de variables.
 | `CUISINE_CODE` | code d'accès de l'écran cuisine | `/cuisine` répond « non configuré » |
 | `SUMUP_API_BASE` | adresse de l'API SumUp — **tests seulement** | la vraie adresse SumUp |
 
+Les variables de l'espace de gestion (`ADMIN_CODE`, `GITHUB_TOKEN`…) sont
+décrites plus bas, dans « Espace de gestion ».
+
 ### En attente : le jour où le nom de domaine est acheté
 
 Décision du client&nbsp;: **tout ce qui suit attend l'achat du domaine.** Rien
@@ -266,6 +269,71 @@ bas de l'écran et le reste après rechargement.
 Aucune base de données&nbsp;: les commandes sont relues directement chez
 Stripe, qui les conserve déjà. Une base de plus serait une base à sauvegarder,
 à sécuriser et à payer pour stocker ce qui existe ailleurs.
+
+## Espace de gestion — `/admin`
+
+L'écran depuis lequel le restaurant tient sa boutique sans nous&nbsp;: fermer
+les commandes, retirer un plat parti, changer un prix, remplacer une photo.
+
+### Deux profils, deux codes
+
+| Profil | Variable | Ce qu'il peut faire |
+|---|---|---|
+| Propriétaire du site | `ADMIN_CODE` | tout |
+| Gérant du restaurant | `ADMIN_CODE_GERANT` | ouvrir / fermer, ruptures, chiffre du jour |
+
+Le gérant n'a **ni les prix, ni la livraison, ni les photos** tant que
+`ADMIN_EDITION` ne vaut pas `1`. Ce n'est pas une bride arbitraire&nbsp;: c'est
+la ligne entre *exploiter* la boutique et la *configurer*. Le jour où le site
+est réglé et payé, poser `ADMIN_EDITION=1` dans Vercel et redéployer suffit à
+lui ouvrir le reste — aucune ligne de code à toucher.
+
+Le contrôle est fait par le serveur, pas par l'écran&nbsp;: les blocs cachés
+ne sont que du rangement, un appel direct à `/api/admin` est refusé de la
+même façon (`outils/test-admin.js` le vérifie).
+
+### Où sont rangées les décisions du soir
+
+Dans un seul fichier, `assets/data/pilotage.json`, écrit par l'API de GitHub.
+Le dépôt sert de base de données&nbsp;: versionné, sauvegardé partout, gratuit,
+et une erreur de prix se défait en regardant l'historique.
+
+| Variable | Rôle | Sans elle |
+|---|---|---|
+| `GITHUB_TOKEN` | jeton *fine-grained*, droit **Contents : read & write** sur ce dépôt seul | l'espace reste consultable, rien ne s'enregistre |
+| `GITHUB_DEPOT` | `utilisateur/depot` | idem |
+| `GITHUB_BRANCHE` | branche visée | `main` |
+| `GITHUB_API_BASE` | adresse de l'API — **tests seulement** | la vraie adresse GitHub |
+
+Les changements sont **relus par l'API toutes les quinze secondes**, pas au
+déploiement&nbsp;: une rupture déclarée au comptoir vaut sur le site dans le
+quart de minute. Les commits de pilotage portent donc `[skip ci]` — sans ça,
+six ruptures un samedi soir déclencheraient six déploiements inutiles.
+
+Les **photos** font exception&nbsp;: elles sont écrites dans
+`assets/img/plats/<plat>.jpg` et ont besoin du déploiement pour être
+converties. Comptez une à deux minutes, l'écran le dit.
+
+Si GitHub ne répond pas, le site continue de prendre les commandes avec la
+carte telle qu'elle est déployée. Une panne d'outil de gestion ne ferme pas
+le restaurant.
+
+### Ce que le gérant voit
+
+- **Le service** — un bouton pour suspendre les commandes en ligne à toute
+  heure, avec un motif affiché au client, et le chiffre encaissé en ligne
+  depuis l'ouverture du service.
+- **Ce qui n'est plus disponible** — les 58 plats, un appui pour retirer,
+  un second pour remettre. Le plat disparaît de la carte de commande, et une
+  commande qui le contiendrait encore est refusée côté serveur.
+- **Les prix** — un prix par famille de pizzas et par taille (modifier
+  « Base sauce tomate — Large » modifie les douze pizzas de la famille), un
+  prix par entrée, dessert et boisson, un par groupe de suppléments. Chaque
+  prix modifié affiche un bouton qui le ramène à celui de la carte.
+- **La livraison** — minimum de commande et frais.
+- **Les photos** — la photo est réduite dans le navigateur avant l'envoi&nbsp;:
+  une photo de téléphone brute pèse quatre mégaoctets pour un affichage sur
+  720&nbsp;pixels.
 
 ## Modifier la carte
 

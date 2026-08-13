@@ -309,15 +309,27 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .tagpill svg{width:13px;height:13px;color:var(--orange)}
 
-/* La pizza ne tourne plus. Elle tournait sur elle-même en soixante secondes ;
-   le restaurant a trouvé que ça faisait gadget, et il a raison : un dessin qui
-   bouge en permanence attire l'œil au moment précis où l'on voudrait qu'il
-   descende vers la carte. */
+/* Le dessin de pizza a laissé la place à une vraie photo. Une illustration,
+   même bien faite, dit « site » ; une photo dit « restaurant ». Le bois de la
+   photo est du même brun que le fond du bandeau : elle s'y pose sans coupure,
+   d'où le cadre à peine marqué et l'ombre portée basse plutôt qu'un contour
+   franc. */
 .hero__art{display:grid;place-items:center}
-.pizza{width:min(62vw,340px);height:auto}
-/* Sur téléphone, l'illustration seule repoussait la carte sous la ligne de
-   flottaison. Elle reste, plus discrète : c'est la carte qu'on vient voir. */
-@media (max-width:719px){ .pizza{width:min(44vw,190px)} }
+.hero__photo{
+  margin:0;width:min(86vw,460px);
+  border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 22px 50px rgba(0,0,0,.42);
+}
+.hero__photo img{display:block;width:100%;height:auto}
+/* Sur téléphone, la photo passe en bandeau large : à pleine hauteur elle
+   repoussait la carte sous la ligne de flottaison, et c'est la carte qu'on
+   vient voir. */
+@media (max-width:719px){
+  .hero__inner{gap:1.2rem}
+  .hero__photo{width:100%;aspect-ratio:2/1}
+  .hero__photo img{height:100%;object-fit:cover}
+}
 
 /* --------------------------------------------------------------------------
    9. Bandeau de repères (orange plein)
@@ -1122,3 +1134,116 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .recap__l--promo{color:var(--red)}
 .recap__l--promo b{color:var(--red)}
 .cart__sum--promo span,.cart__sum--promo b{color:var(--gold)}
+
+/* --------------------------------------------------------------------------
+   23. Espace de gestion (interne)
+   --------------------------------------------------------------------------
+   Même fond sombre que l'écran cuisine : ce sont les deux écrans de la
+   maison, ils doivent se reconnaître au premier coup d'œil et se distinguer
+   du site public. Toutes les cibles font au moins 44 px de haut — l'écran
+   se tient d'une main, souvent avec de la farine dessus.
+   -------------------------------------------------------------------------- */
+.page-admin{background:var(--four-900);color:var(--cream);min-height:100dvh}
+.adm__bar{
+  position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:.8rem;
+  padding:.7rem clamp(1rem,3vw,1.6rem);background:var(--four-800);
+  border-bottom:1px solid rgba(246,241,231,.16);
+}
+.adm__profil{
+  margin-left:auto;font:700 .74rem/1 var(--f-cond);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--gold);
+}
+.adm__sortir{
+  min-height:40px;padding:.3rem .7rem;border:1.5px solid rgba(246,241,231,.24);
+  border-radius:var(--r);color:var(--cream);
+  font:700 .72rem/1 var(--f-cond);letter-spacing:.06em;text-transform:uppercase;
+}
+.adm__sortir:hover{background:rgba(246,241,231,.12)}
+
+.adm{padding:clamp(1rem,3vw,1.6rem);max-width:56rem;margin-inline:auto}
+.adm .kit__acces{max-width:22rem}
+.adm__bloc{
+  margin-bottom:1.1rem;padding:1rem clamp(.9rem,3vw,1.3rem) 1.2rem;
+  background:var(--four-800);border:1px solid rgba(246,241,231,.16);border-radius:var(--r);
+}
+.adm__bloc h2{font:400 1.5rem/1.1 var(--f-display);text-transform:uppercase;margin-bottom:.6rem}
+.adm__bloc h3{
+  font:700 .74rem/1 var(--f-cond);letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);margin:1rem 0 .5rem;
+}
+.adm__cat:first-child h3{margin-top:0}
+.adm__aide{font-size:.88rem;color:#CBB9A7;margin-bottom:.8rem}
+.adm .champ label{color:#CBB9A7}
+.adm .champ input,.adm .champ select{
+  background:var(--four-700);border-color:rgba(246,241,231,.24);color:var(--cream);
+}
+
+/* La note de confirmation reste au-dessus de tout : sur un téléphone, le
+   bloc modifié est souvent déjà sorti de l'écran quand la réponse arrive. */
+.adm__note{
+  position:sticky;top:3.6rem;z-index:9;margin-bottom:1rem;
+  padding:.7rem 1rem;border-radius:var(--r);font-size:.92rem;font-weight:600;
+}
+.adm__note.est-ok{background:#2F5E3E;color:#DFF3E4}
+.adm__note.est-ko{background:var(--red);color:#fff}
+
+.adm__feu{padding:.7rem .9rem;border-radius:var(--r);margin-bottom:.8rem;font-size:.95rem}
+.adm__feu.est-ouvert{background:rgba(111,208,140,.14);border:1px solid rgba(111,208,140,.4)}
+.adm__feu.est-ferme{background:rgba(198,58,46,.2);border:1px solid var(--red)}
+.adm__motif{display:block;margin-top:.3rem;color:#CBB9A7;font-style:italic}
+.btn--danger{background:var(--red);border-color:var(--red);color:#fff}
+
+.adm__chiffres{display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));margin-block:1rem .6rem}
+.adm__chiffres>div{padding:.7rem .8rem;background:var(--four-700);border-radius:var(--r)}
+.adm__chiffres dt{font:700 .68rem/1.3 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:#CBB9A7}
+.adm__chiffres dd{font:700 1.5rem/1.1 var(--f-cond);color:var(--gold)}
+
+/* Le champ de recherche est un input[type=search] : sans ces trois lignes,
+   le navigateur lui impose son propre fond clair au milieu d'un écran sombre. */
+.adm__cherche input{
+  width:100%;min-height:44px;padding:.5rem .7rem;-webkit-appearance:none;appearance:none;
+  background:var(--four-700);border:1.5px solid rgba(246,241,231,.24);
+  border-radius:var(--r);color:var(--cream);font-size:1rem;
+}
+.adm__plats{display:flex;flex-wrap:wrap;gap:.4rem}
+.adm__plat{
+  min-height:44px;padding:.4rem .8rem;border:1.5px solid rgba(246,241,231,.24);
+  border-radius:var(--r);color:var(--cream);font-size:.92rem;text-align:left;
+}
+.adm__plat:hover{background:rgba(246,241,231,.1)}
+/* Un plat retiré est barré autant que coloré : la couleur seule ne se voit
+   pas sous une lumière de cuisine, et pas du tout pour un daltonien. */
+.adm__plat.est-rupture{
+  background:rgba(198,58,46,.22);border-color:var(--red);
+  color:#FFC9C4;text-decoration:line-through;
+}
+.adm__plat[disabled]{opacity:.5}
+
+.adm__prix-l{
+  display:grid;grid-template-columns:1fr auto;gap:.35rem .6rem;align-items:center;
+  padding:.4rem 0;border-bottom:1px solid rgba(246,241,231,.1);
+}
+.adm__prix-n{font-size:.95rem}
+.adm__prix-v{display:flex;align-items:center;gap:.35rem}
+.adm__prix-u{color:#CBB9A7;font:700 1rem/1 var(--f-cond)}
+.adm__prix-c{
+  width:5.2rem;min-height:44px;padding:.4rem .6rem;text-align:right;
+  background:var(--four-700);border:1.5px solid rgba(246,241,231,.24);
+  border-radius:var(--r);color:var(--cream);font:700 1rem/1 var(--f-cond);
+}
+.adm__prix-l.est-change .adm__prix-c{border-color:var(--gold);color:var(--gold)}
+.adm__prix-r{
+  grid-column:1/-1;justify-self:start;font-size:.78rem;
+  min-height:32px;padding:.2rem .5rem;border:1px solid rgba(246,241,231,.24);
+  border-radius:var(--r);color:var(--gold);
+}
+.adm__prix-r:hover{background:rgba(246,241,231,.1)}
+
+.adm__livraison{display:grid;gap:.8rem;max-width:20rem}
+.adm__apercu{display:grid;gap:.8rem;justify-items:start;margin-top:.8rem}
+.adm__apercu img{max-width:min(100%,18rem);border-radius:var(--r);border:1px solid rgba(246,241,231,.24)}
+
+@media (min-width:640px){
+  .adm__prix-l{grid-template-columns:1fr auto 11rem}
+  .adm__prix-r{grid-column:auto;justify-self:end}
+}

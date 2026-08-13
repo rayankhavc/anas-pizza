@@ -7,6 +7,7 @@ Allow: /
 # Écrans internes et retours de paiement : rien à indexer, et des données
 # de clients à ne pas exposer.
 Disallow: /cuisine
+Disallow: /admin
 Disallow: /commande-confirmee
 Disallow: /api/
 
