@@ -327,8 +327,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    vient voir. */
 @media (max-width:719px){
   .hero__inner{gap:1.2rem}
-  .hero__photo{width:100%;aspect-ratio:2/1}
-  .hero__photo img{height:100%;object-fit:cover}
+  .hero__photo{width:100%;aspect-ratio:16/9}
+  /* Le sujet — le logo en haut, la pizza en bas — occupe presque toute la
+     hauteur de la photo. Un rognage centré coupait le logo en deux ; décalé
+     vers le haut, il ne mord que sur le bois. */
+  .hero__photo img{height:100%;object-fit:cover;object-position:center 22%}
 }
 
 /* --------------------------------------------------------------------------
