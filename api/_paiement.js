@@ -348,7 +348,12 @@ function lireTicket(c) {
       const m = t.match(/^(\d+)×\s*(.*)$/);
       return { n: m ? Number(m[1]) : 1, texte: m ? m[2] : t };
     }),
-    total: euros(c.montant)
+    total: euros(c.montant),
+    // Le montant brut suit le libellé : l'écran cuisine affiche le second,
+    // l'espace de gestion additionne le premier. Additionner « 24,90 € »
+    // demanderait de le reconvertir, donc d'introduire un flottant dans une
+    // somme d'argent.
+    montant: c.montant
   };
 }
 
