@@ -353,6 +353,20 @@ Badges disponibles : `badge--veg` (végétarien), `badge--hot` (piquant),
 `badge--star` (best-seller / signature). La recherche et les filtres
 fonctionnent automatiquement sur le texte des plats — aucune configuration.
 
+### Essayer une commande hors des heures d'ouverture
+
+`essaiJusqua`, dans le bloc `LIVRAISON` d'`outils/carte.js`, ouvre les deux
+créneaux quelle que soit l'heure — le seul moyen d'essayer une livraison à
+quatre heures du matin.
+
+C'est une **date de fin**, pas un interrupteur, et c'est délibéré : un
+interrupteur s'oublie, et une boutique laissée ouverte la nuit prend de
+vraies commandes que personne ne prépare. Mettez la prochaine heure
+d'ouverture normale — passé ce moment, l'essai ne donne plus rien que
+l'horaire ne donnait déjà, et il n'y a aucun trou entre les deux.
+
+`null` pour revenir au fonctionnement normal sans attendre.
+
 ## Modifier les horaires
 
 Deux endroits à garder synchronisés :

@@ -160,7 +160,12 @@ carte().offres = [];   // on repose l'offre de laboratoire
 
 console.log('\n── créneau de livraison ──');
 carte().livraison.creneaux = CRENEAUX_REELS;
-const { modeOuvert } = require('../api/_panier');
+const { modeOuvert, enEssai } = require('../api/_panier');
+
+// Une fenêtre d'essai ouverte rendrait vrais tous les contrôles ci-dessous.
+// Ils portent sur l'horaire : on la met de côté et on l'éprouve à part.
+const ESSAI_REEL = carte().livraison.essaiJusqua;
+carte().livraison.essaiJusqua = null;
 
 // Heures d'été à Paris : UTC+2. 20h00 locales = 18:00Z, 00h30 = 22:30Z la veille.
 const aParis = (jour, h, m) => new Date(Date.UTC(2026, 7, jour, h - 2, m || 0));
@@ -185,8 +190,37 @@ ok(r.total === 2180, 'à 1h, le retrait reste possible', euros(r.total));
 refuse(() => calculer([{ plat: 'tikka', taille: 'large', quantite: 2 }], 'emporter', aParis(12, 3, 0)),
        'à 3h, plus rien n’est accepté');
 
+/* --- fenêtre d'essai ---------------------------------------------------- */
+// Elle sert à essayer une commande hors des heures d'ouverture. Ce qui compte
+// n'est pas qu'elle ouvre — c'est qu'elle se referme toute seule. Une
+// boutique laissée ouverte la nuit prend de vraies commandes que personne ne
+// prépare, et ça se paie en remboursements.
+console.log('\n── fenêtre d’essai ───────────────────');
+
+carte().livraison.essaiJusqua = '2026-08-12T09:30:00Z';   // 11h30 à Paris
+
+ok(enEssai(aParis(12, 3, 0)) === true, 'à 3h du matin, l’essai court encore');
+ok(modeOuvert('livraison', aParis(12, 3, 0)) === true,
+   'et la livraison s’ouvre à une heure où elle est normalement fermée');
+r = calculer([{ plat: 'tikka', taille: 'large', quantite: 2 }], 'livraison', aParis(12, 3, 0));
+ok(r.total === 2180 + FRAIS, 'la commande passe le calcul', euros(r.total));
+
+ok(enEssai(aParis(12, 11, 31)) === false, 'passé l’heure dite, l’essai est fini');
+ok(modeOuvert('livraison', aParis(12, 11, 31)) === true,
+   'l’horaire normal prend le relais sans trou');
+refuse(() => calculer([{ plat: 'tikka', taille: 'large', quantite: 2 }], 'livraison', aParis(13, 1, 0)),
+       'et la nuit suivante, la livraison est de nouveau refusée');
+
+ok(enEssai(aParis(12, 3, 0)) === true && (function () {
+  carte().livraison.essaiJusqua = null;
+  return enEssai(aParis(12, 3, 0)) === false;
+})(), 'sans date d’essai, rien n’est ouvert hors créneau');
+
+carte().livraison.essaiJusqua = ESSAI_REEL;
+
 // rouvert pour la suite, qui parle de tickets et non d'horaires
 carte().livraison.creneaux = TOUJOURS;
+carte().livraison.essaiJusqua = null;
 
 console.log('\n── ticket transporté par le prestataire ──');
 const { ticket, lireTicket, reference } = require('../api/_paiement');

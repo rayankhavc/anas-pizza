@@ -104,7 +104,22 @@ function creneau(mode) {
  * franchit minuit est donc la règle ici, pas l'exception — d'où le second
  * test, sur la journée suivante.
  */
+/**
+ * Fenêtre d'essai en cours ?
+ *
+ * Elle sert à essayer une commande hors des heures d'ouverture. Elle porte
+ * une date de fin plutôt qu'un interrupteur : une boutique laissée ouverte
+ * par inadvertance prend de vraies commandes que personne ne prépare.
+ */
+function enEssai(quand) {
+  const j = (carte().livraison || {}).essaiJusqua;
+  if (!j) return false;
+  const fin = Date.parse(j);
+  return Number.isFinite(fin) && (quand || new Date()).getTime() < fin;
+}
+
 function modeOuvert(mode, quand) {
+  if (enEssai(quand)) return true;
   const s = creneau(mode);
   if (!s) return true;                         // pas de créneau défini : toujours ouvert
 
@@ -330,4 +345,5 @@ function libelle(l) {
 }
 
 module.exports = { calculer, verifierAdresse, carte, euros, libelle, Refus,
-  offreDuMoment, jourDeService, livraisonOuverte, modeOuvert, creneau, heureLisible };
+  offreDuMoment, jourDeService, livraisonOuverte, modeOuvert, creneau, heureLisible,
+  enEssai };
