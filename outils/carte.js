@@ -34,6 +34,19 @@ const LIVRAISON = {
     livraison: { debut: '11:30', fin: '00:00' },
     emporter: { debut: '11:30', fin: '01:30' }
   },
+  // Fenêtre d'essai. Tant que cette date n'est pas passée, les deux créneaux
+  // sont considérés ouverts, à n'importe quelle heure — c'est le seul moyen
+  // d'essayer une livraison à quatre heures du matin.
+  //
+  // Elle porte une date de fin, et pas un interrupteur, pour une raison
+  // précise : un interrupteur s'oublie. Une boutique laissée ouverte la nuit
+  // prend de vraies commandes que personne ne prépare, et ça se paie en
+  // remboursements et en avis. La date choisie est l'heure d'ouverture
+  // normale suivante : à partir de là, l'essai ne donne plus rien que
+  // l'horaire ne donnait déjà.
+  //
+  // Mettre null pour revenir au fonctionnement normal sans attendre.
+  essaiJusqua: '2026-08-13T09:30:00Z',   // 11h30 à Paris
   communes: [
     { cp: '44000', nom: 'Nantes' },
     { cp: '44100', nom: 'Nantes' },

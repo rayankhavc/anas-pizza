@@ -219,14 +219,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .header.is-stuck{border-bottom-color:rgba(246,241,231,.14)}
 .header__inner{display:flex;align-items:center;gap:.9rem;height:var(--hdr)}
 
-.brand{display:inline-flex;align-items:center;gap:.6rem;color:var(--cream);flex:none;min-height:44px}
-.brand__mark{width:36px;height:36px;flex:none}
-.brand__txt{display:grid;line-height:1}
-.brand__a{font:700 italic 1.2rem/1 var(--f-serif)}
-.brand__a i{font-style:normal;color:var(--brand-gold);font-family:var(--f-cond);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.95em}
-.brand__b{display:flex;align-items:center;gap:.45em;margin-top:4px;color:var(--cream);opacity:.85}
-.brand__b span{font:600 .53rem/1 var(--f-body);letter-spacing:.4em;text-transform:uppercase;margin-right:-.4em}
-.brand__b::before,.brand__b::after{content:"";flex:none;width:11px;height:1px;background:currentColor;opacity:.7}
+/* Le logo est celui de l'enseigne, détouré de la photo de la devanture
+   (voir outils/logo.js). Il ne se recompose pas : c'est une image, pas du
+   texte mis en forme — le « A » calligraphique n'existe dans aucune police
+   d'ici. Le nom reste lisible par les machines via l'attribut alt. */
+.brand{display:inline-flex;align-items:center;color:var(--cream);flex:none;min-height:44px}
+.brand__logo{display:block;width:min(46vw,206px);height:auto}
 
 .nav{display:none}
 .header__spacer{flex:1}

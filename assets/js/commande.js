@@ -107,7 +107,18 @@
     return (s && s.debut && s.fin) ? s : null;
   }
 
+  /* Fenêtre d'essai : voir outils/carte.js. Le serveur applique la même
+     règle — ici ce n'est que l'affichage, sinon les deux boutons resteraient
+     éteints pendant l'essai. */
+  function enEssai() {
+    var j = carte && carte.livraison && carte.livraison.essaiJusqua;
+    if (!j) return false;
+    var fin = Date.parse(j);
+    return isFinite(fin) && Date.now() < fin;
+  }
+
   function modeOuvert(mode) {
+    if (enEssai()) return true;
     var s = creneau(mode);
     if (!s) return true;
     var debut = enMinutes(s.debut);
