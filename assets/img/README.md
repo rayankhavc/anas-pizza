@@ -20,11 +20,16 @@ minute environ.
 
 Seul le **nom** compte, pas l'extension :
 
-| Nom à donner | Emplacement sur le site | Cadrage        |
-|--------------|-------------------------|----------------|
-| `devanture`  | Grande image du haut    | Paysage, 16/10 |
-| `salle`      | Vignette de gauche      | Portrait, 4/5  |
-| `pizza`      | Vignette de droite      | Portrait, 4/5  |
+| Nom à donner | Emplacement sur le site        | Cadrage        |
+|--------------|--------------------------------|----------------|
+| `hero`       | Tout en haut, à côté du titre  | Paysage, 3/2   |
+| `devanture`  | « La maison », grande image    | Paysage, 16/10 |
+| `salle`      | « La maison », vignette gauche | Portrait, 4/5  |
+| `pizza`      | « La maison », vignette droite | Portrait, 4/5  |
+
+`hero` est la première image que voit un visiteur : c'est celle qui doit être
+la plus soignée. Elle est rognée en paysage, alors laissez de l'air autour du
+plat.
 
 `devanture.jpg`, `devanture.jpeg`, `devanture.png`, `devanture.webp`,
 `devanture.avif` et leurs variantes en majuscules fonctionnent toutes : le site

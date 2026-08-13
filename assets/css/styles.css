@@ -309,15 +309,27 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .tagpill svg{width:13px;height:13px;color:var(--orange)}
 
-/* La pizza ne tourne plus. Elle tournait sur elle-même en soixante secondes ;
-   le restaurant a trouvé que ça faisait gadget, et il a raison : un dessin qui
-   bouge en permanence attire l'œil au moment précis où l'on voudrait qu'il
-   descende vers la carte. */
+/* Le dessin de pizza a laissé la place à une vraie photo. Une illustration,
+   même bien faite, dit « site » ; une photo dit « restaurant ». Le bois de la
+   photo est du même brun que le fond du bandeau : elle s'y pose sans coupure,
+   d'où le cadre à peine marqué et l'ombre portée basse plutôt qu'un contour
+   franc. */
 .hero__art{display:grid;place-items:center}
-.pizza{width:min(62vw,340px);height:auto}
-/* Sur téléphone, l'illustration seule repoussait la carte sous la ligne de
-   flottaison. Elle reste, plus discrète : c'est la carte qu'on vient voir. */
-@media (max-width:719px){ .pizza{width:min(44vw,190px)} }
+.hero__photo{
+  margin:0;width:min(86vw,460px);
+  border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 22px 50px rgba(0,0,0,.42);
+}
+.hero__photo img{display:block;width:100%;height:auto}
+/* Sur téléphone, la photo passe en bandeau large : à pleine hauteur elle
+   repoussait la carte sous la ligne de flottaison, et c'est la carte qu'on
+   vient voir. */
+@media (max-width:719px){
+  .hero__inner{gap:1.2rem}
+  .hero__photo{width:100%;aspect-ratio:2/1}
+  .hero__photo img{height:100%;object-fit:cover}
+}
 
 /* --------------------------------------------------------------------------
    9. Bandeau de repères (orange plein)

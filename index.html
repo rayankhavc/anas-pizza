@@ -10,8 +10,8 @@
      ⚙️  À PERSONNALISER AVANT LA MISE EN LIGNE
      1. Remplacer https://anas-pizza.vercel.app par le vrai nom de domaine
         (canonical, og:url, JSON-LD, sitemap.xml, robots.txt).
-     2. Déposer les photos dans assets/img/ : devanture.jpg · salle.jpg ·
-        pizza.jpg (voir assets/img/README.md).
+     2. Déposer les photos dans assets/img/ : hero.jpg · devanture.jpg ·
+        salle.jpg · pizza.jpg (voir assets/img/README.md).
      3. Pied de page : remplacer le lien « Raythan Web Design » par l'URL
         du site de l'agence (chercher « data-credit »).
      ═══════════════════════════════════════════════════════════════════════ -->
@@ -47,7 +47,7 @@
 <link rel="preload" href="assets/fonts/anton-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/barlow-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/barlow-condensed-700-italic-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/styles.css?v=0a11a1e7">
+<link rel="stylesheet" href="assets/css/styles.css?v=4565f8c1">
 <script src="assets/js/main.js?v=2fcc3ea7" defer></script>
 
 <script type="application/ld+json">
@@ -296,62 +296,14 @@
       </div>
 
       <div class="hero__art">
-        <!-- Le disque et la part appartiennent au même groupe : la part reste
-             solidaire de la pizza quand l'ensemble tourne. -->
-        <svg class="pizza" viewBox="0 0 616 616" role="img" aria-label="Illustration d’une pizza dont une part est sortie">
-          <g class="pizza__wheel"><g transform="translate(58 58)">
-            <!-- disque entamé -->
-            <path d="M250 250 L326.5 65.2 A200 200 0 1 1 173.5 65.2 Z" fill="#D9932F"/>
-            <path d="M250 250 L317.4 87.4 A176 176 0 1 1 182.6 87.4 Z" fill="#F5C95B"/>
-
-            <g stroke="#D9932F" stroke-width="3">
-              <path d="M250 250 96 250"/><path d="M250 250 404 250"/>
-              <path d="M250 250 141 359"/><path d="M250 250 359 359"/>
-              <path d="M250 250 250 424"/>
-            </g>
-
-            <g fill="#FBE3A6">
-              <ellipse cx="196" cy="196" rx="25" ry="16" transform="rotate(-18 196 196)"/>
-              <ellipse cx="318" cy="216" rx="21" ry="13" transform="rotate(24 318 216)"/>
-              <ellipse cx="230" cy="330" rx="26" ry="15" transform="rotate(-8 230 330)"/>
-              <ellipse cx="330" cy="330" rx="18" ry="12" transform="rotate(32 330 330)"/>
-              <ellipse cx="160" cy="278" rx="17" ry="11" transform="rotate(12 160 278)"/>
-            </g>
-
-            <g fill="#C63A2E">
-              <circle cx="168" cy="214" r="22"/>
-              <circle cx="286" cy="176" r="18"/>
-              <circle cx="336" cy="262" r="20"/>
-              <circle cx="200" cy="306" r="19"/>
-              <circle cx="292" cy="342" r="21"/>
-              <circle cx="248" cy="392" r="15"/>
-              <circle cx="150" cy="322" r="14"/>
-              <circle cx="236" cy="240" r="17"/>
-            </g>
-
-            <g fill="#2E2A33">
-              <circle cx="218" cy="176" r="8"/><circle cx="352" cy="206" r="7"/>
-              <circle cx="182" cy="368" r="7"/><circle cx="330" cy="392" r="6.5"/>
-            </g>
-            <g fill="#4A9153">
-              <path d="M272 274c16-9 32-2 34 14-15 9-33 3-34-14Z"/>
-              <path d="M138 250c15-10 31-4 34 12-14 10-32 5-34-12Z"/>
-              <path d="M258 322c14-8 28-2 30 12-13 8-29 3-30-12Z"/>
-            </g>
-
-            <!-- la part sortie, décalée hors de l'encoche -->
-            <g transform="translate(68 -76) rotate(7 250 160)">
-              <path d="M250 250 L173.5 65.2 A200 200 0 0 1 326.5 65.2 Z" fill="#D9932F"/>
-              <path d="M250 250 L182.6 87.4 A176 176 0 0 1 317.4 87.4 Z" fill="#F5C95B"/>
-              <ellipse cx="250" cy="152" rx="28" ry="16" fill="#FBE3A6"/>
-              <circle cx="228" cy="126" r="16" fill="#C63A2E"/>
-              <circle cx="276" cy="164" r="14" fill="#C63A2E"/>
-              <circle cx="250" cy="208" r="11" fill="#C63A2E"/>
-              <circle cx="286" cy="112" r="6.5" fill="#2E2A33"/>
-              <path d="M212 178c13-8 27-2 29 11-13 8-27 3-29-11Z" fill="#4A9153"/>
-            </g>
-          </g></g>
-        </svg>
+        <!-- La photo de la maison, pas une illustration : c'est le premier
+             argument de vente d'une pizzeria. Chargée sans « lazy » car elle
+             occupe le premier écran — la retarder ferait clignoter la page. -->
+        <figure class="hero__photo">
+          <img src="assets/img/hero.opt.webp"
+               alt="Une pizza margherita sortie du four, des nuggets et une boisson, chez Anas Pizza Original"
+               width="660" height="440" decoding="async" fetchpriority="high">
+        </figure>
       </div>
     </div>
   </section>
@@ -829,8 +781,8 @@
                 </g>
               </g>
             </svg>
-            <img src="assets/img/pizza.opt.webp" alt="Une pizza sortie du four chez Anas Pizza Original" loading="lazy" decoding="async" width="400" height="500">
-            <figcaption>Sortie du four</figcaption>
+            <img src="assets/img/pizza.opt.webp" alt="Quatre pizzas d’Anas Pizza Original, dont une margherita et une pizza aux légumes" loading="lazy" decoding="async" width="400" height="500">
+            <figcaption>Sorties du four</figcaption>
           </figure>
         </div>
       </div>
