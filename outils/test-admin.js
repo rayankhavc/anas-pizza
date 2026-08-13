@@ -31,6 +31,7 @@ const anomalies = [];
 
 let compteur = 0;
 const nouveauSha = () => 'sha' + (++compteur).toString(16).padStart(6, '0');
+let glisserUneEcriture = false;   // voir « deux téléphones à la fois »
 
 function fauxGitHub() {
   return http.createServer((req, res) => {
@@ -56,6 +57,12 @@ function fauxGitHub() {
       if (!f) {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ message: 'Not Found' }));
+      }
+      // Simule l'autre téléphone : quelqu'un écrit entre la lecture et
+      // l'écriture. Le sha que l'on vient de renvoyer devient périmé.
+      if (glisserUneEcriture && chemin === 'assets/data/pilotage.json') {
+        glisserUneEcriture = false;
+        fichiers.set(chemin, { contenu: f.contenu, sha: nouveauSha() });
       }
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify({
@@ -408,6 +415,45 @@ const GERANT = { 'x-admin-code': 'code-gerant-test' };
     commits.filter((m) => /^Photo/.test(m)).length > 0 &&
     commits.filter((m) => /^Photo/.test(m)).every((m) => !/\[skip ci\]/.test(m)),
     commits.filter((m) => /^Photo/.test(m)).join(' / '));
+
+  /* --- deux téléphones à la fois ------------------------------------------ */
+  titre('deux téléphones ouverts en même temps');
+
+  // Dans un restaurant, deux personnes sur l'espace de gestion, c'est le cas
+  // normal. Le danger n'est pas l'échec : c'est la réussite silencieuse, où la
+  // seconde écriture efface la première sans que personne le voie.
+  await appeler(admin, {
+    methode: 'POST', entetes: GERANT, corps: { action: 'rupture', plat: 'wings', rupture: true }
+  });
+
+  glisserUneEcriture = true;
+  const collision = await appeler(admin, {
+    methode: 'POST', entetes: GERANT, corps: { action: 'rupture', plat: 'brownie', rupture: true }
+  });
+  ok('une écriture concurrente est refusée, pas avalée',
+    collision.code === 409, 'code ' + collision.code + ' — ' + JSON.stringify(collision.corps).slice(0, 100));
+
+  ok('et le message dit quoi faire, pas quel code HTTP',
+    /réessayez/i.test(collision.corps.erreur || '') && !/409|sha/i.test(collision.corps.erreur || ''),
+    collision.corps.erreur);
+
+  const apresCollision = await frais();
+  ok('et la première déclaration est toujours là',
+    apresCollision.ruptures.indexOf('wings') !== -1,
+    JSON.stringify(apresCollision.ruptures));
+
+  const reprise = await appeler(admin, {
+    methode: 'POST', entetes: GERANT, corps: { action: 'rupture', plat: 'brownie', rupture: true }
+  });
+  ok('le second appui, lui, passe',
+    reprise.code === 200 && reprise.corps.pilotage.ruptures.indexOf('brownie') !== -1 &&
+    reprise.corps.pilotage.ruptures.indexOf('wings') !== -1,
+    JSON.stringify((reprise.corps.pilotage || {}).ruptures));
+
+  await appeler(admin, { methode: 'POST', entetes: GERANT,
+    corps: { action: 'rupture', plat: 'wings', rupture: false } });
+  await appeler(admin, { methode: 'POST', entetes: GERANT,
+    corps: { action: 'rupture', plat: 'brownie', rupture: false } });
 
   /* --- le jour où le gérant a payé --------------------------------------- */
   titre('le jour où le gérant a fini de payer');

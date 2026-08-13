@@ -133,7 +133,15 @@ async function ecrireFichier(chemin, contenu, message, sha) {
   });
   if (!r.ok) {
     const txt = await r.text().catch(() => '');
-    throw new Error('GitHub ' + r.status + ' à l’écriture de ' + chemin + ' — ' + txt.slice(0, 200));
+    // 409 : quelqu'un a écrit entre notre lecture et notre écriture. Ce n'est
+    // pas une panne, c'est le garde-fou qui joue son rôle — et le gérant a
+    // besoin d'un message qu'il peut suivre, pas d'un code HTTP.
+    const e = new Error(r.status === 409
+      ? 'Quelqu’un d’autre vient de modifier au même moment. Rien n’a été perdu : ' +
+        'retouchez et réessayez.'
+      : 'GitHub ' + r.status + ' à l’écriture de ' + chemin + ' — ' + txt.slice(0, 200));
+    if (r.status === 409) e.conflit = true;
+    throw e;
   }
   return r.json();
 }
@@ -169,10 +177,21 @@ async function lire(frais) {
   return normaliser(EMBARQUE || NEUTRE);
 }
 
-/** Le sha du fichier tel que GitHub le connaît, pour une écriture sûre. */
-async function shaCourant() {
+/**
+ * L'état courant et son sha, lus d'un seul coup.
+ *
+ * Deux lectures séparées — le contenu d'un côté, le sha de l'autre — ouvrent
+ * une fenêtre entre les deux : une écriture qui s'y glisse fait fusionner un
+ * contenu périmé. Ici, le contenu et le sha viennent de la même réponse, donc
+ * du même instant. Si quelqu'un écrit ensuite, le sha ne correspond plus et
+ * GitHub refuse en 409 — ce qui est le bon échec.
+ */
+async function lireAvecSha() {
   const f = await lireFichier(CHEMIN);
-  return f ? f.sha : null;
+  return {
+    valeur: normaliser(f ? JSON.parse(f.contenu.toString('utf8')) : null),
+    sha: f ? f.sha : null
+  };
 }
 
 /**
@@ -190,8 +209,7 @@ async function ecrire(muter, qui, quoi) {
 
   // On relit juste avant d'écrire : deux téléphones ouverts sur l'espace
   // admin, c'est le cas normal dans un restaurant, pas l'exception.
-  const sha = await shaCourant();
-  const courant = await lire(true);
+  const { valeur: courant, sha } = await lireAvecSha();
   const neuf = normaliser(muter(JSON.parse(JSON.stringify(courant))));
   neuf.maj = new Date().toISOString();
   neuf.par = qui;
@@ -249,7 +267,7 @@ function livraisonPilotee(pilotage, base) {
 
 module.exports = {
   lire, ecrire, ecritureDisponible, normaliser,
-  lireFichier, ecrireFichier, shaCourant,
+  lireFichier, ecrireFichier, lireAvecSha,
   cleTaille, clePlat, cleSupp, prixPilote, enRupture, livraisonPilotee,
   CHEMIN
 };

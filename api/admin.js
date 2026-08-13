@@ -369,6 +369,9 @@ module.exports = async function handler(req, res) {
   } catch (e) {
     if (e instanceof Refus) return json(res, e.code, { erreur: e.message });
     if (e.configuration) return json(res, 503, { erreur: e.message });
+    // Écriture concurrente : l'écran se redessine sur l'état réel, et le
+    // gérant refait son geste. Rien à consigner, ce n'est pas une panne.
+    if (e.conflit) return json(res, 409, { erreur: e.message });
     console.error('[admin] ' + nom + ' : ' + e.message);
     return json(res, 502, { erreur: 'Enregistrement impossible : ' + e.message });
   }
