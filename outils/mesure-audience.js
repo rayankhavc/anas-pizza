@@ -71,6 +71,7 @@ function bloc() {
       'gtag(\'js\',new Date());gtag(\'config\',\'' + id + '\',{anonymize_ip:true});</script>');
     l.push('<script async src="https://www.googletagmanager.com/gtag/js?id=' + id + '"></script>');
     l.push('<script src="assets/js/consentement.js" defer></script>');
+    l.push('<script src="assets/js/mesure.js" defer></script>');
   }
   l.push(FIN);
   return l.join('\n');
