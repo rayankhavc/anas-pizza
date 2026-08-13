@@ -234,6 +234,29 @@ sur la configuration réelle, sans que personne ait à y penser.
 
 Le lien **Cookies** du pied de page rouvre le choix à tout moment.
 
+#### Les quatre gestes comptés
+
+Analytics compte seul les visites, les pages et la provenance. Il ne compte
+pas ce qui, dans une pizzeria, décide de la journée. `assets/js/mesure.js`
+ajoute quatre événements, et quatre seulement&nbsp;:
+
+| Événement | La question à laquelle il répond |
+|---|---|
+| `clic_telephone` | combien d'appels le site déclenche — la vraie conversion |
+| `clic_commander` | combien ont eu l'intention de commander |
+| `commande_demarree` | combien sont entrés dans le tunnel (l'écart avec le précédent dit si la page rebute) |
+| `clic_itineraire` | combien viennent sur place |
+
+Chacun porte un paramètre `emplacement` — en-tête, barre du bas, pied de
+page — parce que « 40 appels » sans savoir d'où ils partent ne dit pas quel
+bouton garder.
+
+Les commandes payées ne sont **pas** comptées ici&nbsp;: elles sont déjà chez
+le prestataire de paiement, avec le montant exact. Les compter deux fois,
+c'est se donner deux chiffres qui finiront par diverger.
+
+Rien n'est envoyé tant que le visiteur n'a pas accepté la mesure.
+
 ### Mise en service, le jour où la clé arrive
 
 1. Vercel → le projet → **Settings → Environment Variables** ;
