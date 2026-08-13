@@ -343,13 +343,21 @@ les commandes, retirer un plat parti, changer un prix, remplacer une photo.
 | Profil | Variable | Ce qu'il peut faire |
 |---|---|---|
 | Propriétaire du site | `ADMIN_CODE` | tout |
-| Gérant du restaurant | `ADMIN_CODE_GERANT` | ouvrir / fermer, ruptures, chiffre du jour |
+| Gérant du restaurant | `ADMIN_CODE_GERANT` | tout |
 
-Le gérant n'a **ni les prix, ni la livraison, ni les photos** tant que
-`ADMIN_EDITION` ne vaut pas `1`. Ce n'est pas une bride arbitraire&nbsp;: c'est
-la ligne entre *exploiter* la boutique et la *configurer*. Le jour où le site
-est réglé et payé, poser `ADMIN_EDITION=1` dans Vercel et redéployer suffit à
-lui ouvrir le reste — aucune ligne de code à toucher.
+Les deux profils sont ouverts. La bride qui limitait le gérant à
+l'exploitation a été levée&nbsp;: elle protégeait le prestataire, pas le
+restaurant, et le vrai levier n'a jamais été là — c'est le propriétaire qui
+détient les codes, qui peut les changer et qui peut suspendre la boutique en
+un appui.
+
+Le garde-fou utile est ailleurs, et il tient tout seul&nbsp;: chaque
+modification est un commit signé dans le dépôt, avec son auteur, sa date et
+son avant/après. Un prix cassé se retrouve et se défait en lisant
+l'historique — ce qu'aucun panneau de contrôle classique ne donne.
+
+`ADMIN_EDITION=0` remet la bride si le besoin revient&nbsp;: le gérant retombe
+alors sur l'exploitation seule (ouvrir, fermer, ruptures, chiffre du jour).
 
 Le contrôle est fait par le serveur, pas par l'écran&nbsp;: les blocs cachés
 ne sont que du rangement, un appel direct à `/api/admin` est refusé de la
@@ -438,14 +446,17 @@ l'horaire ne donnait déjà, et il n'y a aucun trou entre les deux.
 
 ## Modifier les horaires
 
-Deux endroits à garder synchronisés :
+Trois endroits à garder synchronisés :
 
-- l'affichage : tableau `.hours` dans `index.html` ;
-- la pastille « Ouvert / Fermé » : constante `HOURS` en haut d'`assets/js/main.js`
-  (minutes depuis minuit, fuseau Europe/Paris ; une fermeture supérieure à `1440`
-  déborde sur le lendemain — ex. `1560` = 2h du matin).
+- **l'affichage** : tableau `.hours` dans `index.html` ;
+- **la prise de commande** : bloc `creneaux` d'`outils/carte.js`, seul juge
+  de ce que le serveur accepte ;
+- **les moteurs** : bloc `openingHoursSpecification` du JSON-LD dans `<head>`.
 
-Pensez aussi au bloc `openingHoursSpecification` du JSON-LD dans `<head>`.
+La pastille « Ouvert / Fermé » du bandeau d'accueil a été retirée&nbsp;: elle
+accueillait par « Fermé » un visiteur venu regarder la carte à 3h du matin,
+et le premier mot du site ne doit pas être celui-là. Les horaires restent
+dans « Infos & horaires », là où on les cherche.
 
 ## Aperçu en local
 

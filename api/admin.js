@@ -7,11 +7,20 @@
    - le GÉRANT du restaurant (ADMIN_CODE_GERANT) tient la boutique au
      quotidien : ouvrir, fermer, déclarer une rupture, voir la recette.
 
-   Ce que le gérant ne peut pas faire tant que ADMIN_EDITION vaut autre chose
-   que « 1 » : toucher aux prix, aux conditions de livraison et aux photos.
-   Ce n'est pas une bride arbitraire, c'est la ligne entre exploiter et
-   configurer — et elle se lève en changeant une seule variable dans Vercel,
-   sans redéployer une ligne de code.
+   Les deux profils peuvent tout, y compris les prix, la livraison et les
+   photos. La bride qui existait sur le gérant a été levée : elle protégeait
+   le prestataire, pas le restaurant, et le vrai levier n'a jamais été là —
+   c'est le propriétaire qui détient les codes, qui peut les changer et qui
+   peut fermer la boutique en un appui.
+
+   Le garde-fou utile est ailleurs, et il tient tout seul : chaque
+   modification est un commit signé dans le dépôt, avec son auteur, sa date
+   et son avant/après. Un prix cassé se retrouve et se défait en regardant
+   l'historique — ce qu'aucun panneau de contrôle classique ne donne.
+
+   ADMIN_EDITION=0 remet la bride si le besoin revient : le gérant retombe
+   alors sur l'exploitation seule — ouvrir, fermer, déclarer une rupture,
+   lire le chiffre du jour.
 
    Aucun compte, aucun mot de passe stocké : deux codes partagés, comparés à
    durée constante. Pour un espace que deux personnes ouvrent, un système de
@@ -52,7 +61,8 @@ function memeCode(a, b) {
 function identifier(code) {
   const proprio = process.env.ADMIN_CODE || '';
   const gerant = process.env.ADMIN_CODE_GERANT || '';
-  const edition = String(process.env.ADMIN_EDITION || '') === '1';
+  // Ouvert par défaut. ADMIN_EDITION=0 — et rien d'autre — referme.
+  const edition = String(process.env.ADMIN_EDITION || '1') !== '0';
 
   if (proprio && memeCode(code, proprio)) {
     return {
@@ -357,7 +367,7 @@ module.exports = async function handler(req, res) {
   try {
     if (nom === 'photo') {
       if (!moi.droits.photos) {
-        return json(res, 403, { erreur: 'Les photos ne sont pas encore ouvertes à ce profil.' });
+        return json(res, 403, { erreur: 'Les photos ne sont pas ouvertes à ce profil.' });
       }
       if (!ecritureDisponible()) {
         return json(res, 503, { erreur: 'Publication non configurée (GITHUB_TOKEN absent).' });
@@ -377,9 +387,7 @@ module.exports = async function handler(req, res) {
     const acte = fabrique(corps, qui);
     if (!moi.droits[acte.droit]) {
       return json(res, 403, {
-        erreur: moi.profil === 'gerant'
-          ? 'Cette partie sera ouverte à la fin de la mise en service du site.'
-          : 'Action non autorisée pour ce profil.'
+        erreur: 'Cette partie n’est pas ouverte à ce profil.'
       });
     }
 

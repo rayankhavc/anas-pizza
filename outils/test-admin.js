@@ -5,8 +5,8 @@
    prix et à la disponibilité des plats, c'est-à-dire à ce que le client
    paie. Deux fautes suffiraient à coûter de l'argent au restaurant —
 
-   - un profil qui obtiendrait un droit qu'il n'a pas, et le gérant change
-     les prix avant d'avoir payé le site ;
+   - un profil qui obtiendrait un droit qu'il n'a pas, alors que la bride
+     ADMIN_EDITION=0 est posée ;
    - une rupture déclarée au comptoir qui n'arrêterait pas la commande, et
      la cuisine reçoit un ticket pour un plat qu'elle n'a plus.
 
@@ -148,7 +148,7 @@ const GERANT = { 'x-admin-code': 'code-gerant-test' };
   process.env.GITHUB_BRANCHE = 'main';
   process.env.ADMIN_CODE = 'code-proprio-test';
   process.env.ADMIN_CODE_GERANT = 'code-gerant-test';
-  delete process.env.ADMIN_EDITION;         // le gérant n'a pas encore payé
+  process.env.ADMIN_EDITION = '0';          // bride posée : on l'éprouve d'abord
   delete process.env.SUMUP_API_KEY;         // pas de recette dans ce test
   delete process.env.STRIPE_SECRET_KEY;
 
@@ -195,7 +195,7 @@ const GERANT = { 'x-admin-code': 'code-gerant-test' };
   ok('le gérant tient la boutique',
     vueGerant.corps.droits.service === true && vueGerant.corps.droits.ruptures === true);
 
-  ok('mais pas les prix tant que le site n’est pas payé',
+  ok('mais pas les prix quand la bride est posée',
     vueGerant.corps.droits.prix === false && vueGerant.corps.droits.livraison === false &&
     vueGerant.corps.droits.photos === false);
 
@@ -504,12 +504,15 @@ const GERANT = { 'x-admin-code': 'code-gerant-test' };
   await appeler(admin, { methode: 'POST', entetes: GERANT,
     corps: { action: 'rupture', plat: 'brownie', rupture: false } });
 
-  /* --- le jour où le gérant a payé --------------------------------------- */
-  titre('le jour où le gérant a fini de payer');
+  /* --- bride levée -------------------------------------------------------- */
+  titre('sans bride, le gérant a tout');
 
-  process.env.ADMIN_EDITION = '1';
+  // C'est le réglage par défaut : ADMIN_EDITION absent vaut « ouvert ». La
+  // bride ne protégeait que le prestataire, et le vrai levier est ailleurs —
+  // les codes, et l'historique du dépôt qui défait toute erreur.
+  delete process.env.ADMIN_EDITION;
   const gerantLibre = await appeler(admin, { entetes: GERANT });
-  ok('une variable suffit à lui ouvrir les prix',
+  ok('la variable absente lui ouvre tout',
     gerantLibre.corps.droits.prix === true && gerantLibre.corps.droits.photos === true &&
     gerantLibre.corps.droits.livraison === true);
 
@@ -522,7 +525,13 @@ const GERANT = { 'x-admin-code': 'code-gerant-test' };
   await appeler(admin, {
     methode: 'POST', entetes: GERANT, corps: { action: 'prix', cle: 'cat:tradition:medium', prix: null }
   });
-  delete process.env.ADMIN_EDITION;
+
+  const photoLibre = await appeler(admin, {
+    methode: 'POST', entetes: GERANT,
+    corps: { action: 'photo', plat: 'salle', image: 'data:image/jpeg;base64,' + 'QUJD'.repeat(600) }
+  });
+  ok('et il peut remplacer une photo du restaurant', photoLibre.code === 200,
+    JSON.stringify(photoLibre.corps).slice(0, 120));
 
   /* --- panne de GitHub --------------------------------------------------- */
   titre('quand GitHub ne répond plus');

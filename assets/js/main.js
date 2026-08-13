@@ -12,18 +12,13 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ------------------------------------------------------------------ *
-   * 1. Horaires — source de vérité unique (fuseau Europe/Paris)
-   *    minutes depuis minuit ; une fermeture > 1440 déborde sur le lendemain
+   * 1. Le jour de la semaine, à l'heure de Paris
+   *    Les horaires d'ouverture ne sont plus calculés ici : la pastille
+   *    « Ouvert / Fermé » du bandeau d'accueil a été retirée. Le seul usage
+   *    restant est de souligner la ligne du jour dans le tableau des
+   *    horaires. Les horaires qui font foi pour la commande sont côté
+   *    serveur, dans outils/carte.js.
    * ------------------------------------------------------------------ */
-  var HOURS = [
-    { open: 690, close: 1560 }, // dimanche  11:30 – 02:00
-    { open: 690, close: 1560 }, // lundi     11:30 – 02:00
-    { open: 690, close: 1560 }, // mardi     11:30 – 02:00
-    { open: 690, close: 1560 }, // mercredi  11:30 – 02:00
-    { open: 690, close: 1560 }, // jeudi     11:30 – 02:00
-    { open: 690, close: 1560 }, // vendredi  11:30 – 02:00
-    { open: 690, close: 1560 }  // samedi    11:30 – 02:00
-  ];
   var DAY_NAMES = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
 
   function parisNow() {
@@ -43,50 +38,6 @@
       var d = new Date();
       return { day: d.getDay(), minutes: d.getHours() * 60 + d.getMinutes() };
     }
-  }
-
-  function fmt(mins) {
-    var m = ((mins % 1440) + 1440) % 1440;
-    return String(Math.floor(m / 60)).padStart(2, '0') + 'h' +
-           (m % 60 ? String(m % 60).padStart(2, '0') : '');
-  }
-
-  function openState() {
-    var now = parisNow();
-    var today = HOURS[now.day];
-    var yday = HOURS[(now.day + 6) % 7];
-
-    // Reste de la nuit de la veille (ex. vendredi 01h00 → service du jeudi soir)
-    if (yday.close > 1440 && now.minutes < yday.close - 1440) {
-      return { open: true, until: yday.close - 1440 };
-    }
-    if (now.minutes >= today.open && now.minutes < Math.min(today.close, 1440)) {
-      return { open: true, until: today.close };
-    }
-    if (now.minutes < today.open) {
-      return { open: false, next: today.open, nextDay: null };
-    }
-    return { open: false, next: HOURS[(now.day + 1) % 7].open, nextDay: 'demain' };
-  }
-
-  /* Pastille « Ouvert / Fermé » -------------------------------------- */
-  var statusEl = $('[data-status]');
-  if (statusEl) {
-    var paint = function () {
-      var s = openState();
-      var label = $('[data-status-label]', statusEl);
-      var sub = $('[data-status-sub]', statusEl);
-      statusEl.classList.toggle('is-open', s.open);
-      statusEl.classList.toggle('is-closed', !s.open);
-      if (label) label.textContent = s.open ? 'Ouvert maintenant' : 'Fermé';
-      if (sub) {
-        sub.textContent = s.open
-          ? '· jusqu’à ' + fmt(s.until)
-          : '· ouvre ' + (s.nextDay ? s.nextDay + ' ' : '') + 'à ' + fmt(s.next);
-      }
-    };
-    paint();
-    setInterval(paint, 60000);
   }
 
   /* Ligne du jour dans le tableau des horaires ----------------------- */
