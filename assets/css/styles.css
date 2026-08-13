@@ -548,14 +548,29 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* liens légaux : 22 px de haut au clic, on remonte à la cible de 44 px */
 .footer__bottom nav a{display:inline-flex;align-items:center;min-height:44px}
 .footer__bottom a:hover{color:var(--gold)}
-.credit{
+/* La signature de l'agence. Elle héritait du « max-width:38ch » des
+   paragraphes du pied de page : sur grand écran elle se pliait en trois
+   lignes dans une colonne de 320 px, l'adresse renvoyée à la ligne derrière
+   un point médian orphelin. D'où le sélecteur plus fort ici — « .footer p »
+   pèse plus lourd que « .credit » seul, et c'est ce qui gagnait. */
+.footer .credit{
   max-width:none;
-  display:flex;align-items:center;flex-wrap:wrap;gap:.2rem .45rem;
-  margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid rgba(246,241,231,.14);
+  display:flex;align-items:center;flex-wrap:wrap;gap:.5rem .8rem;
+  margin-top:1.3rem;padding-top:1.2rem;border-top:1px solid rgba(246,241,231,.14);
   font-size:.82rem;color:#8FA0BA;
 }
-.credit a{color:var(--cream);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--orange);text-decoration-thickness:2px}
-.credit a:hover{color:var(--orange)}
+.credit__agence{display:inline-flex;align-items:center;gap:.6rem;min-height:44px}
+.credit__logo{width:28px;height:28px;flex:none;color:#8FA0BA}
+.credit a{color:#8FA0BA;font-weight:400;text-decoration:none}
+.credit a b{color:var(--cream);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--orange);text-decoration-thickness:2px}
+.credit__mail{min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(246,241,231,.28)}
+.credit a:hover,.credit a:hover b{color:var(--orange)}
+/* Le séparateur n'apparaît que si les deux tiennent sur une ligne : replié,
+   un point médian se retrouverait seul en tête de ligne. */
+.credit__sep{display:none}
+@media (min-width:560px){
+  .credit__sep{display:block;width:1px;height:1.1em;background:rgba(246,241,231,.24)}
+}
 
 /* --------------------------------------------------------------------------
    18. Barre d'action mobile
@@ -1247,4 +1262,56 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (min-width:640px){
   .adm__prix-l{grid-template-columns:1fr auto 11rem}
   .adm__prix-r{grid-column:auto;justify-self:end}
+}
+
+/* --------------------------------------------------------------------------
+   24. Bandeau de consentement
+   --------------------------------------------------------------------------
+   Il n'existe que si la mesure d'audience est activée : sans traceur, pas de
+   bandeau — c'est le meilleur bandeau de tous.
+
+   Les deux boutons sont identiques. Un « Accepter » plein et un « Refuser »
+   en gris pâle, c'est un choix libre en apparence seulement, et c'est ce que
+   la CNIL sanctionne. Posé en bas de l'écran plutôt qu'en travers de la page :
+   il informe, il ne prend pas le site en otage.
+   -------------------------------------------------------------------------- */
+.consent{
+  position:fixed;z-index:60;left:.7rem;right:.7rem;
+  bottom:calc(.7rem + env(safe-area-inset-bottom));
+  max-width:30rem;padding:1rem 1.1rem 1.1rem;
+  background:var(--four-800);color:var(--cream);
+  border:1px solid rgba(246,241,231,.2);border-radius:var(--r);
+  box-shadow:0 18px 44px rgba(0,0,0,.5);
+  animation:fadeUp .3s var(--ease) both;
+}
+.consent__t{font:700 .78rem/1 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.consent__d{font-size:.88rem;line-height:1.5;color:#CBB9A7;margin-bottom:.9rem}
+.consent__d a{color:var(--cream);text-decoration:underline;text-underline-offset:3px}
+.consent__b{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.consent__b button{
+  min-height:46px;padding:.5rem .8rem;border-radius:var(--r);
+  border:1.5px solid rgba(246,241,231,.3);color:var(--cream);
+  font:700 .8rem/1 var(--f-cond);letter-spacing:.08em;text-transform:uppercase;
+}
+.consent__b button:hover{background:rgba(246,241,231,.12)}
+
+/* La barre d'action mobile occupe déjà le bas de l'écran : le bandeau se
+   pose au-dessus d'elle, sinon il recouvre « Appeler ». */
+@media (max-width:899px){
+  .consent{bottom:calc(4.6rem + env(safe-area-inset-bottom))}
+}
+@media (min-width:600px){
+  .consent{left:auto;right:1.2rem;bottom:calc(1.2rem + env(safe-area-inset-bottom))}
+}
+
+/* Les deux barres internes portent le logo, un état et un bouton. Sur un
+   écran de 320 px, les trois ne tiennent pas côte à côte : le bouton sortait
+   de la page. On laisse le logo se réduire et la barre se plier plutôt que
+   d'imposer une largeur qui n'existe pas. */
+.kit__bar,.adm__bar{flex-wrap:wrap}
+.kit__bar .brand,.adm__bar .brand{flex:0 1 auto;min-width:0}
+.kit__bar .brand__logo,.adm__bar .brand__logo{width:min(40vw,168px)}
+@media (max-width:359px){
+  .kit__bar .brand__logo,.adm__bar .brand__logo{width:118px}
+  .kit__etat,.adm__profil{margin-left:0;flex-basis:100%;order:3}
 }

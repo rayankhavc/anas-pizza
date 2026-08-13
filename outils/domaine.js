@@ -14,6 +14,15 @@
    Désormais l'adresse est ici, et nulle part ailleurs. Le jour où le
    restaurant achète son nom de domaine, on change cette ligne — ou on pose
    SITE_URL dans Vercel — et tout suit.
+
+   ── Sa place dans la chaîne de construction ────────────────────────────────
+   Ce script passe en AVANT-DERNIER, juste avant l'empreinte des versions, et
+   ce n'est pas un détail d'ordonnancement. Il réécrit des fichiers ; tout
+   générateur qui écrirait une adresse après lui la lui ferait manquer. C'est
+   arrivé avec llms.txt, qui était produit après son passage et gardait donc
+   l'ancienne adresse alors que les huit autres fichiers étaient à jour — un
+   défaut invisible, parce que le fichier existait bien et paraissait juste.
+   Tout ce qui écrit une URL doit tourner avant lui.
    ========================================================================== */
 'use strict';
 
@@ -25,15 +34,20 @@ const RACINE = path.join(__dirname, '..');
 // L'adresse réelle du site. Vercel fournit VERCEL_PROJECT_PRODUCTION_URL,
 // mais on ne s'en sert pas par défaut : elle change selon le déploiement et
 // une canonique doit être stable.
-const SITE = (process.env.SITE_URL || 'https://anas-pizza.vercel.app')
+// Le domaine du restaurant, acheté le 13 août 2026. Sans « www » : une seule
+// forme fait autorité, et c'est celle-là. La variante www redirige vers elle
+// côté hébergeur, elle n'apparaît nulle part dans les pages.
+const SITE = (process.env.SITE_URL || 'https://anaspizzaoriginal.fr')
   .trim().replace(/\/+$/, '');
 
 // Toute adresse absolue déjà posée par une exécution précédente, quelle
-// qu'elle soit, est remplacée. Le script est donc rejouable sans dégât.
+// qu'elle soit, est remplacée. Le script est donc rejouable sans dégât — et
+// c'est ce qui permet de changer de domaine sans chasser les occurrences.
 const CONNUES = [
   'https://www.anaspizza-nantes.fr',
   'https://anaspizza-nantes.fr',
-  'https://anas-pizza.vercel.app'
+  'https://anas-pizza.vercel.app',
+  'https://www.anaspizzaoriginal.fr'
 ];
 
 const FICHIERS = ['.html', '.xml', '.txt', '.webmanifest'];

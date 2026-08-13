@@ -53,6 +53,6 @@ User-agent: Bingbot
 Allow: /
 
 # Résumé lisible par une machine, pour les moteurs de réponse
-# https://anas-pizza.vercel.app/llms.txt
+# https://anaspizzaoriginal.fr/llms.txt
 
-Sitemap: https://anas-pizza.vercel.app/sitemap.xml
+Sitemap: https://anaspizzaoriginal.fr/sitemap.xml

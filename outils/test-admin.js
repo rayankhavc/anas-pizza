@@ -393,6 +393,55 @@ const GERANT = { 'x-admin-code': 'code-gerant-test' };
   ok('une seconde photo écrase la première sans conflit de sha', remplacee.code === 200,
     JSON.stringify(remplacee.corps).slice(0, 140));
 
+  // Le PNG est refusé exprès : l'étape de construction retient le premier
+  // fichier trouvé pour un nom donné, donc un tikka.png déposé à côté d'un
+  // tikka.jpg ne remplacerait rien et personne ne le verrait.
+  const png = await appeler(admin, {
+    methode: 'POST', entetes: PROPRIO,
+    corps: { action: 'photo', plat: 'tikka', image: 'data:image/png;base64,' + 'QUJD'.repeat(600) }
+  });
+  ok('un PNG est refusé, pour ne pas doubler le fichier au lieu de l’écraser',
+    png.code === 422, JSON.stringify(png.corps).slice(0, 120));
+
+  /* --- photos du restaurant ---------------------------------------------- */
+  titre('les photos du restaurant');
+
+  const vue = await appeler(admin, { entetes: PROPRIO });
+  ok('l’écran connaît les quatre photos du restaurant',
+    (vue.corps.scenes || []).length === 4 &&
+    vue.corps.scenes.some((s) => s.id === 'hero') &&
+    vue.corps.scenes.some((s) => s.id === 'salle'),
+    JSON.stringify((vue.corps.scenes || []).map((s) => s.id)));
+
+  const salle = await appeler(admin, {
+    methode: 'POST', entetes: PROPRIO,
+    corps: { action: 'photo', plat: 'salle', image: 'data:image/jpeg;base64,' + 'QUJD'.repeat(600) }
+  });
+  ok('la salle se remplace, et à la racine des images',
+    salle.code === 200 && salle.corps.chemin === 'assets/img/salle.jpg',
+    JSON.stringify(salle.corps).slice(0, 140));
+
+  const hero = await appeler(admin, {
+    methode: 'POST', entetes: PROPRIO,
+    corps: { action: 'photo', plat: 'hero', image: 'data:image/jpeg;base64,' + 'WFla'.repeat(600) }
+  });
+  ok('la photo d’accueil aussi',
+    hero.code === 200 && fichiers.has('assets/img/hero.jpg'), JSON.stringify(hero.corps).slice(0, 140));
+
+  const inventee = await appeler(admin, {
+    methode: 'POST', entetes: PROPRIO,
+    corps: { action: 'photo', plat: 'cuisine', image: 'data:image/jpeg;base64,' + 'QUJD'.repeat(600) }
+  });
+  ok('un nom de photo inventé ne crée rien', inventee.code === 422,
+    JSON.stringify(inventee.corps).slice(0, 120));
+
+  const sceneGerant = await appeler(admin, {
+    methode: 'POST', entetes: GERANT,
+    corps: { action: 'photo', plat: 'hero', image: 'data:image/jpeg;base64,' + 'QUJD'.repeat(600) }
+  });
+  ok('et le gérant n’y touche pas non plus tant qu’il n’a pas les droits',
+    sceneGerant.code === 403, JSON.stringify(sceneGerant.corps).slice(0, 120));
+
   /* --- traçabilité ------------------------------------------------------- */
   titre('ce que le dépôt garde');
 
