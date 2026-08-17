@@ -53,8 +53,12 @@ module.exports = async function handler(req, res) {
 
   // Format imposé : « A7F3-K2 ». Une référence qui n'y ressemble pas ne part
   // même pas chez SumUp.
+  // La référence porte désormais le mode en tête — LIVRAISON-A7F3-K2 — pour
+  // être lisible d'un coup d'œil dans l'application du prestataire de
+  // paiement. Le préfixe est facultatif ici : une commande passée avant ce
+  // changement n'en a pas, et doit rester consultable.
   const ref = String(corps.reference || '').trim().toUpperCase();
-  if (!/^[A-Z2-9]{4}-[A-Z2-9]{2}$/.test(ref)) {
+  if (!/^(?:(?:LIVRAISON|EMPORTER)-)?[A-Z2-9]{4}-[A-Z2-9]{2}$/.test(ref)) {
     return json(res, 200, { fait: false });
   }
 

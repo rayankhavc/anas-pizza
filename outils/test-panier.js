@@ -250,6 +250,24 @@ for (let i = 0; i < 500; i++) refs.add(reference());
 ok(refs.size > 495, 'références distinctes', refs.size + '/500');
 ok(!/[IO01]/.test(Array.from(refs).join('')), 'aucun caractère ambigu (I, O, 0, 1)');
 
+// La référence porte le mode en tête pour être lisible d'un coup d'œil dans
+// l'application d'encaissement — c'est le seul endroit où le restaurateur
+// regarde quand l'argent tombe.
+const { referenceCourte } = require('../api/_paiement');
+ok(/^LIVRAISON-[A-Z2-9]{4}-[A-Z2-9]{2}$/.test(reference('livraison')),
+   'une livraison se reconnaît sans rien ouvrir', reference('livraison'));
+ok(/^EMPORTER-[A-Z2-9]{4}-[A-Z2-9]{2}$/.test(reference('emporter')),
+   'un retrait aussi', reference('emporter'));
+const nue = reference();
+ok(nue === referenceCourte(nue), 'sans mode, la référence reste nue', nue);
+ok(referenceCourte('LIVRAISON-A7F3-K2') === 'A7F3-K2' &&
+   referenceCourte('EMPORTER-A7F3-K2') === 'A7F3-K2',
+   'et le client ne dicte que les six caractères');
+
+const prefixees = new Set();
+for (let i = 0; i < 500; i++) prefixees.add(reference('livraison'));
+ok(prefixees.size > 495, 'le préfixe ne casse pas l’unicité', prefixees.size + '/500');
+
 console.log('\n── allergènes ─────────────────────────');
 const { allergenes } = require('./carte');
 const dit = (ing, nom, type) => allergenes(ing, type || 'pizza', nom || '');

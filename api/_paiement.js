@@ -40,12 +40,38 @@ function prestataire() {
   return null;
 }
 
-/** Référence courte, lisible au téléphone : « A7F3-K2 ». */
-function reference() {
-  const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';   // sans I, O, 0, 1 : dictés sans erreur
+/**
+ * La référence d'une commande.
+ *
+ * Elle porte le mode de retrait en tête — LIVRAISON-A7F3-K2 — et ce n'est
+ * pas décoratif. C'est la seule chaîne que le prestataire de paiement affiche
+ * partout : dans la liste des encaissements, dans le détail, dans la
+ * recherche. Le restaurateur qui voit tomber l'argent sur son téléphone sait
+ * alors immédiatement s'il y a une pizza à livrer ou à préparer pour un
+ * retrait, sans ouvrir quoi que ce soit. Le détail complet reste dans la
+ * description, mais il faut un geste de plus pour l'atteindre.
+ *
+ * La partie aléatoire fait toujours l'unicité. Elle est tirée d'un alphabet
+ * sans I, O, 0 ni 1 : une référence se dicte au téléphone.
+ *
+ * @param {String=} mode  'livraison' | 'emporter' — omis, on ne préfixe pas
+ */
+function reference(mode) {
+  const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let s = '';
   for (let i = 0; i < 6; i++) s += a[Math.floor(Math.random() * a.length)];
-  return s.slice(0, 4) + '-' + s.slice(4);
+  const courte = s.slice(0, 4) + '-' + s.slice(4);
+  if (mode !== 'livraison' && mode !== 'emporter') return courte;
+  return (mode === 'livraison' ? 'LIVRAISON' : 'EMPORTER') + '-' + courte;
+}
+
+/**
+ * La partie que l'on montre au client et qu'il dicte au téléphone.
+ * « LIVRAISON-A7F3-K2 » est utile au restaurant, illisible pour un client
+ * qui la lit à voix haute — il n'a besoin que des six caractères.
+ */
+function referenceCourte(ref) {
+  return String(ref || '').replace(/^(LIVRAISON|EMPORTER)-/, '');
 }
 
 /**
@@ -75,7 +101,7 @@ function ticket(total, client, mode) {
 /* SumUp                                                                      */
 /* -------------------------------------------------------------------------- */
 async function sumupCheckout(total, client, mode, base) {
-  const ref = reference();
+  const ref = reference(mode);
   const corps = {
     checkout_reference: ref,
     // SumUp attend un montant décimal, pas des centimes
@@ -272,7 +298,7 @@ const TVA = 'txcd_40060003';   // restauration à emporter / livrée
 
 async function stripeCheckout(total, client, mode, base) {
   const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-  const ref = reference();
+  const ref = reference(mode);
 
   const articles = total.lignes.map((l) => ({
     quantity: l.quantite,
@@ -373,4 +399,4 @@ async function commandesPayees(depuis) {
 }
 
 module.exports = { prestataire, ouvrirPaiement, commandesPayees, commandeParReference,
-  ticket, lireTicket, reference };
+  ticket, lireTicket, reference, referenceCourte };
