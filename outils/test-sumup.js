@@ -266,7 +266,12 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
   ok('une page de paiement SumUp est renvoyée',
     typeof r1.corps.url === 'string' && r1.corps.url.startsWith('https://pay.sumup.test/'),
     String(r1.corps.url));
-  ok('la référence est dictable au téléphone', /^[A-Z2-9]{4}-[A-Z2-9]{2}$/.test(r1.corps.reference || ''),
+  // La référence porte le mode en tête : c'est ce que le restaurateur lit
+  // dans son application d'encaissement quand l'argent tombe, avant même
+  // d'ouvrir le détail. Le client, lui, ne voit que les six caractères de
+  // fin — la page de confirmation retire le préfixe.
+  ok('la référence annonce le mode au restaurant',
+    /^LIVRAISON-[A-Z2-9]{4}-[A-Z2-9]{2}$/.test(r1.corps.reference || ''),
     String(r1.corps.reference));
 
   const envoye = recus[0] || {};

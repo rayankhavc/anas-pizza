@@ -31,10 +31,14 @@
    pas renvoyer deux fois la même commande en cuisine. */
 addEventListener('DOMContentLoaded', function () {
   var ref = new URLSearchParams(location.search).get('ref') || '';
-  if (!/^[A-Z0-9-]{1,12}$/.test(ref)) return;
+  if (!/^[A-Z0-9-]{1,24}$/.test(ref)) return;
 
   var p = document.getElementById('ref');
-  p.querySelector('b').textContent = ref;
+  // La référence porte le mode en tête — LIVRAISON-A7F3-K2 — pour que le
+  // restaurant reconnaisse la commande d'un coup d'œil dans son application
+  // d'encaissement. Le client, lui, n'a besoin que des six caractères : c'est
+  // ce qu'il aura à dicter au téléphone si quelque chose cloche.
+  p.querySelector('b').textContent = ref.replace(/^(LIVRAISON|EMPORTER)-/, '');
   p.hidden = false;
 
   var email = '';
