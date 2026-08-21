@@ -13,7 +13,10 @@
     "supp:supplement-viande": 245,
     "supp:legumes-oeuf": 150
   },
-  "livraison": {},
-  "maj": "2026-08-21T18:26:19.195Z",
+  "livraison": {
+    "minimum": 1380,
+    "frais": 299
+  },
+  "maj": "2026-08-21T18:26:31.640Z",
   "par": "gérant"
 }
