@@ -8,9 +8,10 @@
     "cat:tomate:large": 1290,
     "cat:creme:large": 1290,
     "cat:tradition:large": 1090,
-    "cat:veggie:large": 1090
+    "cat:veggie:large": 1090,
+    "supp:supplement-fromage": 190
   },
   "livraison": {},
-  "maj": "2026-08-21T18:25:31.430Z",
+  "maj": "2026-08-21T18:25:57.743Z",
   "par": "gérant"
 }
