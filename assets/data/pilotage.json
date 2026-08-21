@@ -5,9 +5,10 @@
   },
   "ruptures": [],
   "prix": {
-    "cat:tomate:large": 1290
+    "cat:tomate:large": 1290,
+    "cat:creme:large": 1290
   },
   "livraison": {},
-  "maj": "2026-08-21T18:24:53.837Z",
+  "maj": "2026-08-21T18:25:07.886Z",
   "par": "gérant"
 }
