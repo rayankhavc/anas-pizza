@@ -4,8 +4,10 @@
     "motif": ""
   },
   "ruptures": [],
-  "prix": {},
+  "prix": {
+    "cat:tomate:large": 1290
+  },
   "livraison": {},
-  "maj": null,
-  "par": null
+  "maj": "2026-08-21T18:24:53.837Z",
+  "par": "gérant"
 }
