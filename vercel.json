@@ -3,5 +3,13 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:chemin*",
+      "has": [{ "type": "host", "value": "www.anaspizzaoriginal.fr" }],
+      "destination": "https://anaspizzaoriginal.fr/:chemin*",
+      "permanent": true
+    }
+  ]
 }
