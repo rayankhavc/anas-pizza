@@ -79,16 +79,32 @@ Pose la redirection dans `vercel.json` plutôt que dans le tableau de bord :
 versionnée, relue en revue, et elle suit le projet si on le redéploie
 ailleurs.
 
+**Il faut deux règles, pas une.** `/:chemin+` ne couvre pas la racine, et
+`/:chemin*` ne la couvre pas non plus chez Vercel : `https://www.LE-DOMAINE.fr/`
+continuait de répondre `200` alors que toutes les autres pages redirigeaient
+bien. C'est-à-dire que la page la plus importante du site était la seule à
+passer à travers — et un contrôle sur `/commander` seul aurait conclu que
+tout allait bien.
+
 ```json
 "redirects": [
   {
-    "source": "/:chemin*",
+    "source": "/",
     "has": [{ "type": "host", "value": "www.LE-DOMAINE.fr" }],
-    "destination": "https://LE-DOMAINE.fr/:chemin*",
+    "destination": "https://LE-DOMAINE.fr/",
+    "permanent": true
+  },
+  {
+    "source": "/:chemin+",
+    "has": [{ "type": "host", "value": "www.LE-DOMAINE.fr" }],
+    "destination": "https://LE-DOMAINE.fr/:chemin+",
     "permanent": true
   }
 ]
 ```
+
+Vérification&nbsp;: `www` doit répondre **308 sur la racine comme sur une page
+profonde**. Tester les deux.
 
 Vérifier depuis un terminal plutôt que depuis le navigateur du client, dont
 le cache DNS ment :
