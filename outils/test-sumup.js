@@ -235,6 +235,23 @@ function titre(t) { console.log('\n── ' + t + ' ' + '─'.repeat(Math.max(0,
   const SUPP_FROMAGE = carte().supplements.find((g) => g.id === 'supplement-fromage').prix;
   const FRAIS = carte().livraison.frais;
 
+  /* Le restaurant pilote ses prix depuis /admin, et chaque changement est
+     commité dans assets/data/pilotage.json — c'est le principe même du
+     dispositif. Ce fichier étant dans le dépôt, il s'applique aussi ici : une
+     hausse de tarif décidée un samedi soir faisait échouer des contrôles qui
+     portent sur la mécanique du calcul, pas sur le prix du jour. Le message
+     d'échec — « attendu 3069, reçu 3495 » — n'avait alors aucun rapport avec
+     ce qui avait réellement changé, et envoyait chercher un bogue inexistant.
+
+     On repart donc du tarif de la carte, comme on remet les créneaux et les
+     offres à plat juste en dessous. Le pilotage a ses propres contrôles dans
+     test-admin.js, contre un faux dépôt. */
+  const pilotage = require('../assets/data/pilotage.json');
+  pilotage.prix = {};
+  pilotage.ruptures = [];
+  pilotage.livraison = {};
+  pilotage.service = { ouvert: true, motif: '' };
+
   // La livraison ferme à minuit. Ce test-ci vérifie la chaîne SumUp, pas les
   // horaires : on ouvre le créneau en grand, sinon il échouerait la nuit.
   // Le créneau a ses propres contrôles dans test-panier.js.

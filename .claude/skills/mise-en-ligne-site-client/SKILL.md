@@ -64,9 +64,31 @@ Chez le registrar (Hostinger, OVH, Gandi…), zone DNS :
 | `CNAME` | `www` | `cname.vercel-dns.com` |
 
 Puis Vercel → projet → **Settings → Domains** → ajouter le domaine **et** sa
-variante `www`, en laissant Vercel rediriger la seconde vers la première.
-Propagation : quelques minutes à quelques heures. Le certificat HTTPS est
-émis tout seul ensuite.
+variante `www`. Propagation : quelques minutes à quelques heures. Le
+certificat HTTPS est émis tout seul ensuite.
+
+**Mais ajouter les deux ne suffit pas.** Par défaut Vercel sert le site sur
+les deux hôtes, et `www` renvoie une copie complète de chaque page avec un
+`200`. Search Console le signale quelques jours plus tard sous le libellé
+*« Autre page avec balise canonique correcte »* : ce n'est pas une erreur —
+le mot *correcte* le dit, la canonique fait son travail — mais Google
+explore le site deux fois et l'on dépend d'une balise là où une redirection
+serait sans ambiguïté.
+
+Pose la redirection dans `vercel.json` plutôt que dans le tableau de bord :
+versionnée, relue en revue, et elle suit le projet si on le redéploie
+ailleurs.
+
+```json
+"redirects": [
+  {
+    "source": "/:chemin*",
+    "has": [{ "type": "host", "value": "www.LE-DOMAINE.fr" }],
+    "destination": "https://LE-DOMAINE.fr/:chemin*",
+    "permanent": true
+  }
+]
+```
 
 Vérifier depuis un terminal plutôt que depuis le navigateur du client, dont
 le cache DNS ment :
@@ -77,9 +99,9 @@ curl -s -o /dev/null -w "%{http_code}\n" https://LE-DOMAINE.fr
 curl -s -o /dev/null -w "%{http_code} → %{redirect_url}\n" https://ANCIENNE-ADRESSE.vercel.app
 ```
 
-L'ancienne adresse doit répondre **307 vers la nouvelle**. Si le client dit
-« ça marche plus », c'est souvent ça : il teste l'ancienne URL et prend la
-redirection pour une panne.
+L'ancienne adresse doit répondre **307 vers la nouvelle**, et `www` un
+**308** — pas un `200`. Si le client dit « ça marche plus », c'est souvent la
+première : il teste l'ancienne URL et prend la redirection pour une panne.
 
 ---
 

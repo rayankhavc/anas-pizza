@@ -200,10 +200,35 @@ les huit autres fichiers étaient à jour.
 | `CNAME` | `www` | `cname.vercel-dns.com` |
 
 Puis, dans Vercel → le projet → **Settings → Domains**, ajouter
-`anaspizzaoriginal.fr` **et** `www.anaspizzaoriginal.fr`, en laissant Vercel
-rediriger la seconde vers la première. Compter de quelques minutes à
-quelques heures de propagation ; le certificat HTTPS est émis tout seul
-ensuite.
+`anaspizzaoriginal.fr` **et** `www.anaspizzaoriginal.fr`. Compter de quelques
+minutes à quelques heures de propagation ; le certificat HTTPS est émis tout
+seul ensuite.
+
+#### La redirection du « www » se fait dans le code
+
+Ajouter les deux domaines ne suffit pas&nbsp;: par défaut Vercel **sert le
+site sur les deux**, et `www` renvoie alors une copie complète de chaque page
+avec un `200`. Search Console le signale sous le libellé *« Autre page avec
+balise canonique correcte »* — la canonique fait bien son travail, rien n'est
+perdu, mais Google explore le site deux fois et l'on dépend d'une balise là
+où une redirection serait sans ambiguïté.
+
+La redirection est donc posée dans `vercel.json`, et non dans le tableau de
+bord&nbsp;: elle est ainsi versionnée, relue en revue, et elle suit le projet
+si on le redéploie ailleurs.
+
+```json
+"redirects": [
+  {
+    "source": "/:chemin*",
+    "has": [{ "type": "host", "value": "www.anaspizzaoriginal.fr" }],
+    "destination": "https://anaspizzaoriginal.fr/:chemin*",
+    "permanent": true
+  }
+]
+```
+
+Vérification&nbsp;: `www` doit répondre **308**, pas 200.
 
 ### Search Console et mesure d'audience
 
