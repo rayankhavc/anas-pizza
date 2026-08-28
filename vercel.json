@@ -6,9 +6,15 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/:chemin*",
+      "source": "/",
       "has": [{ "type": "host", "value": "www.anaspizzaoriginal.fr" }],
-      "destination": "https://anaspizzaoriginal.fr/:chemin*",
+      "destination": "https://anaspizzaoriginal.fr/",
+      "permanent": true
+    },
+    {
+      "source": "/:chemin+",
+      "has": [{ "type": "host", "value": "www.anaspizzaoriginal.fr" }],
+      "destination": "https://anaspizzaoriginal.fr/:chemin+",
       "permanent": true
     }
   ]

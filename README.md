@@ -217,18 +217,32 @@ La redirection est donc posée dans `vercel.json`, et non dans le tableau de
 bord&nbsp;: elle est ainsi versionnée, relue en revue, et elle suit le projet
 si on le redéploie ailleurs.
 
+**Il faut deux règles, pas une.** `/:chemin+` ne couvre pas la racine, et
+`/:chemin*` ne la couvre pas non plus chez Vercel : `https://www.anaspizzaoriginal.fr/`
+continuait de répondre `200` alors que toutes les autres pages redirigeaient
+bien. C'est-à-dire que la page la plus importante du site était la seule à
+passer à travers — et un contrôle sur `/commander` seul aurait conclu que
+tout allait bien.
+
 ```json
 "redirects": [
   {
-    "source": "/:chemin*",
+    "source": "/",
     "has": [{ "type": "host", "value": "www.anaspizzaoriginal.fr" }],
-    "destination": "https://anaspizzaoriginal.fr/:chemin*",
+    "destination": "https://anaspizzaoriginal.fr/",
+    "permanent": true
+  },
+  {
+    "source": "/:chemin+",
+    "has": [{ "type": "host", "value": "www.anaspizzaoriginal.fr" }],
+    "destination": "https://anaspizzaoriginal.fr/:chemin+",
     "permanent": true
   }
 ]
 ```
 
-Vérification&nbsp;: `www` doit répondre **308**, pas 200.
+Vérification&nbsp;: `www` doit répondre **308 sur la racine comme sur une page
+profonde**. Tester les deux.
 
 ### Search Console et mesure d'audience
 
