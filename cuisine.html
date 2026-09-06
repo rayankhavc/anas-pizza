@@ -9,8 +9,8 @@
 <!-- Écran interne : jamais indexé, jamais partagé. -->
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/styles.css?v=9c39a83c">
-<script src="assets/js/cuisine.js?v=47fbbb0d" defer></script>
+<link rel="stylesheet" href="assets/css/styles.css?v=b515a8c3">
+<script src="assets/js/cuisine.js?v=8f2815c3" defer></script>
 </head>
 
 <body class="page-cuisine">
@@ -39,6 +39,10 @@
   </form>
 
   <div id="tableau" hidden>
+    <!-- L'alerte se voit autant qu'elle s'entend : dans une cuisine, le son
+         se couvre. « role=alert » la fait aussi annoncer à voix haute par les
+         lecteurs d'écran. -->
+    <p class="kit__alerte" id="alerte" role="alert" hidden></p>
     <p class="kit__vide" id="vide" hidden>Aucune commande pour l’instant. L’écran se met à jour tout seul.</p>
     <div class="kit__grille" id="commandes"></div>
   </div>
