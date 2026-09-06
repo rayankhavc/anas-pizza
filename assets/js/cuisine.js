@@ -62,31 +62,152 @@
     return true;
   }
 
-  /* --- sonnerie : trois notes générées, aucun fichier à charger ---------- */
+  /* --- sonnerie : quatre notes générées, aucun fichier à charger --------- */
   var audio = null;
-  function sonner() {
-    if (!son) return;
+
+  /**
+   * Réveille le moteur audio du navigateur.
+   *
+   * Un contexte audio créé sans que personne n'ait touché la page démarre
+   * « suspendu » : les oscillateurs tournent, et il ne sort rien. Aucune
+   * erreur, aucun message — juste le silence. C'est le défaut qui a fait
+   * croire au restaurant que la sonnerie n'existait pas.
+   *
+   * On l'ouvre donc dès la saisie du code, qui est un geste de l'utilisateur,
+   * et on le relance à chaque fois par précaution : un onglet mis en veille
+   * revient parfois suspendu.
+   */
+  function reveiller() {
     try {
       audio = audio || new (window.AudioContext || window.webkitAudioContext)();
-      [0, 0.18, 0.36].forEach(function (t, i) {
+      if (audio.state === 'suspended') audio.resume();
+      return true;
+    } catch (e) {
+      return false;   // pas de son disponible : l'alerte visuelle prend le relais
+    }
+  }
+
+  function sonner() {
+    if (!son || !reveiller()) return;
+    try {
+      // Quatre notes montantes plutôt que trois, et deux fois plus fort : à
+      // vingt heures, dans une cuisine, un tintement discret ne s'entend pas.
+      [0, 0.15, 0.30, 0.45].forEach(function (t, i) {
         var o = audio.createOscillator();
         var g = audio.createGain();
         o.type = 'sine';
-        o.frequency.value = [880, 1175, 1568][i];
+        o.frequency.value = [880, 1175, 1568, 2093][i];
         g.gain.setValueAtTime(0.0001, audio.currentTime + t);
-        g.gain.exponentialRampToValueAtTime(0.25, audio.currentTime + t + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + t + 0.16);
+        g.gain.exponentialRampToValueAtTime(0.5, audio.currentTime + t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + t + 0.18);
         o.connect(g); g.connect(audio.destination);
         o.start(audio.currentTime + t);
-        o.stop(audio.currentTime + t + 0.18);
+        o.stop(audio.currentTime + t + 0.2);
       });
     } catch (e) { /* pas de son disponible : l'affichage suffit */ }
+  }
+
+  /* --- l'alerte insiste jusqu'à ce que quelqu'un la voie ----------------- */
+
+  /**
+   * Une commande ratée, c'est une pizza payée que personne ne prépare. Un
+   * seul tintement au moment précis où le four s'ouvre ne suffit pas : on
+   * répète toutes les vingt secondes, et on arrête au premier geste sur
+   * l'écran — toucher la page, c'est être devant.
+   *
+   * La répétition s'arrête d'elle-même au bout de cinq minutes. Passé ce
+   * délai, personne n'est là, et une sonnerie qui hurle toute la nuit finit
+   * par être coupée pour de bon — ce qui coûterait bien plus cher qu'une
+   * alerte manquée. Le bandeau et le titre de l'onglet, eux, restent.
+   */
+  var RAPPEL = 20000;
+  var MAX_RAPPELS = 15;          // cinq minutes
+  var neuves = new Set();        // commandes vues mais pas encore acquittées
+  var rappel = null;
+  var rappelsFaits = 0;
+  var titreOrigine = document.title;
+  var clignote = null;
+
+  function bandeau() {
+    var b = $('#alerte');
+    if (!b) return;
+    var n = neuves.size;
+    if (!n) { b.hidden = true; return; }
+    b.textContent = n === 1
+      ? '🔔 Nouvelle commande — touchez l’écran'
+      : '🔔 ' + n + ' nouvelles commandes — touchez l’écran';
+    b.hidden = false;
+  }
+
+  function titreAlerte() {
+    clearInterval(clignote);
+    if (!neuves.size) { document.title = titreOrigine; clignote = null; return; }
+    var alt = false;
+    clignote = setInterval(function () {
+      alt = !alt;
+      document.title = alt
+        ? '(' + neuves.size + ') NOUVELLE COMMANDE'
+        : titreOrigine;
+    }, 1000);
+  }
+
+  function declencherAlerte() {
+    bandeau();
+    titreAlerte();
+    sonner();
+    rappelsFaits = 0;
+    clearInterval(rappel);
+    rappel = setInterval(function () {
+      if (!neuves.size || ++rappelsFaits >= MAX_RAPPELS) {
+        clearInterval(rappel); rappel = null; return;
+      }
+      sonner();
+    }, RAPPEL);
+  }
+
+  function arreterAlerte() {
+    if (!neuves.size) return;
+    neuves.clear();
+    clearInterval(rappel); rappel = null;
+    bandeau();
+    titreAlerte();
+    // Les cartes ne se redessinent qu'au tour suivant : sans ce nettoyage,
+    // une carte continuerait de battre jusqu'à quinze secondes après qu'on
+    // a acquitté l'alerte. Le bandeau dit « vu », la carte dirait « pas vu ».
+    Array.prototype.forEach.call(
+      document.querySelectorAll('.kit__c.est-neuve'),
+      function (el) { el.classList.remove('est-neuve'); }
+    );
+  }
+
+  /* --- l'écran ne doit pas s'endormir ------------------------------------ */
+
+  /**
+   * Un téléphone posé au comptoir se verrouille au bout d'une minute. Écran
+   * éteint, le navigateur gèle les minuteries : la page cesse d'interroger le
+   * serveur, donc elle ne sonne plus. Elle rattrape au réveil, sans un bruit.
+   *
+   * C'est la première cause d'alerte manquée, et elle ne se voit pas — tout a
+   * l'air de marcher quand on regarde l'écran. Le verrou de réveil demande au
+   * système de garder l'écran allumé tant que la page est ouverte.
+   */
+  var verrou = null;
+  function garderEcranAllume() {
+    if (!navigator.wakeLock || verrou) return;
+    navigator.wakeLock.request('screen').then(function (v) {
+      verrou = v;
+      v.addEventListener('release', function () { verrou = null; });
+    }).catch(function () { /* refusé ou indisponible : on continue sans */ });
   }
 
   /* --- rendu ------------------------------------------------------------ */
   function carte(c) {
     var fait = faites.has(c.id);
-    return '<article class="kit__c' + (fait ? ' est-faite' : '') + '" data-id="' + c.id + '">' +
+    // Une carte non acquittée est signalée aussi à l'œil : si le haut-parleur
+    // est coupé ou couvert par le bruit, c'est le regard qui rattrape.
+    var neuve = neuves.has(c.id) && !fait;
+    return '<article class="kit__c' + (fait ? ' est-faite' : '') +
+      (neuve ? ' est-neuve' : '') + '" data-id="' + c.id + '">' +
       '<header class="kit__c-h">' +
         '<span class="kit__mode kit__mode--' + c.mode + '">' +
           (c.mode === 'livraison' ? 'Livraison' : 'À emporter') + '</span>' +
@@ -111,9 +232,13 @@
   }
 
   function afficher(commandes) {
-    var neuves = commandes.filter(function (c) { return !connues.has(c.id); });
+    var arrivees = commandes.filter(function (c) { return !connues.has(c.id); });
     commandes.forEach(function (c) { connues.add(c.id); });
-    if (neuves.length && !premierTour) sonner();
+
+    if (arrivees.length && !premierTour) {
+      arrivees.forEach(function (c) { neuves.add(c.id); });
+      declencherAlerte();
+    }
     premierTour = false;
 
     // les commandes préparées passent en bas
@@ -158,19 +283,45 @@
   function demarrer() {
     $('#acces').hidden = true;
     $('#tableau').hidden = false;
+    garderEcranAllume();
     tour();
     setInterval(tour, PERIODE);
-    // au retour d'un écran mis en veille, on rafraîchit sans attendre
+
+    // Au retour d'un écran mis en veille : on rafraîchit sans attendre, et on
+    // reprend le verrou d'écran — le système le relâche à chaque veille, il
+    // ne se redemande pas tout seul.
     document.addEventListener('visibilitychange', function () {
-      if (!document.hidden) tour();
+      if (document.hidden) return;
+      garderEcranAllume();
+      tour();
     });
   }
 
   document.addEventListener('DOMContentLoaded', function () {
     if (!document.querySelector('.page-cuisine')) return;
 
+    // Toucher l'écran, c'est être devant : l'alerte s'arrête. En phase de
+    // capture, pour que le geste compte même s'il atterrit sur un bouton qui
+    // fait autre chose.
+    //
+    // Le même geste rouvre le moteur audio. C'est indispensable le soir où
+    // l'écran redémarre tout seul avec le code déjà en mémoire : personne ne
+    // saisit rien, la page s'ouvre sans le moindre geste, et le son resterait
+    // muet jusqu'au premier contact.
+    function geste() {
+      reveiller();
+      arreterAlerte();
+    }
+    ['pointerdown', 'keydown'].forEach(function (ev) {
+      document.addEventListener(ev, geste, true);
+    });
+
     $('#acces').addEventListener('submit', function (e) {
       e.preventDefault();
+      // La saisie du code est le premier geste de la soirée : c'est le seul
+      // moment garanti pour ouvrir le moteur audio, que les navigateurs
+      // refusent d'activer sans une action de l'utilisateur.
+      reveiller();
       code = $('#code').value.trim();
       var err = $('#err-acces');
       err.hidden = true;
@@ -188,15 +339,20 @@
       if (!b) return;
       var id = b.dataset.fait;
       if (faites.has(id)) faites.delete(id); else faites.add(id);
+      neuves.delete(id);
       garderFaites();
       tour();
     });
 
+    // Ce bouton fait deux choses d'un seul appui : il coupe ou remet la
+    // sonnerie, et il l'essaie. C'est le geste à faire en ouvrant l'écran —
+    // entendre les quatre notes prouve que le haut-parleur marche, que le
+    // volume est monté et que le téléphone n'est pas en mode silencieux.
     $('#son').addEventListener('click', function () {
       son = !son;
       this.setAttribute('aria-pressed', String(son));
       this.querySelector('span').textContent = son ? 'Son' : 'Muet';
-      if (son) sonner();   // confirme que le haut-parleur fonctionne
+      if (son) sonner();
     });
 
     // un code déjà saisi sur cet écran évite de le retaper chaque soir
