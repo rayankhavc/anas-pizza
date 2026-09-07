@@ -201,32 +201,60 @@
   }
 
   /* --- rendu ------------------------------------------------------------ */
+
+  /**
+   * Tout ce qui vient du client passe par ici avant d'entrer dans du HTML.
+   *
+   * Le nom, l'adresse et la note sont saisis librement par le client sur la
+   * page de commande : api/_panier.js en vérifie la longueur, pas le contenu.
+   * Ce texte voyage ensuite jusqu'ici — description du paiement, puis
+   * product_summary relu par api/_paiement.js — et atterrissait tel quel dans
+   * l'innerHTML de cet écran. Une note de commande suffisait donc à faire
+   * exécuter du code sur la tablette de la cuisine, laquelle garde le code
+   * d'accès en mémoire et affiche les coordonnées de tous les clients du
+   * service.
+   *
+   * api/_courriel.js échappait déjà ses champs de la même façon : c'est le
+   * même geste, il manquait simplement ici.
+   */
+  function e(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function carte(c) {
     var fait = faites.has(c.id);
     // Une carte non acquittée est signalée aussi à l'œil : si le haut-parleur
     // est coupé ou couvert par le bruit, c'est le regard qui rattrape.
     var neuve = neuves.has(c.id) && !fait;
+    // Le téléphone part dans un href : on ne garde que les chiffres et le +,
+    // pour qu'aucune donnée ne puisse s'y transformer en « javascript: ».
+    var tel = String(c.telephone || '').replace(/[^\d+]/g, '');
     return '<article class="kit__c' + (fait ? ' est-faite' : '') +
-      (neuve ? ' est-neuve' : '') + '" data-id="' + c.id + '">' +
+      (neuve ? ' est-neuve' : '') + '" data-id="' + e(c.id) + '">' +
       '<header class="kit__c-h">' +
-        '<span class="kit__mode kit__mode--' + c.mode + '">' +
+        '<span class="kit__mode kit__mode--' + (c.mode === 'livraison' ? 'livraison' : 'emporter') + '">' +
           (c.mode === 'livraison' ? 'Livraison' : 'À emporter') + '</span>' +
-        '<span class="kit__h">' + c.heure + '</span>' +
-        '<span class="kit__id">#' + c.id + '</span>' +
+        '<span class="kit__h">' + e(c.heure) + '</span>' +
+        '<span class="kit__id">#' + e(c.id) + '</span>' +
       '</header>' +
       '<ul class="kit__art">' +
         c.articles.map(function (a) {
-          return '<li><b>' + a.n + '×</b> ' + a.texte + '</li>';
+          return '<li><b>' + e(a.n) + '×</b> ' + e(a.texte) + '</li>';
         }).join('') +
       '</ul>' +
-      (c.commentaire ? '<p class="kit__com">⚠ ' + c.commentaire + '</p>' : '') +
+      (c.commentaire ? '<p class="kit__com">⚠ ' + e(c.commentaire) + '</p>' : '') +
       '<footer class="kit__c-f">' +
-        '<p class="kit__cli"><b>' + c.nom + '</b> · <a href="tel:' + c.telephone + '">' +
-          c.telephone + '</a></p>' +
-        (c.mode === 'livraison' ? '<p class="kit__adr">' + c.adresse + '</p>' : '') +
-        '<p class="kit__tot">' + c.total + '</p>' +
+        '<p class="kit__cli"><b>' + e(c.nom) + '</b> · <a href="tel:' + e(tel) + '">' +
+          e(c.telephone) + '</a></p>' +
+        (c.mode === 'livraison' ? '<p class="kit__adr">' + e(c.adresse) + '</p>' : '') +
+        '<p class="kit__tot">' + e(c.total) + '</p>' +
       '</footer>' +
-      '<button class="kit__ok" type="button" data-fait="' + c.id + '">' +
+      '<button class="kit__ok" type="button" data-fait="' + e(c.id) + '">' +
         (fait ? 'Remettre en attente' : 'Marquer préparée') + '</button>' +
       '</article>';
   }

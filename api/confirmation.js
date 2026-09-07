@@ -18,6 +18,7 @@
 
 const { commandeParReference, prestataire } = require('./_paiement');
 const { prevenir, courrielActif, adresseValide } = require('./_courriel');
+const garde = require('./_garde');
 
 function json(res, code, corps) {
   res.statusCode = code;
@@ -62,6 +63,26 @@ module.exports = async function handler(req, res) {
     return json(res, 200, { fait: false });
   }
 
+  /* Cet appel n'est protégé par aucun code : c'est la page de retour de
+     paiement qui le déclenche, et elle n'a pas de secret à présenter. Deux
+     raisons de le rationner tout de même :
+
+     - il réexpédie le détail d'une commande — nom, téléphone, adresse — à
+       l'adresse que l'appelant indique. Une référence inconnue répond
+       aujourd'hui la même chose qu'une référence impayée, ce qui empêche de
+       les distinguer une par une ; le garde empêche d'en essayer beaucoup ;
+     - chaque appel déclenche une requête chez le prestataire de paiement.
+       Sans limite, un tiers peut consommer notre quota gratuitement.
+
+     Un client normal appelle une fois, avec une référence valide : il ne
+     rencontre jamais ce garde. */
+  const feu = garde.autorise(req);
+  if (!feu.ok) {
+    res.setHeader('Retry-After', String(feu.attente));
+    return json(res, 429, { erreur: 'Trop de demandes. Réessayez dans ' +
+      feu.attente + ' secondes.' });
+  }
+
   const email = adresseValide(corps.email) ? String(corps.email).trim() : null;
 
   if (!prestataire() || !courrielActif()) {
@@ -76,8 +97,13 @@ module.exports = async function handler(req, res) {
     return json(res, 200, { fait: false });
   }
 
-  // Référence inconnue, ou paiement pas abouti : même réponse muette.
-  if (!commande) return json(res, 200, { fait: false });
+  // Référence inconnue, ou paiement pas abouti : même réponse muette, et le
+  // garde retient l'échec — c'est ce qui rend l'essai en série impraticable.
+  if (!commande) {
+    await garde.echec(req);
+    return json(res, 200, { fait: false });
+  }
+  garde.succes(req);
 
   const bilan = await prevenir(commande, email);
   if (bilan.motifs.length) {

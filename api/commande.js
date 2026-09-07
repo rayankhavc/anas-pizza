@@ -34,10 +34,35 @@ async function lireCorps(req) {
   return JSON.parse(Buffer.concat(morceaux).toString('utf8') || '{}');
 }
 
+/**
+ * L'adresse du site, celle vers laquelle le prestataire de paiement renverra
+ * le client une fois la carte validée.
+ *
+ * Elle ne se déduit plus des en-têtes de la requête. « Host » et
+ * « x-forwarded-host » sont fournis par l'appelant : les recopier revenait à
+ * laisser choisir l'adresse de retour d'un paiement. L'hébergeur normalise
+ * ces en-têtes en pratique, mais c'est sa politique du moment, pas une
+ * garantie — et le seul gain était d'éviter d'écrire le domaine quelque part.
+ *
+ * SITE_URL le fixe. À défaut, on retombe sur la liste des domaines connus,
+ * et l'en-tête ne sert qu'à choisir parmi eux : un domaine inventé n'y est
+ * pas, donc il ne peut pas être retenu.
+ */
+const DOMAINES = ['anaspizzaoriginal.fr', 'www.anaspizzaoriginal.fr'];
+
 function origine(req) {
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  const hote = req.headers['x-forwarded-host'] || req.headers.host;
-  return proto + '://' + hote;
+  const fixe = String(process.env.SITE_URL || '').trim().replace(/\/+$/, '');
+  if (/^https:\/\/[\w.-]+$/.test(fixe)) return fixe;
+
+  const hote = String(req.headers['x-forwarded-host'] || req.headers.host || '')
+    .split(',')[0].trim().toLowerCase();
+
+  // Les déploiements de prévisualisation de l'hébergeur portent un domaine
+  // en .vercel.app : on les accepte pour pouvoir tester la chaîne complète.
+  if (DOMAINES.includes(hote) || /^[\w-]+(-[\w-]+)*\.vercel\.app$/.test(hote)) {
+    return 'https://' + hote;
+  }
+  return 'https://' + DOMAINES[0];
 }
 
 module.exports = async function handler(req, res) {

@@ -33,6 +33,7 @@ const {
   cleTaille, clePlat, cleSupp, prixPilote, enRupture, livraisonPilotee
 } = require('./_pilotage');
 const { carte, euros } = require('./_panier');
+const garde = require('./_garde');
 const { commandesPayees, prestataire } = require('./_paiement');
 const { debutService } = require('./cuisine');
 
@@ -328,9 +329,24 @@ module.exports = async function handler(req, res) {
     });
   }
 
+  garde.verifierForce('ADMIN_CODE', process.env.ADMIN_CODE);
+  garde.verifierForce('ADMIN_CODE_GERANT', process.env.ADMIN_CODE_GERANT);
+
+  const feu = garde.autorise(req);
+  if (!feu.ok) {
+    res.setHeader('Retry-After', String(feu.attente));
+    return json(res, 429, {
+      erreur: 'Trop de codes incorrects. Réessayez dans ' + feu.attente + ' secondes.'
+    });
+  }
+
   const code = String(req.headers['x-admin-code'] || '');
   const moi = identifier(code);
-  if (!moi) return json(res, 401, { erreur: 'Code incorrect.' });
+  if (!moi) {
+    await garde.echec(req);
+    return json(res, 401, { erreur: 'Code incorrect.' });
+  }
+  garde.succes(req);
 
   /* ── état complet ────────────────────────────────────────────────────── */
   if (req.method === 'GET') {

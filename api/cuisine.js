@@ -13,6 +13,7 @@
 'use strict';
 
 const { commandesPayees, prestataire } = require('./_paiement');
+const garde = require('./_garde');
 
 function json(res, code, corps) {
   res.statusCode = code;
@@ -54,11 +55,28 @@ module.exports = async function handler(req, res) {
   if (!attendu) {
     return json(res, 503, { erreur: 'Écran cuisine non configuré (CUISINE_CODE absent).' });
   }
-  const url = new URL(req.url, 'http://x');
-  const fourni = req.headers['x-cuisine-code'] || url.searchParams.get('code') || '';
+  garde.verifierForce('CUISINE_CODE', attendu);
+
+  const feu = garde.autorise(req);
+  if (!feu.ok) {
+    res.setHeader('Retry-After', String(feu.attente));
+    return json(res, 429, {
+      erreur: 'Trop de codes incorrects. Réessayez dans ' + feu.attente + ' secondes.'
+    });
+  }
+
+  /* Le code ne se lit que dans l'en-tête.
+     Il était aussi accepté en « ?code= », ce dont personne ne se servait : le
+     client (assets/js/cuisine.js) a toujours envoyé l'en-tête. Une porte que
+     personne n'emprunte mais qui recopie le code dans les journaux de
+     l'hébergeur, l'historique du navigateur et l'en-tête Referer de chaque
+     ressource chargée ensuite n'a que des inconvénients. */
+  const fourni = req.headers['x-cuisine-code'] || '';
   if (!memeCode(String(fourni), attendu)) {
+    await garde.echec(req);
     return json(res, 401, { erreur: 'Code incorrect.' });
   }
+  garde.succes(req);
 
   if (!prestataire()) {
     return json(res, 200, { commandes: [], note: 'Paiement en ligne pas encore activé.' });

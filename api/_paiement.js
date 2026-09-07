@@ -57,9 +57,20 @@ function prestataire() {
  * @param {String=} mode  'livraison' | 'emporter' — omis, on ne préfixe pas
  */
 function reference(mode) {
+  /* Tirage cryptographique, et non Math.random().
+     Une référence n'est pas qu'un identifiant : /api/confirmation accepte de
+     réexpédier le détail d'une commande — nom, téléphone, adresse — à qui
+     présente la bonne. Math.random() n'est pas conçu pour résister à
+     l'analyse : quelques sorties observées suffisent à reconstituer l'état du
+     générateur et à prédire les suivantes. Il aurait donc suffi de passer
+     quelques commandes pour deviner celles des autres clients.
+     L'alphabet garde les 32 caractères sans I, O, 0 ni 1 — une référence se
+     dicte au téléphone — et 32 divise 256, donc le modulo ne favorise aucune
+     lettre. */
   const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const octets = require('crypto').randomBytes(6);
   let s = '';
-  for (let i = 0; i < 6; i++) s += a[Math.floor(Math.random() * a.length)];
+  for (let i = 0; i < 6; i++) s += a[octets[i] % a.length];
   const courte = s.slice(0, 4) + '-' + s.slice(4);
   if (mode !== 'livraison' && mode !== 'emporter') return courte;
   return (mode === 'livraison' ? 'LIVRAISON' : 'EMPORTER') + '-' + courte;

@@ -118,22 +118,50 @@ const AVEC_GA4 =
 '        votre consentement (article&nbsp;6.1.a du RGPD et article&nbsp;82 de la loi « Informatique et Libertés »).\n' +
 '        Nous n’utilisons ni la publicité personnalisée, ni le partage de données publicitaires.</p>';
 
-function politique() {
-  if (!fs.existsSync(path.join(RACINE, POLITIQUE))) return false;
-  const abs = path.join(RACINE, POLITIQUE);
+/* Les mentions légales portent le même sujet, en deux lignes plutôt qu'en
+   cinq : c'est la politique de confidentialité qui détaille, elles ne font
+   qu'annoncer. Elles étaient restées en dehors de cette mécanique, et
+   affirmaient donc « aucun cookie de mesure d'audience » pendant que GA4
+   tournait — la page la plus formelle du site était la seule à mentir. */
+const MENTIONS = 'mentions-legales.html';
+
+const M_SANS_TRACEUR =
+'      <p>Ce site ne dépose aucun cookie de mesure d’audience ni de publicité.</p>';
+
+const M_AVEC_GA4 =
+'      <p>Ce site utilise <strong>Google Analytics</strong> pour mesurer sa fréquentation. Cet outil dépose\n' +
+'        des cookies, et <strong>rien n’est déposé tant que vous n’avez pas accepté</strong>&nbsp;: un bandeau\n' +
+'        recueille votre choix à la première visite, et le lien <em>Cookies</em> en bas de page permet d’en\n' +
+'        changer à tout moment. Aucun cookie publicitaire n’est utilisé.</p>';
+
+/**
+ * Met une page en accord avec la configuration réelle.
+ * @returns {boolean} vrai si le fichier a changé
+ */
+function accorder(fichier, avecGa4, sansGa4) {
+  const abs = path.join(RACINE, fichier);
+  if (!fs.existsSync(abs)) return false;
   const avant = fs.readFileSync(abs, 'utf8');
   const i = avant.indexOf(T_DEBUT);
   const j = avant.indexOf(T_FIN);
   if (i === -1 || j === -1) {
-    console.warn('[mesure] ⚠ repères « traceurs » absents de ' + POLITIQUE +
+    console.warn('[mesure] ⚠ repères « traceurs » absents de ' + fichier +
       ' : la page n’a pas pu être mise en accord avec la configuration.');
     return false;
   }
   const apres = avant.slice(0, i + T_DEBUT.length) + '\n' +
-    (GA4 ? AVEC_GA4 : SANS_TRACEUR) + '\n' + avant.slice(j);
+    (GA4 ? avecGa4 : sansGa4) + '\n' + avant.slice(j);
   if (apres === avant) return false;
   fs.writeFileSync(abs, apres);
   return true;
+}
+
+function politique() {
+  // Les deux pages qui parlent des traceurs, tenues par le même geste : une
+  // page légale oubliée dans cette boucle est une page qui finira par mentir.
+  const a = accorder(POLITIQUE, AVEC_GA4, SANS_TRACEUR);
+  const b = accorder(MENTIONS, M_AVEC_GA4, M_SANS_TRACEUR);
+  return a || b;
 }
 
 function main() {
