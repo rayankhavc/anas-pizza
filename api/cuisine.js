@@ -31,18 +31,88 @@ function memeCode(a, b) {
   return d === 0;
 }
 
+/* --------------------------------------------------------------------------
+   L'heure de Paris, depuis un serveur qui n'y est pas
+   --------------------------------------------------------------------------
+   Les fonctions sans serveur tournent en UTC. Tout calcul d'horaire fait avec
+   les méthodes locales de Date (setHours, getHours) porte donc sur UTC, pas
+   sur Paris — deux heures d'écart l'été, une l'hiver.
+
+   Le détour par toLocaleString('en-US', { timeZone: 'Europe/Paris' }) suivi
+   d'un new Date() est le piège classique, et c'est celui dans lequel cette
+   fonction était tombée : il rend les bons chiffres — « 12:52 » — mais
+   new Date() les relit dans le fuseau du serveur. Le 11h00 posé ensuite
+   devenait 11h00 UTC, soit 13h00 à Paris. Toute commande passée entre 11h et
+   13h tombait avant le début de service et disparaissait de l'écran cuisine,
+   sans le moindre message. Le soir n'était pas touché, ce qui a laissé le
+   défaut passer inaperçu jusqu'à ce qu'un service du midi le révèle.
+
+   On passe donc par le décalage réel de Paris à un instant donné, lu chez
+   Intl, seul à connaître les règles d'heure d'été et leurs changements.
+   -------------------------------------------------------------------------- */
+
+const FUSEAU = 'Europe/Paris';
+
+const CHAMPS = new Intl.DateTimeFormat('en-US', {
+  timeZone: FUSEAU, hour12: false,
+  year: 'numeric', month: '2-digit', day: '2-digit',
+  hour: '2-digit', minute: '2-digit', second: '2-digit'
+});
+
+/** Les composantes de l'heure murale parisienne à un instant donné. */
+function murParis(instant) {
+  const p = {};
+  for (const m of CHAMPS.formatToParts(instant)) p[m.type] = m.value;
+  return {
+    annee: Number(p.year), mois: Number(p.month), jour: Number(p.day),
+    // certaines versions d'ICU rendent « 24 » pour minuit
+    heure: Number(p.hour) % 24, minute: Number(p.minute), seconde: Number(p.second)
+  };
+}
+
+/** Le décalage de Paris sur UTC à cet instant, en millisecondes. */
+function decalageParis(instant) {
+  const m = murParis(instant);
+  const commeSiUTC = Date.UTC(m.annee, m.mois - 1, m.jour, m.heure, m.minute, m.seconde);
+  return commeSiUTC - instant.getTime();
+}
+
+/**
+ * L'instant UTC correspondant à une heure murale parisienne.
+ *
+ * Le décalage dépend de l'instant qu'on cherche, pas de celui d'où l'on part :
+ * on l'estime une fois, puis on le relit à la date obtenue. Deux passes
+ * suffisent — 11h00 est loin des heures où bascule l'heure d'été (2h et 3h),
+ * donc la seconde lecture est toujours la bonne.
+ */
+function instantParis(annee, mois, jour, heure) {
+  const mural = Date.UTC(annee, mois - 1, jour, heure, 0, 0);
+  const approx = mural - decalageParis(new Date(mural));
+  return mural - decalageParis(new Date(approx));
+}
+
 /**
  * Début du service en cours, en secondes.
- * Le restaurant sert de 11h30 à 2h du matin : entre minuit et 3h, la nuit
- * appartient encore au service de la veille.
+ *
+ * Le restaurant sert de 11h30 à 2h du matin. Le service ouvre donc à 11h00
+ * heure de Paris, avec une marge devant la première commande possible ; et
+ * entre minuit et 3h, la nuit appartient encore au service de la veille.
  */
 function debutService(maintenant) {
-  const paris = new Date((maintenant || new Date())
-    .toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
-  const d = new Date(paris);
-  d.setHours(11, 0, 0, 0);
-  if (paris.getHours() < 3) d.setDate(d.getDate() - 1);
-  return Math.floor(d.getTime() / 1000);
+  const t = maintenant || new Date();
+  const m = murParis(t);
+
+  let { annee, mois, jour } = m;
+  if (m.heure < 3) {
+    // On recule d'un jour par le calendrier, pas en soustrayant 24 heures :
+    // les jours de changement d'heure n'en font pas 24.
+    const veille = new Date(Date.UTC(annee, mois - 1, jour) - 24 * 3600 * 1000);
+    annee = veille.getUTCFullYear();
+    mois = veille.getUTCMonth() + 1;
+    jour = veille.getUTCDate();
+  }
+
+  return Math.floor(instantParis(annee, mois, jour, 11) / 1000);
 }
 
 module.exports = async function handler(req, res) {
