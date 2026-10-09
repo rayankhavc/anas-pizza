@@ -372,6 +372,50 @@ Aucune base de données&nbsp;: les commandes sont relues directement chez
 Stripe, qui les conserve déjà. Une base de plus serait une base à sauvegarder,
 à sécuriser et à payer pour stocker ce qui existe ailleurs.
 
+### Envoyer les commandes sur la caisse SumUp
+
+Le restaurant a son propre écran de cuisine SumUp, fixé au mur. Deux écrans à
+surveiller, c'est un écran de trop&nbsp;: les commandes du site peuvent être
+versées dans la caisse, d'où elles partent seules sur cet écran-là.
+
+Attention, ce sont deux API différentes. Celle qui encaisse (`api.sumup.com`)
+ignore tout des commandes. Celle qui tient les ventes et l'écran de cuisine
+est l'ancienne Goodtill, `api.thegoodtill.com`, et elle exige un en-tête
+`Vendor-Id` que SumUp délivre à la demande&nbsp;: écrire à
+`pos.support.uk.ie@sumup.com` en donnant le code marchand. Demander au passage
+un compte de démonstration, pour ne jamais essayer sur la caisse du service.
+
+| Variable | Rôle | Sans elle |
+|---|---|---|
+| `POS_SUBDOMAIN` | sous-domaine du magasin (celui de l'adresse du back-office) | — |
+| `POS_USER` / `POS_PASSWORD` | compte **administrateur ou propriétaire**&nbsp;; un compte « opérateur » est refusé par l'API | — |
+| `POS_VENDOR_ID` | l'en-tête délivré par SumUp | rien n'est tenté, le site encaisse comme avant |
+| `POS_OUTLET_ID` | seulement si le magasin a plusieurs points de vente | l'unique point de vente |
+| `POS_TVA` | taux appliqué aux lignes, en toutes lettres&nbsp;: `10` | `10` |
+| `POS_RATTRAPAGE_CLE` | protège `/api/pos-rattrapage` | l'adresse répond « non configuré » |
+
+Tant que les quatre premières manquent, tout ce chemin reste éteint&nbsp;: pas
+un appel réseau, pas une ligne de journal, aucun risque pour la commande.
+
+**Le versement passe par une tâche planifiée**, `/api/pos-rattrapage`, à
+appeler chaque minute avec la clé (`?cle=…` ou un en-tête `Authorization`).
+Elle compare les commandes payées du service à celles que la caisse dit déjà
+avoir, et n'envoie que la différence&nbsp;: la relancer dix fois n'envoie rien
+en double.
+
+C'est volontairement une tâche, et non un envoi au moment du paiement. Le seul
+instant où le serveur apprend qu'un paiement a abouti, c'est le retour du
+client sur la page de confirmation&nbsp;; un client qui ferme l'onglet en
+sortant de la page bancaire — ce qui arrive tous les jours — et la commande
+n'arriverait jamais en cuisine.
+
+Ce qui part en caisse&nbsp;: les articles en lignes lisibles à 0,00&nbsp;€,
+puis une ligne qui porte la totalité de la somme. La règle de l'API veut que
+les paiements égalent les lignes au centime, et notre ticket ne transporte pas
+le prix de chaque article — seulement le total. La cuisine lit donc sa
+commande article par article, la caisse encaisse le bon montant, et ce qu'on
+y perd est la ventilation par plat dans les rapports.
+
 ## Espace de gestion — `/admin`
 
 L'écran depuis lequel le restaurant tient sa boutique sans nous&nbsp;: fermer
