@@ -1,6 +1,6 @@
 {
   "service": {
-    "ouvert": false,
+    "ouvert": true,
     "motif": ""
   },
   "ruptures": [],
@@ -17,6 +17,6 @@
     "minimum": 1380,
     "frais": 245
   },
-  "maj": "2026-10-14T20:49:35.616Z",
+  "maj": "2026-10-14T20:49:38.519Z",
   "par": "gérant"
 }
