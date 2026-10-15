@@ -371,6 +371,30 @@ du dépôt. Ce qui appartient au client dès le premier jour : son nom de
 domaine, son compte de paiement, ses données. Cette ligne-là est la bonne, et
 elle se tient sans discussion.
 
+### Le dépôt en privé, toujours
+
+Un dépôt public n'est pas une faille tant qu'aucun secret n'est dans le code —
+et il n'y en a pas : clés, jetons et codes vivent dans les variables de
+l'hébergeur. Mais un dépôt public, c'est :
+
+- **le travail de l'agence copiable en cinq minutes**, par n'importe qui, y
+  compris le concurrent qui démarche le même client ;
+- **la vie du commerce en clair** : chaque prix changé, par qui, à quelle
+  heure, puisque l'espace de gestion écrit dans le dépôt ;
+- **le code de l'administration offert** à qui veut y chercher une faille.
+
+Rien de tout ça ne sert à personne. Le dépôt naît privé, ou passe privé avant
+la livraison : Settings → Danger Zone → Change visibility → Make private.
+
+Avant, deux vérifications :
+1. **Aucun secret dans l'historique** — `git log --all -p | grep -E
+   "sup_sk_|ghp_|github_pat_|sk_live_|xkeysib-"`. Un secret déjà publié ne se
+   rattrape pas en passant privé : il se **révoque** et se remplace.
+2. **Le site ne lit pas le dépôt sans jeton** — pas de
+   `raw.githubusercontent.com` dans le code. Tout doit passer par l'API avec
+   le jeton, qui marche pareil en privé. L'hébergeur gratuit (Vercel Hobby)
+   accepte les dépôts privés d'un compte personnel.
+
 ---
 
 ## Sur le rythme de ces fins de projet
